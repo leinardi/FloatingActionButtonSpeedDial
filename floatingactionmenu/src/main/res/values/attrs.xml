@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FabWithTitleView">
+        <attr name="fab_title" format="string" />
+        <attr name="fab_color" format="color" />
+        <attr name="fab_drawable" format="reference" />
+    </declare-styleable>
+    <!-->
+    <declare-styleable name="FabWithOptions">
+        <attr name="options_menu" format="reference" />
+        <attr name="options_color" format="color"/>
+        <attr name="src" format="reference"/>
+        <attr name="color" format="color"/>
+    </declare-styleable>
+    <!-->
+    <declare-styleable name="OptionsFabLayout">
+        <attr name="options_menu" format="reference" />
+        <attr name="options_color" format="color" />
+        <attr name="src" format="reference" />
+        <attr name="color" format="color" />
+        <attr name="background_color" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">floatingactionmenu</string>
+
+    <string name="fab_1">Add alarm</string>
+</resources>
