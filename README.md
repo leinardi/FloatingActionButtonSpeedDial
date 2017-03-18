@@ -3,7 +3,7 @@ Floating action menu is a library allowing easily integrate fully customizable F
 # Download
 Gradle:
 ```groovy
-compile 'com.github.arthurghazaryan.floatingactionmenu:1.0.0
+compile 'com.github.arthurghazaryan:floatingactionmenu:1.0.0'
 ```
 # Usage
 1. Define a menu in `res/menu` folder.
