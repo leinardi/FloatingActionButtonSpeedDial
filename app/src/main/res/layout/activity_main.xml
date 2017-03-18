@@ -30,11 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:color="@color/colorAccent"
-        custom:options_menu="@menu/fab_menu"
         custom:options_color="@color/colorPrimary"
-        custom:src="@drawable/ic_add_white_24dp"
-        />
-
+        custom:options_menu="@menu/fab_menu"
+        custom:src="@drawable/ic_add_white_24dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -143,7 +143,7 @@ public class OptionsFabLayout extends RelativeLayout {
                     else if (event.getAction() == MotionEvent.ACTION_UP)
                         ((CardView) v).setCardBackgroundColor(
                                 ContextCompat.getColor(context, R.color.cardview_light_background));
-                    return false;
+                    return true;
                 }
             });
         }
@@ -152,8 +152,8 @@ public class OptionsFabLayout extends RelativeLayout {
     /**
      * Listener for handling events on mini fab's.
      */
-    public static abstract class OnMiniFabSelectedListener {
-        public abstract void onMiniFabSelected(MenuItem fabItem);
+    public  interface OnMiniFabSelectedListener {
+        void onMiniFabSelected(MenuItem fabItem);
     }
 
 }

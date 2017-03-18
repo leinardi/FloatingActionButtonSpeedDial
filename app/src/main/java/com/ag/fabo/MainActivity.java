@@ -32,14 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         fabWithOptions = (OptionsFabLayout) findViewById(R.id.fab_l);
 
-        //Sets mini fab's colors.
+        //Set mini fab's colors.
         fabWithOptions.setMiniFabsColors(
                 R.color.colorPrimary,
-                R.color.green_fab,
-                R.color.green_fab,
                 R.color.green_fab);
 
-        //Sets main fab clicklistener.
+        //Set main fab clicklistener.
         fabWithOptions.setMainFabOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Sets mini fabs clicklisteners.
+        //Set mini fabs clicklisteners.
         fabWithOptions.setMiniFabSelectedListener(new OptionsFabLayout.OnMiniFabSelectedListener() {
             @Override
             public void onMiniFabSelected(MenuItem fabItem) {
@@ -102,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
