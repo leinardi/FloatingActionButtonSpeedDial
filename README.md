@@ -1,5 +1,9 @@
 # Floating-Action-Menu
 Floating action menu is a library allowing easily integrate fully customizable FloatingActionButton menu.
+# Screenshots
+
+<img src="screenshots/Screenshot_20170318-221201.png" width="40%">
+
 # Download
 Gradle:
 ```groovy
