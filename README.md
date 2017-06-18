@@ -37,7 +37,7 @@ For each item add only 2 attributes `title` and `icon`.
         custom:options_menu="@menu/fab_menu"
         custom:src="@drawable/ic_add_white_24dp" />
 ```
-3. Set mini fabs colors using `setMiniFabsColors` method(this is optional,you can define one color for all mini fabs using `otpions_color` attribute). 
+3. Set mini fabs colors using `setMiniFabsColors` method(this is optional,you can define one color for all mini fabs using `options_color` attribute). 
 ```Java
 fabWithOptions = (OptionsFabLayout) findViewById(R.id.fab_l);
 
