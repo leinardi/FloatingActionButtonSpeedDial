@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Main fab clicked!", Toast.LENGTH_SHORT).show();
+                if (fabWithOptions.isOptionsMenuOpened()) {
+                    fabWithOptions.closeOptionsMenu();
+                }
             }
         });
 

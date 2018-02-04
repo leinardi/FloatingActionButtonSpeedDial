@@ -30,6 +30,8 @@ public class FabWithOptions extends LinearLayout {
     private boolean enableMiniFabs = false;
     private Context context;
     private OptionsFabLayout mOptionsFabLayout;
+    private int mainFabOpenDrawable;
+    private int mainFabCloseDrawable;
 
 
     /**
@@ -72,7 +74,8 @@ public class FabWithOptions extends LinearLayout {
      * Set Main FloatingActionButton parameters.
      */
     private void setupMainFab(Context context, TypedArray a) {
-        int mainFabDrawable = a.getResourceId(R.styleable.OptionsFabLayout_src, -1);
+        mainFabOpenDrawable = a.getResourceId(R.styleable.OptionsFabLayout_open_src, -1);
+        mainFabCloseDrawable = a.getResourceId(R.styleable.OptionsFabLayout_close_src, -1);
 
         int color = a.getColor(
                 R.styleable.OptionsFabLayout_color,
@@ -80,8 +83,8 @@ public class FabWithOptions extends LinearLayout {
 
         mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
 
-        if (mainFabDrawable != -1) {
-            mMainFab.setImageResource(mainFabDrawable);
+        if (mainFabOpenDrawable != -1) {
+            mMainFab.setImageResource(mainFabOpenDrawable);
         }
         //Set margins on Main FloatingActionButton.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -186,6 +189,10 @@ public class FabWithOptions extends LinearLayout {
                             }
                             visibilitySetup(View.VISIBLE);
                             enableMiniFabs = true;
+
+                            if (mainFabCloseDrawable != -1) {
+                                mMainFab.setImageResource(mainFabCloseDrawable);
+                            }
                         } else {
                             listener.onClick(view);
                         }
@@ -213,6 +220,10 @@ public class FabWithOptions extends LinearLayout {
     void closeOptionsMenu() {
         enableMiniFabs = false;
         visibilitySetup(View.GONE);
+
+        if (mainFabOpenDrawable != -1) {
+            mMainFab.setImageResource(mainFabOpenDrawable);
+        }
     }
 
     /**
