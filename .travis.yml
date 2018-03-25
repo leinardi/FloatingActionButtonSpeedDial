@@ -1,0 +1,30 @@
+language: android
+jdk: oraclejdk8
+sudo: true
+
+os:
+  - linux
+addons:
+  apt_packages:
+    - pandoc
+before_install:
+  - mkdir -p $ANDROID_HOME/licenses
+  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $ANDROID_HOME/licenses/android-sdk-license
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROID_HOME/licenses/android-sdk-license
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - build-tools-27.0.3
+    - android-27
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+
+script:
+  - ./gradlew clean check dependencyUpdate --profile
+  - pandoc `ls -1rt build/reports/profile/profile-*.html | tail -n1` -t plain
+  - cat build/dependencyUpdates/report.txt
