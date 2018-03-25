@@ -8,7 +8,8 @@
     <declare-styleable name="OptionsFabLayout">
         <attr name="options_menu" format="reference" />
         <attr name="options_color" format="color" />
-        <attr name="src" format="reference" />
+        <attr name="open_src" format="reference" />
+        <attr name="close_src" format="reference" />
         <attr name="color" format="color" />
         <attr name="background_color" format="color" />
     </declare-styleable>

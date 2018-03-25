@@ -2,7 +2,7 @@
 Floating action menu is a library allowing easily integrate fully customizable FloatingActionButton menu.
 # Screenshots
 
-<img src="screenshots/Screenshot_20170318-221201.png" width="40%">
+<img src="screenshots/fab-menu-start.png" width="40%"><img src="screenshots/fab-menu-opened.png" width="40%">
 
 # Download
 Gradle:
@@ -35,7 +35,8 @@ For each item add only 2 attributes `title` and `icon`.
         custom:color="@color/colorAccent"
         custom:options_color="@color/colorPrimary"
         custom:options_menu="@menu/fab_menu"
-        custom:src="@drawable/ic_add_white_24dp" />
+        custom:open_src="@drawable/ic_add_white_24dp"
+        custom:close_src="@drawable/ic_close_white_24dp" />
 ```
 3. Set mini fabs colors using `setMiniFabsColors` method(this is optional,you can define one color for all mini fabs using `options_color` attribute). 
 ```Java
@@ -82,7 +83,8 @@ fabWithOptions = (OptionsFabLayout) findViewById(R.id.fab_l);
 |:-----------:|:-----------:|
 | options_menu| menu that contains mini fabs | 
 | options_color         | sets same color for all mini fabs.Default value is `primary color`|
-| src         | main fab drawable           |
+| open_src         | main fab drawable before opening menu           |
+| close_src         | main fab drawable when menu is opened          |
 |color | main fab color|
 |background_color|color of background view when menu expanded|
 
