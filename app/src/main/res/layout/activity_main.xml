@@ -32,7 +32,8 @@
         custom:color="@color/colorAccent"
         custom:options_color="@color/colorPrimary"
         custom:options_menu="@menu/fab_menu"
-        custom:src="@drawable/ic_add_white_24dp" />
+        custom:open_src="@drawable/ic_add_white_24dp"
+        custom:close_src="@drawable/ic_close_white_24dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>
