@@ -1,4 +1,4 @@
-# Yet Another Floating Action Button Menu
+# Floating Action Button Speed Dial
 
 [![GitHub release](https://img.shields.io/github/release/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/releases)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
@@ -11,10 +11,11 @@ TBD
 - [x] Highly customizable (label, icon, ripple, fab and label background colors) 
 - [x] Same animations as in Inbox by Gmail
 - [x] Option to have different icons for open/close state
+- [x] Support for overlay/touch guard layout
 - [x] Out-of-the box support for Snackbar behavior
 - [x] Optional support for `RecyclerView` and `NestedScrollView`
 - [x] Support for VectorDrawable
-- [x] Easy to programmatically add, replace or remove items
+- [x] Easy to use
 
 
 ## To Do
