@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.leinardi.fabspeeddial.sample;
+package com.leinardi.android.speeddial.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,9 +29,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.leinardi.fabspeeddial.SpeedDialActionItem;
-import com.leinardi.fabspeeddial.SpeedDialOverlayLayout;
-import com.leinardi.fabspeeddial.SpeedDialView;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialOverlayLayout;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MainActivity extends AppCompatActivity {
     private static final int DATASET_COUNT = 60;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSpeedDial(boolean addActionItems) {
-        mSpeedDialView = findViewById(com.leinardi.fabspeeddial.sample.R.id.speedDial);
+        mSpeedDialView = findViewById(R.id.speedDial);
 
         if (addActionItems) {
             mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_no_label, R.drawable
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(com.leinardi.fabspeeddial.sample.R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        Toolbar toolbar = findViewById(com.leinardi.fabspeeddial.sample.R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == com.leinardi.fabspeeddial.sample.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
