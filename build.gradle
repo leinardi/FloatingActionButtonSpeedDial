@@ -23,6 +23,8 @@ buildscript {
     dependencies {
         classpath deps.android_gradle_plugin
         classpath deps.android_checkstyle_plugin
+        classpath deps.android_maven_gradle_plugin
+        classpath deps.gradle_bintray_plugin
         classpath deps.gradle_versions_plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -41,19 +43,6 @@ subprojects {
             if (details.requested.group == 'com.android.support'
                     && !details.requested.name.contains('multidex')) {
                 details.useVersion versions.support
-            }
-        }
-    }
-}
-
-dependencyUpdates.resolutionStrategy = {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-            }
-            if (rejected) {
-                selection.reject('Release candidate')
             }
         }
     }

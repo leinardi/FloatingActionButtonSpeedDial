@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.leinardi.fabspeeddial;
+package com.leinardi.android.speeddial;
 
 import android.graphics.Matrix;
 import android.graphics.Rect;

@@ -45,9 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:scaleType="fitXY"
         app:fabSize="mini"
         app:useCompatPadding="true" />
 
