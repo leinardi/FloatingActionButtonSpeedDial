@@ -1,0 +1,8 @@
+# Set to false to create a new comment instead of updating the app's first one
+updateComment: true
+
+# Use a custom string, or set to false to disable
+before: "Unfortunately, the [{{ provider }} build]({{ targetUrl }}) is failing as of {{ commit }}. Here's the output:"
+
+# Use a custom string, or set to false to disable
+after: "If you need help with this issue, don't hesitate to ask a maintainer of the project!"
