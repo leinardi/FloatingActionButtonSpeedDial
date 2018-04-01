@@ -69,6 +69,7 @@ android {
 
 dependencies {
     implementation project(':library')
+//    implementation "com.leinardi.android:speed-dial:${build_versions.version_name}"
     implementation deps.support.app_compat
     implementation deps.support.recyclerview
     implementation deps.constraint_layout
