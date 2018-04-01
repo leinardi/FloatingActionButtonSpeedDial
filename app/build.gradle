@@ -31,7 +31,6 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-
     compileOptions {
         sourceCompatibility build_versions.java_version
         targetCompatibility build_versions.java_version
