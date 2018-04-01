@@ -23,7 +23,7 @@ mvn_config.licenses = 'Apache-2.0' // Comma separated
 mvn_config.website = 'https://github.com/leinardi/FloatingActionButtonSpeedDial'
 mvn_config.issue_tracker_url = 'https://github.com/leinardi/FloatingActionButtonSpeedDial/issues'
 mvn_config.vcs_url = 'https://github.com/leinardi/FloatingActionButtonSpeedDial.git'
-mvn_config.description = 'HD44780 LCD driver for Android Things'
+mvn_config.description = 'Android library providing an implementation of the Material Design Floating Action Button Speed Dial pattern.'
 mvn_config.tags = 'android,speeddial,fab,FloatingActionButton' // Comma separated
 mvn_config.githubRepo = 'leinardi/FloatingActionButtonSpeedDial'
 mvn_config.inception_year = '2018'
@@ -35,3 +35,5 @@ ext.mvn_config = mvn_config
 
 apply from: rootProject.file('maven.gradle')
 apply from: rootProject.file('bintray.gradle')
+
+archivesBaseName = mvn_config.artifact_id
