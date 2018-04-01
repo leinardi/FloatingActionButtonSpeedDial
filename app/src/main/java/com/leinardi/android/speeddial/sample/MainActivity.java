@@ -123,9 +123,8 @@ public class MainActivity extends AppCompatActivity {
                         showToast(speedDialActionItem.getLabel() + " clicked!");
                         break;
                     case R.id.fab_add_action:
-                        mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id
-                                .fab_replace_action, R.drawable
-                                .ic_replace_white_24dp)
+                        mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_replace_action,
+                                R.drawable.ic_replace_white_24dp)
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color
                                                 .material_orange_500,
                                         getTheme()))
@@ -133,9 +132,8 @@ public class MainActivity extends AppCompatActivity {
                                 .create(), ADD_ACTION_POSITION);
                         break;
                     case R.id.fab_replace_action:
-                        mSpeedDialView.replaceFabOptionItem(new SpeedDialActionItem.Builder(R.id
-                                .fab_remove_action, R.drawable
-                                .ic_delete_white_24dp)
+                        mSpeedDialView.replaceFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_remove_action,
+                                R.drawable.ic_delete_white_24dp)
                                 .setLabel(getString(R.string.label_remove_action))
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_accent,
                                         getTheme()))

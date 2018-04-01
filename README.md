@@ -7,11 +7,12 @@
 TBD
 
 ## Features
-- [x] MinSdk 14
+- [x] MinSdk 15
 - [x] Highly customizable (label, icon, ripple, fab and label background colors) 
 - [x] Same animations as in Inbox by Gmail
 - [x] Option to have different icons for open/close state
 - [x] Support for overlay/touch guard layout
+- [x] Support for bottom, left and right menu expansion (left and right have no labels)
 - [x] Out-of-the box support for Snackbar behavior
 - [x] Optional support for `RecyclerView` and `NestedScrollView`
 - [x] Support for VectorDrawable
@@ -25,13 +26,17 @@ TBD
 - [ ] Add Javadoc
 - [ ] Write tests
 - [ ] Publish first release
-- [ ] Provide support for bottom, middle, left and right menu expansion
-
-## Screenshots
-<img src="/art/screenshot_api_27.png" width="360"/> <img src="/art/screenshot_api_16.png" width="360"/>
 
 ## Demo
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
+
+## Screenshots
+### API 27 and 16
+<img src="/art/screenshot_api_27.png" width="360"/> <img src="/art/screenshot_api_16.png" width="360"/>
+
+### Bottom and left expansion
+<img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="360"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="360"/>
+
 
 ## Disabling app `SnackbarBehavior`
 ```java
