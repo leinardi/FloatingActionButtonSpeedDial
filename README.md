@@ -28,7 +28,7 @@ TBD
 - [ ] Provide support for bottom, middle, left and right menu expansion
 
 ## Screenshots
-![API 27](/art/screenshot_api_27.png) ![API 16](/art/screenshot_api_16.png)
+<img src="/art/screenshot_api_27.png" width="360"/> <img src="/art/screenshot_api_16.png" width="360"/>
 
 ## Demo
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
