@@ -18,9 +18,10 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('checkstyle.gradle')
 
 android {
-
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
+
+    apply from: 'mavenConfig.gradle'
 
     defaultConfig {
         minSdkVersion build_versions.min_sdk
@@ -34,32 +35,6 @@ android {
     compileOptions {
         sourceCompatibility build_versions.java_version
         targetCompatibility build_versions.java_version
-    }
-
-    def isKeystoreInfoAvailable = file(KEYSTORE_PATH).exists() && file(KEYSTORE_PROPERTIES_PATH).exists()
-
-    signingConfigs {
-        if (isKeystoreInfoAvailable) {
-            release {
-                Properties props = new Properties()
-                props.load(new FileInputStream(file(KEYSTORE_PROPERTIES_PATH)))
-                storeFile file(KEYSTORE_PATH)
-                storePassword props['store.password']
-                keyAlias props['key.alias']
-                keyPassword props['key.password']
-            }
-        }
-    }
-
-    buildTypes {
-        if (isKeystoreInfoAvailable) {
-            release {
-                minifyEnabled true
-                shrinkResources true
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                signingConfig signingConfigs.release
-            }
-        }
     }
 }
 

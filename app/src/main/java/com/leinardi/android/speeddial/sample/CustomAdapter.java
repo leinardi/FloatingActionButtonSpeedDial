@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.leinardi.fabspeeddial.sample;
+package com.leinardi.android.speeddial.sample;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,7 +45,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(com.leinardi.android.speeddial.sample.R.layout.text_row_item, viewGroup, false);
 
         return new ViewHolder(v);
     }
@@ -79,7 +79,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
                 }
             });
-            mTextView = (TextView) v.findViewById(R.id.textView);
+            mTextView = v.findViewById(R.id.textView);
         }
 
         public TextView getTextView() {

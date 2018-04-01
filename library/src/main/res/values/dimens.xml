@@ -18,7 +18,8 @@
 <resources>
     <dimen name="sd_overlay_elevation">5dp</dimen>
     <dimen name="sd_open_elevation">8dp</dimen>
-    <dimen name="sd_close_elevation">4dp</dimen>
+    <dimen name="sd_close_elevation">5dp</dimen>
     <dimen name="sd_fab_mini_size">54dp</dimen>
     <dimen name="sd_fab_normal_size">72dp</dimen>
+    <dimen name="sd_fab_side_margin">12dp</dimen>|
 </resources>

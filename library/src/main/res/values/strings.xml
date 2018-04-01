@@ -16,8 +16,8 @@
   -->
 
 <resources>
-    <string name="speeddial_snackbar_behavior">com.leinardi.fabspeeddial.SpeedDialView$SnackbarBehavior</string>
+    <string name="speeddial_snackbar_behavior">com.leinardi.android.speeddial.SpeedDialView$SnackbarBehavior</string>
     <string name="speeddial_scrolling_view_snackbar_behavior">
-        com.leinardi.fabspeeddial.SpeedDialView$ScrollingViewSnackbarBehavior
+        com.leinardi.android.speeddial.SpeedDialView$ScrollingViewSnackbarBehavior
     </string>
 </resources>

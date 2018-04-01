@@ -22,7 +22,7 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "com.leinardi.fabspeeddial.sample"
+        applicationId "com.leinardi.android.speeddial.sample"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
@@ -30,7 +30,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-
 
     compileOptions {
         sourceCompatibility build_versions.java_version
@@ -61,11 +60,16 @@ android {
                 signingConfig signingConfigs.release
             }
         }
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+        }
     }
 }
 
 dependencies {
     implementation project(':library')
+//    implementation "com.leinardi.android:speed-dial:${build_versions.version_name}"
     implementation deps.support.app_compat
     implementation deps.support.recyclerview
     implementation deps.constraint_layout
