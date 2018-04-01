@@ -22,7 +22,7 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "com.leinardi.fabspeeddial.sample"
+        applicationId "com.leinardi.android.speeddial.sample"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code

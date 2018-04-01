@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.leinardi.fabspeeddial;
+package com.leinardi.android.speeddial;
 
 import android.content.Context;
 import android.content.res.Resources;

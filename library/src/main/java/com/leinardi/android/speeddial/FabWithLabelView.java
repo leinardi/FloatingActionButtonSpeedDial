@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.leinardi.fabspeeddial;
+package com.leinardi.android.speeddial;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -37,12 +37,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leinardi.fabspeeddial.SpeedDialView.OnOptionFabSelectedListener;
+import com.leinardi.android.speeddial.SpeedDialView.OnOptionFabSelectedListener;
 
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
 import static android.support.design.widget.FloatingActionButton.SIZE_NORMAL;
-import static com.leinardi.fabspeeddial.SpeedDialActionItem.NOT_SET;
+import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
 
 /**
  * View that contains fab button and its label.
