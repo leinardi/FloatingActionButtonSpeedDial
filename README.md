@@ -23,12 +23,14 @@ Android library providing an implementation of the Material Design Floating Acti
 - [x] Easy to use
 
 ## To Do
+- [x] Publish first alpha release
+- [ ] Publish first beta release
+- [ ] Publish first stable release
 - [ ] Add label to main FAB (blocked by https://issuetracker.google.com/issues/77303906)
 - [ ] Add FAB size option (blocked by https://issuetracker.google.com/issues/77303906)
 - [ ] Clean up code 
 - [ ] Add Javadoc
 - [ ] Write tests
-- [ ] Publish first release
 
 ## How to use
 ### Gradle setup
