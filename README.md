@@ -94,6 +94,9 @@ speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelected
 A fully working example is available [here](/sample).
 
 ## Demo
+### Video
+https://www.youtube.com/watch?v=tWowiF5ElAg
+### App
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
 
 ## Screenshots
