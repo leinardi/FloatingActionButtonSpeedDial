@@ -1,7 +1,7 @@
 # Floating Action Button Speed Dial
 
 [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)
-[![GitHub release](https://img.shields.io/github/release/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/releases)
+[![GitHub release](https://img.shields.io/github/release/leinardi/FloatingActionButtonSpeedDial/all.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/releases)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
 
@@ -20,7 +20,6 @@ Android library providing an implementation of the Material Design Floating Acti
 - [x] Optional support for `RecyclerView` and `NestedScrollView` behavior
 - [x] Support for VectorDrawable
 - [x] Easy to use
-
 
 ## To Do
 - [ ] Add label to main FAB (blocked by https://issuetracker.google.com/issues/77303906)
@@ -114,12 +113,13 @@ params.setBehavior(new SpeedDialView.NoBehavior());
 speedDialView.requestLayout();
 ```
 
-## Credits
+## Changelog
+See the [CHANGELOG.md](/CHANGELOG.md)
 
+## Credits
 This project is based on [floating-action-menu by ArthurGhazaryan](https://github.com/ArthurGhazaryan/floating-action-menu).
 
 ## Licenses
-
 ```
 Copyright 2018 Roberto Leinardi.
 
