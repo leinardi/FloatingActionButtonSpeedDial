@@ -28,6 +28,69 @@ TBD
 - [ ] Write tests
 - [ ] Publish first release
 
+## How to use
+### Setup
+The request to publish this library to Jcenter is currently pending, meanwhile it is possible to use this repository:
+```
+repositories {
+    google()
+    jcenter()
+    maven { url 'https://dl.bintray.com/leinardi/android' }
+}
+```
+
+Dependencies entry (latest version: [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
+```
+implementation "com.leinardi.android:speed-dial:1.0-alpha02"
+```
+### Use
+Add the `SpeedDialView` to your layout:
+
+```xml
+<com.leinardi.android.speeddial.SpeedDialView
+    android:id="@+id/speedDial"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    app:srcCompat="@drawable/ic_add_white_24dp" />
+```
+
+Add the items to the `SpeedDialView`:
+
+```java
+speedDialView = findViewById(R.id.speedDial);
+speedDialView.addFabOptionItem(
+        new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
+                .create()
+);
+```
+Add the click listeners:
+```java
+speedDialView.setMainFabOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if (speedDialView.isFabMenuOpen()) {
+            speedDialView.closeOptionsMenu();
+        }
+    }
+});
+
+speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelectedListener() {
+    @Override
+    public void onOptionFabSelected(SpeedDialActionItem speedDialActionItem) {
+        switch (speedDialActionItem.getId()) {
+            case R.id.fab_link:
+                showToast("Link action clicked!");
+                break;
+            default:
+                break;
+        }
+    }
+});
+```
+
+A fully working example is available [here](/app).
+
 ## Demo
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
 
