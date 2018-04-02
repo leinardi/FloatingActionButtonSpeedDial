@@ -33,6 +33,8 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
     private static final String TAG = SpeedDialOverlayLayout.class.getSimpleName();
     private boolean mClickableOverlay;
     private int mAnimationDuration;
+    @Nullable
+    private OnClickListener mClickListener;
 
     public SpeedDialOverlayLayout(@NonNull Context context) {
         super(context);
@@ -53,8 +55,14 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
         return mClickableOverlay;
     }
 
+    /**
+     * Enables or disables the click on the overlay view.
+     *
+     * @param clickableOverlay True to enable the click, false otherwise.
+     */
     public void setClickableOverlay(boolean clickableOverlay) {
         this.mClickableOverlay = clickableOverlay;
+        setOnClickListener(mClickListener);
     }
 
     public void setAnimationDuration(int animationDuration) {
@@ -95,6 +103,12 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
                 UiUtils.fadeOutAnim(this);
             }
         }
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener clickListener) {
+        mClickListener = clickListener;
+        super.setOnClickListener(hasClickableOverlay() ? clickListener : null);
     }
 
     private void init(Context context, AttributeSet attrs) {
