@@ -5,17 +5,19 @@
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
 
-TBD
+Android library providing an implementation of the Material Design Floating Action Button Speed Dial.
+
+![Demo](/art/demo_1.gif)
 
 ## Features
 - [x] MinSdk 15
-- [x] Highly customizable (label, icon, ripple, fab and label background colors) 
+- [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support) 
 - [x] Same animations as in Inbox by Gmail
 - [x] Option to have different icons for open/close state
-- [x] Support for overlay/touch guard layout
+- [x] Optional overlay/touch guard layout
 - [x] Support for bottom, left and right menu expansion (left and right have no labels)
 - [x] Out-of-the box support for Snackbar behavior
-- [x] Optional support for `RecyclerView` and `NestedScrollView`
+- [x] Optional support for `RecyclerView` and `NestedScrollView` behavior
 - [x] Support for VectorDrawable
 - [x] Easy to use
 
@@ -58,7 +60,7 @@ Add the `SpeedDialView` to your layout:
 Add the items to the `SpeedDialView`:
 
 ```java
-speedDialView = findViewById(R.id.speedDial);
+SpeedDialView speedDialView = findViewById(R.id.speedDial);
 speedDialView.addFabOptionItem(
         new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
                 .create()
@@ -104,9 +106,9 @@ A fully working example is available [here](/sample).
 
 ## Disabling app `SnackbarBehavior`
 ```java
-CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mFabMenuView.getLayoutParams();
-params.setBehavior(new FabMenuView.NoBehavior());
-mFabMenuView.requestLayout();
+CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
+params.setBehavior(new SpeedDialView.NoBehavior());
+speedDialView.requestLayout();
 ```
 
 ## Credits
