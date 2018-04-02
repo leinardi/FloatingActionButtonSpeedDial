@@ -31,21 +31,14 @@ Android library providing an implementation of the Material Design Floating Acti
 - [ ] Publish first release
 
 ## How to use
-### Setup
-The request to publish this library to Jcenter is currently pending, meanwhile it is possible to use this repository:
-```
-repositories {
-    google()
-    jcenter()
-    maven { url 'https://dl.bintray.com/leinardi/android' }
-}
-```
+### Gradle setup
+The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version: [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```
-implementation "com.leinardi.android:speed-dial:1.0-alpha02"
+implementation "com.leinardi.android:speed-dial:<latest version>"
 ```
-### Use
+### Basic use
 Add the `SpeedDialView` to your layout:
 
 ```xml
@@ -91,6 +84,52 @@ speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelected
 });
 ```
 
+### Optional steps
+#### Adding an overlay/touch guard when the menu is open (like Inbox by Gmail)
+You simply need to add the `SpeedDialOverlayLayout` to your layout:
+
+```xml
+<com.leinardi.android.speeddial.SpeedDialOverlayLayout
+    android:id="@+id/overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+and then provide the instance of that layout to the `SpeedDialView`:
+
+```java
+SpeedDialOverlayLayout speedDialOverlayLayout = findViewById(R.id.overlay);
+mSpeedDialView.setSpeedDialOverlayLayout(speedDialOverlayLayout);
+```
+
+#### Hiding the FAB when scrolling a `RecyclerView` or a `NestedScrollView`
+Just apply the `ScrollingViewSnackbarBehavior` to the `SpeedDialView`. This can be done via XML using
+the convenience string resource `@string/speeddial_scrolling_view_snackbar_behavior`:
+
+```xml
+<com.leinardi.android.speeddial.SpeedDialView
+    android:id="@+id/speedDial"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior" />
+```
+
+Or programmatically:
+```java
+CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
+params.setBehavior(new SpeedDialView.ScrollingViewSnackbarBehavior());
+speedDialView.requestLayout();
+```
+
+NB: for the behaviors to work, `SpeedDialView` needs to be a direct child of `CoordinatorLayout`
+
+#### Disabling `SnackbarBehavior`
+Since the `SnackbarBehavior` is enabled by default and, afaik, it is not possible to remove a Behavior, simply use apply the `SpeedDialView.NoBehavior` instead:
+```java
+CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
+params.setBehavior(new SpeedDialView.NoBehavior());
+speedDialView.requestLayout();
+```
+
 A fully working example is available [here](/sample).
 
 ## Demo
@@ -106,13 +145,6 @@ https://www.youtube.com/watch?v=tWowiF5ElAg
 ### Bottom and left expansion
 <img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="360"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="360"/>
 
-
-## Disabling app `SnackbarBehavior`
-```java
-CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
-params.setBehavior(new SpeedDialView.NoBehavior());
-speedDialView.requestLayout();
-```
 
 ## Changelog
 See the [CHANGELOG.md](/CHANGELOG.md)
