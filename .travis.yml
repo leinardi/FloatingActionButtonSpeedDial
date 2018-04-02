@@ -25,6 +25,7 @@ android:
     - google-gdk-license-.+
 
 script:
-  - ./gradlew clean check dependencyUpdate --profile
+  - ./gradlew clean check --profile
   - pandoc `ls -1rt build/reports/profile/profile-*.html | tail -n1` -t plain
+  - ./gradlew dependencyUpdate # I must run this separately due to issues with the support library resolutionStrategy
   - cat build/dependencyUpdates/report.txt
