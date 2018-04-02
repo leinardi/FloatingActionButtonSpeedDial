@@ -31,8 +31,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -85,6 +83,7 @@ class UiUtils {
      * @param view view to animate.
      */
     public static void fadeOutAnim(final View view) {
+        ViewCompat.animate(view).cancel();
         view.setAlpha(1F);
         view.setVisibility(VISIBLE);
         ViewCompat.animate(view)
@@ -107,6 +106,7 @@ class UiUtils {
      * @param view view to animate.
      */
     public static void fadeInAnim(final View view) {
+        ViewCompat.animate(view).cancel();
         view.setAlpha(0);
         view.setVisibility(VISIBLE);
         ViewCompat.animate(view)
@@ -123,47 +123,56 @@ class UiUtils {
      * @param view view that starts that animation.
      */
     public static void shrinkAnim(final View view, final boolean removeView) {
-        view.animate().cancel();
-        Animation anim = AnimationUtils.loadAnimation(view.getContext(), android.R.anim.fade_out);
-        anim.setDuration(SHORT_ANIM_TIME);
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if (removeView) {
-                    ViewGroup parent = (ViewGroup) view.getParent();
-                    if (parent != null) {
-                        parent.removeView(view);
+        ViewCompat.animate(view).cancel();
+        ViewCompat.animate(view)
+                .alpha(0F)
+                .withLayer()
+                .setDuration(SHORT_ANIM_TIME)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (removeView) {
+                            ViewGroup parent = (ViewGroup) view.getParent();
+                            if (parent != null) {
+                                parent.removeView(view);
+                            }
+                        } else {
+                            view.setVisibility(GONE);
+                        }
                     }
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        view.startAnimation(anim);
+                })
+                .start();
     }
 
-    public static void rotateForward(View view) {
+    /**
+     * Rotate a view of {@link #ROTATION_ANGLE} degrees.
+     *
+     * @param view    The view to rotate.
+     * @param animate true to animate the rotation, false to be instant.
+     * @see #rotateBackward(View, boolean)
+     */
+    public static void rotateForward(View view, boolean animate) {
         ViewCompat.animate(view)
                 .rotation(ROTATION_ANGLE)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(animate ? SHORT_ANIM_TIME : 0)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
     }
 
-    public static void rotateBackward(View view) {
+    /**
+     * Rotate a view back to its default angle (0°).
+     *
+     * @param view    The view to rotate.
+     * @param animate true to animate the rotation, false to be instant.
+     * @see #rotateForward(View, boolean)
+     */
+    public static void rotateBackward(View view, boolean animate) {
         ViewCompat.animate(view)
                 .rotation(0.0F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(animate ? SHORT_ANIM_TIME : 0)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
     }
