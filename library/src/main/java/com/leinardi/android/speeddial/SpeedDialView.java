@@ -437,7 +437,6 @@ public class SpeedDialView extends LinearLayout {
             if (mMainFabCloseDrawable != null) {
                 mMainFab.setImageDrawable(mMainFabOpenDrawable);
             }
-            UiUtils.rotateForward(mMainFab);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_close_elevation));
             }
