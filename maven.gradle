@@ -14,58 +14,70 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.github.dcendents.android-maven'
+def isMavenAvailable = false
+try {
+    "mvn -version".execute().waitFor() // Check if Maven binary is available
+    isMavenAvailable = true
+} catch (IOException ignore) {
+    logger.warn("Maven binary not available, pubishing to Bintray not possible.")
+}
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name mvn_config.artifact_id
-            description mvn_config.description
-            url mvn_config.website
-            inceptionYear mvn_config.inception_year
+if (isMavenAvailable) {
+    apply plugin: 'com.github.dcendents.android-maven'
 
-            packaging 'aar'
-            groupId mvn_config.group_id
-            artifactId mvn_config.artifact_id
-            version mvn_config.version
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                connection mvn_config.vcs_url
+    install {
+        repositories.mavenInstaller {
+            pom.project {
+                name mvn_config.artifact_id
+                description mvn_config.description
                 url mvn_config.website
+                inceptionYear mvn_config.inception_year
 
-            }
-            developers {
-                developer {
-                    name "Roberto Leinardi"
-                    email "roberto@leinardi.com"
+                packaging 'aar'
+                groupId mvn_config.group_id
+                artifactId mvn_config.artifact_id
+                version mvn_config.version
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                scm {
+                    connection mvn_config.vcs_url
+                    url mvn_config.website
+
+                }
+                developers {
+                    developer {
+                        name "Roberto Leinardi"
+                        email "roberto@leinardi.com"
+                    }
                 }
             }
         }
     }
-}
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
 
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    apply from: rootProject.file('bintray.gradle')
 }
