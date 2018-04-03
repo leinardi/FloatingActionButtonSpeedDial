@@ -34,6 +34,5 @@ mvn_config.override = true
 ext.mvn_config = mvn_config
 
 apply from: rootProject.file('maven.gradle')
-apply from: rootProject.file('bintray.gradle')
 
 archivesBaseName = mvn_config.artifact_id
