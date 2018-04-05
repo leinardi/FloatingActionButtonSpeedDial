@@ -1,14 +1,17 @@
 # Floating Action Button Speed Dial
 
 [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)
-[![GitHub release](https://img.shields.io/github/release/leinardi/FloatingActionButtonSpeedDial/all.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/releases)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/leinardi/FloatingActionButtonSpeedDial.svg?columns=all&style=plastic)](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
 
-Android library providing an implementation of the Material Design Floating Action Button Speed Dial.
 
-![Demo](/art/demo_1.gif)
+<img src="/art/demo_1.gif" width="290" align="right" hspace="0" />
+
+Android library providing an implementation of the [Material Design Floating Action Button Speed Dial](https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-transitions).
+
+<!--![Demo](/art/demo_1.gif)-->
 
 ## Features
 - [x] MinSdk 15
@@ -22,21 +25,14 @@ Android library providing an implementation of the Material Design Floating Acti
 - [x] Support for VectorDrawable
 - [x] Easy to use
 
-## To Do
-- [x] Publish first alpha release
-- [ ] Publish first beta release
-- [ ] Publish first stable release
-- [ ] Add label to main FAB (blocked by https://issuetracker.google.com/issues/77303906)
-- [ ] Add FAB size option (blocked by https://issuetracker.google.com/issues/77303906)
-- [ ] Clean up code 
-- [ ] Add Javadoc
-- [ ] Write tests
+## Development status
+Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) board.
 
 ## How to use
 ### Gradle setup
 The library is available on Jcenter so no additonal repository is required.
 
-Dependencies entry (latest version: [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
+Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```
 implementation "com.leinardi.android:speed-dial:<latest version>"
 ```
@@ -87,6 +83,39 @@ speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelected
 ```
 
 ### Optional steps
+#### Customizing the items
+The `SpeedDialActionItem.Builder` provides several setters to customize the aspect of one item:
+
+```java
+mSpeedDialView.addFabOptionItem(
+        new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable.ic_custom_color)
+                .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
+                .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+                .setLabel(getString(R.string.label_custom_color))
+                .setLabelColor(Color.WHITE)
+                .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+                .setLabelClickable(false)
+                .create()
+);
+```
+Is is also possible to specify a theme to easily change the FAB background and ripple effect color:
+
+```java
+mSpeedDialView.addFabOptionItem(
+        new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
+                .setLabel(getString(R.string.label_custom_theme))
+                .setTheme(R.style.AppTheme_Purple)
+                .create());
+```
+```xml
+<style name="AppTheme.Purple" parent="AppTheme">
+    <item name="colorPrimary">@color/material_purple_500</item>
+    <item name="colorPrimaryDark">@color/material_purple_700</item>
+    <item name="colorAccent">@color/material_purple_a700</item>
+    <item name="colorControlHighlight">@color/material_purple_200</item>
+</style>
+```
+
 #### Adding an overlay/touch guard when the menu is open (like Inbox by Gmail)
 You simply need to add the `SpeedDialOverlayLayout` to your layout:
 
@@ -142,11 +171,8 @@ https://www.youtube.com/watch?v=tWowiF5ElAg
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
 
 ## Screenshots
-### API 27 and 16
-<img src="/art/screenshot_api_27.png" width="360"/> <img src="/art/screenshot_api_16.png" width="360"/>
-
-### Bottom and left expansion
-<img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="360"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="360"/>
+### API 27, API 16, bottom and left expansion
+<img src="/art/screenshot_api_27.png" width="215"/> <img src="/art/screenshot_api_16.png" width="215"/> <img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="215"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="215"/>
 
 
 ## Changelog
