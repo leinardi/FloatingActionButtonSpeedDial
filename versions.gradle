@@ -22,8 +22,8 @@ ext.deps = [:]
 def versions = [:]
 versions.android_checkstyle_plugin = "1.0.0"
 versions.android_gradle_plugin = "3.1.0"
-versions.android_maven_gradle_plugin = "2.0"
-versions.androidthings = "0.6.1-devpreview"
+versions.android_maven_gradle_plugin = "2.1"
+versions.androidthings = "0.7-devpreview"
 versions.apache_commons = "2.5"
 versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.1.0"
 versions.atsl_rules = "1.0.1"
@@ -60,7 +60,7 @@ versions.play_services = "11.6.2"
 versions.retrofit = "2.3.0"
 versions.rx_android = "2.0.1"
 versions.rxjava2 = "2.1.9"
-versions.support = "27.1.0"
+versions.support = "27.1.1"
 versions.timber = "4.6.0"
 ext.versions = versions
 
@@ -207,6 +207,7 @@ ext.build_versions = build_versions
 static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
+    handler.mavenCentral()
     handler.maven { url 'https://dl.bintray.com/leinardi/android' }
 }
 
