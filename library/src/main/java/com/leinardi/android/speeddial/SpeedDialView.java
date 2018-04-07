@@ -70,7 +70,7 @@ public class SpeedDialView extends LinearLayout {
     private boolean mIsFabMenuOpen = false;
     private Drawable mMainFabOpenDrawable = null;
     private Drawable mMainFabCloseDrawable = null;
-    private OnOptionFabSelectedListener mOnOptionFabSelectedListener;
+    private OnSpeedDialOptionSelectedListener mOnSpeedDialOptionSelectedListener;
     @Nullable
     private SpeedDialOverlayLayout mSpeedDialOverlayLayout;
     @ExpansionMode
@@ -255,11 +255,11 @@ public class SpeedDialView extends LinearLayout {
      *
      * @param listener listener to set.
      */
-    public void setOptionFabSelectedListener(final OnOptionFabSelectedListener listener) {
-        mOnOptionFabSelectedListener = listener;
+    public void setOptionFabSelectedListener(final OnSpeedDialOptionSelectedListener listener) {
+        mOnSpeedDialOptionSelectedListener = listener;
         for (int optionFabIndex = 0; optionFabIndex < mFabWithLabelViews.size(); optionFabIndex++) {
             final FabWithLabelView fabWithLabelView = mFabWithLabelViews.get(optionFabIndex);
-            fabWithLabelView.setOptionFabSelectedListener(mOnOptionFabSelectedListener);
+            fabWithLabelView.setOptionFabSelectedListener(mOnSpeedDialOptionSelectedListener);
         }
     }
 
@@ -439,7 +439,7 @@ public class SpeedDialView extends LinearLayout {
         }
         newView.setSpeedDialActionItem(speedDialActionItem);
         newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
-        newView.setOptionFabSelectedListener(mOnOptionFabSelectedListener);
+        newView.setOptionFabSelectedListener(mOnSpeedDialOptionSelectedListener);
         return newView;
     }
 
@@ -538,7 +538,7 @@ public class SpeedDialView extends LinearLayout {
     /**
      * Listener for handling events on option fab's.
      */
-    public interface OnOptionFabSelectedListener {
+    public interface OnSpeedDialOptionSelectedListener {
         void onOptionFabSelected(SpeedDialActionItem speedDialActionItem);
     }
 
