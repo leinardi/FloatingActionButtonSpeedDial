@@ -62,8 +62,7 @@ import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.TOP;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-@CoordinatorLayout.DefaultBehavior(SpeedDialView.SnackbarBehavior.class)
-public class SpeedDialView extends LinearLayout {
+public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     private FloatingActionButton mMainFab;
@@ -199,6 +198,12 @@ public class SpeedDialView extends LinearLayout {
                 newView.setVisibility(GONE);
             }
         }
+    }
+
+    @NonNull
+    @Override
+    public CoordinatorLayout.Behavior getBehavior() {
+        return new SnackbarBehavior();
     }
 
     private int getLayoutPosition(int position) {
