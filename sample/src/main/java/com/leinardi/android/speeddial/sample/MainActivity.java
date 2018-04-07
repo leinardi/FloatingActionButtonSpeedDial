@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Set option fabs clicklisteners.
-        mSpeedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelectedListener() {
+        mSpeedDialView.setOptionFabSelectedListener(new SpeedDialView.OnSpeedDialOptionSelectedListener() {
             @Override
             public void onOptionFabSelected(SpeedDialActionItem speedDialActionItem) {
                 switch (speedDialActionItem.getId()) {
