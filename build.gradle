@@ -28,6 +28,7 @@ buildscript {
         classpath deps.gradle_bintray_plugin
         classpath deps.gradle_versions_plugin
         classpath deps.violations_plugin
+        classpath deps.errorprone_plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -67,6 +68,7 @@ task violationCommentsToGitHub(type: se.bjurr.violations.comments.github.plugin.
     violations = [
             ["FINDBUGS", ".", ".*/reports/findbugs/.*\\.xml\$", "Findbugs"],
             ["CHECKSTYLE", ".", ".*/reports/checkstyle/.*debug\\.xml\$", "Checkstyle"],
-            ["ANDROIDLINT", ".", ".*/reports/lint-results.*\\.xml\$", "Android Lint"]
+            ["ANDROIDLINT", ".", ".*/reports/lint-results.*\\.xml\$", "Android Lint"],
+            ["GOOGLEERRORPRONE", ".", ".*/build.log\$", "Error Prone"]
     ]
 }
