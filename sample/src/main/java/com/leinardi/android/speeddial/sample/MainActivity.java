@@ -17,10 +17,12 @@
 package com.leinardi.android.speeddial.sample;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -71,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
                             "incididunt ut labore et dolore magna aliqua.")
                     .create());
 
-            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable
-                    .ic_custom_color)
+            Drawable drawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_custom_color);
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, drawable)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000,
                             getTheme()))
                     .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
@@ -82,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                             getTheme()))
                     .create());
 
-            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_add_action, R.drawable
-                    .ic_add_white_24dp)
+            drawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_add_white_24dp);
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_add_action, drawable)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_green_500,
                             getTheme()))
                     .setLabel(getString(R.string.label_add_action))

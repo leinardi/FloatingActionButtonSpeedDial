@@ -3,6 +3,7 @@
 ## [1.0-alpha04] - 2018-04-08
 - android support library 27.1.1
 - several API changes:
+    - added `SpeedDialActionItem.Builder(@IdRes int id, @Nullable Drawable d)`
     - added `SpeedDialView.setOnSpeedDialChangeListener(OnSpeedDialChangeListener l)`
     - removed `SpeedDialView.setMainFabOnClickListener(OnClickListener l)`
     - renamed `OnOptionFabSelectedListener` to `OnSpeedDialClickListener`

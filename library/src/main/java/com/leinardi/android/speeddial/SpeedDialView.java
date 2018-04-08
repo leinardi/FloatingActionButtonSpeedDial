@@ -470,7 +470,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             }
             int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdFabCloseSrc, NOT_SET);
             if (openDrawableRes != NOT_SET) {
-                mMainFabCloseDrawable = UiUtils.getRotateDrawable(context, closeDrawableRes);
+                final Drawable drawable = AppCompatResources.getDrawable(context, closeDrawableRes);
+                mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -UiUtils.ROTATION_ANGLE);
             }
             mExpansionMode = attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode);
             mRotateOnToggle = attr.getBoolean(R.styleable.SpeedDialView_sdFabRotateOnToggle, mRotateOnToggle);
