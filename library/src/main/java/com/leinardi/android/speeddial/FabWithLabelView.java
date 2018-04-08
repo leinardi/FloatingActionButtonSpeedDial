@@ -37,7 +37,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leinardi.android.speeddial.SpeedDialView.OnOptionFabSelectedListener;
+import com.leinardi.android.speeddial.SpeedDialView.OnSpeedDialActionSelectedListener;
 
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
@@ -56,7 +56,7 @@ final class FabWithLabelView extends LinearLayout {
     private CardView mLabelCardView;
     private boolean mIsLabelEnable;
     private SpeedDialActionItem mSpeedDialActionItem;
-    private OnOptionFabSelectedListener mOnOptionFabSelectedListener;
+    private OnSpeedDialActionSelectedListener mOnSpeedDialActionSelectedListener;
     @FloatingActionButton.Size
     private int mCurrentFabSize;
 
@@ -175,25 +175,28 @@ final class FabWithLabelView extends LinearLayout {
     /**
      * Set a listener that will be notified when a menu fab is selected.
      *
-     * @param onOptionFabSelectedListener listener to set.
+     * @param listener listener to set.
      */
-    public void setOptionFabSelectedListener(final OnOptionFabSelectedListener onOptionFabSelectedListener) {
-        mOnOptionFabSelectedListener = onOptionFabSelectedListener;
-        if (mOnOptionFabSelectedListener != null) {
+    public void setOnSpeedDialActionSelectedListener(OnSpeedDialActionSelectedListener listener) {
+        mOnSpeedDialActionSelectedListener = listener;
+        if (mOnSpeedDialActionSelectedListener != null) {
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnOptionFabSelectedListener.onOptionFabSelected(getSpeedDialActionItem());
+                    mOnSpeedDialActionSelectedListener.onActionSelected(getSpeedDialActionItem());
                 }
             });
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (getSpeedDialActionItem().isLabelClickable() && isLabelEnable()) {
-                        mOnOptionFabSelectedListener.onOptionFabSelected(getSpeedDialActionItem());
+                        mOnSpeedDialActionSelectedListener.onActionSelected(getSpeedDialActionItem());
                     }
                 }
             });
+        } else {
+            getFab().setOnClickListener(null);
+            getLabelBackground().setOnClickListener(null);
         }
     }
 

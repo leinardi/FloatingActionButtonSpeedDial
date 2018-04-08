@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,12 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialOverlayLayout;
 import com.leinardi.android.speeddial.SpeedDialView;
 
+/**
+ * Main activity of the sample project
+ */
+@SuppressWarnings("PMD") // sample project with long methods
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int DATASET_COUNT = 60;
     private static final int ADD_ACTION_POSITION = 4;
     private String[] mDataset;
@@ -55,17 +61,17 @@ public class MainActivity extends AppCompatActivity {
         mSpeedDialView = findViewById(R.id.speedDial);
 
         if (addActionItems) {
-            mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_no_label, R.drawable
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_no_label, R.drawable
                     .ic_link_white_24dp)
                     .create());
 
-            mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
                     .ic_lorem_ipsum)
                     .setLabel("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
                             "incididunt ut labore et dolore magna aliqua.")
                     .create());
 
-            mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable
                     .ic_custom_color)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000,
                             getTheme()))
@@ -76,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
                             getTheme()))
                     .create());
 
-            mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_add_action, R.drawable
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_add_action, R.drawable
                     .ic_add_white_24dp)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_green_500,
                             getTheme()))
                     .setLabel(getString(R.string.label_add_action))
                     .create());
 
-            mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable
+            mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable
                     .ic_theme_white_24dp)
                     .setLabel(getString(R.string.label_custom_theme))
                     .setTheme(R.style.AppTheme_Purple)
@@ -94,21 +100,26 @@ public class MainActivity extends AppCompatActivity {
         SpeedDialOverlayLayout speedDialOverlayLayout = findViewById(R.id.overlay);
         mSpeedDialView.setSpeedDialOverlayLayout(speedDialOverlayLayout);
 
-        //Set main fab clicklistener.
-        mSpeedDialView.setMainFabOnClickListener(new View.OnClickListener() {
+        //Set main action clicklistener.
+        mSpeedDialView.setOnSpeedDialChangeListener(new SpeedDialView.OnSpeedDialChangeListener() {
             @Override
-            public void onClick(View view) {
-                showToast("Main fab clicked!");
-                if (mSpeedDialView.isFabMenuOpen()) {
-                    mSpeedDialView.closeOptionsMenu();
+            public void onMainActionSelected() {
+                showToast("Main action clicked!");
+                if (mSpeedDialView.isSpeedDialOpen()) {
+                    mSpeedDialView.closeSpeedDial();
                 }
+            }
+
+            @Override
+            public void onSpeedDialToggleChanged(boolean isOpen) {
+                Log.d(TAG, "Speed dial toggle state changed. Open = " + isOpen);
             }
         });
 
         //Set option fabs clicklisteners.
-        mSpeedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelectedListener() {
+        mSpeedDialView.setOnSpeedDialActionSelectedListener(new SpeedDialView.OnSpeedDialActionSelectedListener() {
             @Override
-            public void onOptionFabSelected(SpeedDialActionItem speedDialActionItem) {
+            public void onActionSelected(SpeedDialActionItem speedDialActionItem) {
                 switch (speedDialActionItem.getId()) {
                     case R.id.fab_no_label:
                         showToast("No label action clicked!");
@@ -123,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         showToast(speedDialActionItem.getLabel() + " clicked!");
                         break;
                     case R.id.fab_add_action:
-                        mSpeedDialView.addFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_replace_action,
+                        mSpeedDialView.addSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id.fab_replace_action,
                                 R.drawable.ic_replace_white_24dp)
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color
                                                 .material_orange_500,
@@ -132,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
                                 .create(), ADD_ACTION_POSITION);
                         break;
                     case R.id.fab_replace_action:
-                        mSpeedDialView.replaceFabOptionItem(new SpeedDialActionItem.Builder(R.id.fab_remove_action,
+                        mSpeedDialView.replaceSpeedDialActionItem(new SpeedDialActionItem.Builder(R.id
+                                .fab_remove_action,
                                 R.drawable.ic_delete_white_24dp)
                                 .setLabel(getString(R.string.label_remove_action))
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_accent,
@@ -140,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                 .create(), ADD_ACTION_POSITION);
                         break;
                     case R.id.fab_remove_action:
-                        mSpeedDialView.removeFabOptionItemById(R.id.fab_remove_action);
+                        mSpeedDialView.removeSpeedDialActionItemById(R.id.fab_remove_action);
                         break;
                     default:
                         break;
@@ -160,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Closes menu if its opened.
-        if (mSpeedDialView.isFabMenuOpen()) {
-            mSpeedDialView.closeOptionsMenu();
+        if (mSpeedDialView.isSpeedDialOpen()) {
+            mSpeedDialView.closeSpeedDial();
         } else {
             super.onBackPressed();
         }
