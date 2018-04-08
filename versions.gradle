@@ -62,6 +62,7 @@ versions.rx_android = "2.0.1"
 versions.rxjava2 = "2.1.9"
 versions.support = "27.1.1"
 versions.timber = "4.6.0"
+versions.violations_plugin = "1.40"
 ext.versions = versions
 
 def deps = [:]
@@ -192,6 +193,7 @@ deps.pio_softpwm = "com.leinardi.android.things:pio-softpwm:$versions.pio_softpw
 deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+deps.violations_plugin = "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
 ext.deps = deps
 
 def build_versions = [:]
@@ -208,6 +210,7 @@ static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()
+    handler.maven { url "https://plugins.gradle.org/m2/" }
     handler.maven { url 'https://dl.bintray.com/leinardi/android' }
 }
 

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 apply from: rootProject.file('versions-plugin.gradle')
+apply plugin: "se.bjurr.violations.violation-comments-to-github-gradle-plugin"
 
 buildscript {
     repositories {
@@ -26,6 +27,7 @@ buildscript {
         classpath deps.android_maven_gradle_plugin
         classpath deps.gradle_bintray_plugin
         classpath deps.gradle_versions_plugin
+        classpath deps.violations_plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -51,4 +53,20 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task violationCommentsToGitHub(type: se.bjurr.violations.comments.github.plugin.gradle.ViolationCommentsToGitHubTask) {
+    repositoryOwner = "leinardi"
+    repositoryName = "FloatingActionButtonSpeedDial"
+    pullRequestId = System.properties['GITHUB_PULLREQUESTID']
+    oAuth2Token = System.properties['GITHUB_OAUTH2TOKEN']
+    gitHubUrl = "https://api.github.com/"
+    createCommentWithAllSingleFileComments = false
+    createSingleFileComments = true
+    commentOnlyChangedContent = true
+    violations = [
+            ["FINDBUGS", ".", ".*/reports/findbugs/.*\\.xml\$", "Findbugs"],
+            ["CHECKSTYLE", ".", ".*/reports/checkstyle/.*debug\\.xml\$", "Checkstyle"],
+            ["ANDROIDLINT", ".", ".*/reports/lint-results.*\\.xml\$", "Android Lint"]
+    ]
 }
