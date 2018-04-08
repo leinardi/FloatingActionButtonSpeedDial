@@ -33,6 +33,9 @@ before_script:
 
 script:
   - ./gradlew clean build :library:check --profile --continue
-  - ./gradlew violationCommentsToGitHub -DGITHUB_PULLREQUESTID=$TRAVIS_PULL_REQUEST -DGITHUB_OAUTH2TOKEN=$GITHUB_OAUTH2TOKEN --info
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+      ./gradlew violationCommentsToGitHub -DGITHUB_PULLREQUESTID=$TRAVIS_PULL_REQUEST -DGITHUB_OAUTH2TOKEN=$GITHUB_OAUTH2TOKEN --info
+    fi
   - pandoc `ls -1rt build/reports/profile/profile-*.html | tail -n1` -t plain
   - ./gradlew dependencyUpdate # I must run this separately due to issues with the support library resolutionStrategy
