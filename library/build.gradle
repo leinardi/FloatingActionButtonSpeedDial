@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply from: rootProject.file('checkstyle.gradle')
+apply plugin: 'net.ltgt.errorprone'
 
 android {
     compileSdkVersion build_versions.target_sdk
