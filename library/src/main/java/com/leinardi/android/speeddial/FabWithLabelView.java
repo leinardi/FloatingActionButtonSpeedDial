@@ -26,7 +26,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -136,15 +135,12 @@ final class FabWithLabelView extends LinearLayout {
 
         int iconTintColor = actionItem.getFabImageTintColor();
 
-        int iconResId = actionItem.getFabImageResource();
-        if (iconResId != NOT_SET) {
-            Drawable drawable = AppCompatResources.getDrawable(getContext(), iconResId);
-            if (drawable != null && iconTintColor != NOT_SET) {
-                drawable = DrawableCompat.wrap(drawable);
-                DrawableCompat.setTint(drawable.mutate(), iconTintColor);
-            }
-            setFabIcon(drawable);
+        Drawable drawable = actionItem.getFabImageDrawable(getContext());
+        if (drawable != null && iconTintColor != NOT_SET) {
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable.mutate(), iconTintColor);
         }
+        setFabIcon(drawable);
 
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
         if (fabBackgroundColor == NOT_SET) {
