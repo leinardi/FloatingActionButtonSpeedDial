@@ -11,12 +11,10 @@
 
 Android library providing an implementation of the [Material Design Floating Action Button Speed Dial](https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-transitions).
 
-<!--![Demo](/art/demo_1.gif)-->
-
 ## Features
 - [x] MinSdk 15
 - [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support) 
-- [x] Same animations as in Inbox by Gmail
+- [x] Same animations as in [Inbox by Gmail](https://play.google.com/store/apps/details?id=com.google.android.apps.inbox)
 - [x] Option to have different icons for open/close state
 - [x] Optional overlay/touch guard layout
 - [x] Support for bottom, left and right menu expansion (left and right have no labels)
@@ -52,25 +50,16 @@ Add the items to the `SpeedDialView`:
 
 ```java
 SpeedDialView speedDialView = findViewById(R.id.speedDial);
-speedDialView.addFabOptionItem(
+speedDialView.addSpeedDialActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
                 .create()
 );
 ```
 Add the click listeners:
 ```java
-speedDialView.setMainFabOnClickListener(new View.OnClickListener() {
+speedDialView.setOnSpeedDialActionSelectedListener(new SpeedDialView.OnSpeedDialActionSelectedListener() {
     @Override
-    public void onClick(View view) {
-        if (speedDialView.isFabMenuOpen()) {
-            speedDialView.closeOptionsMenu();
-        }
-    }
-});
-
-speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelectedListener() {
-    @Override
-    public void onOptionFabSelected(SpeedDialActionItem speedDialActionItem) {
+    public void onActionSelected(SpeedDialActionItem speedDialActionItem) {
         switch (speedDialActionItem.getId()) {
             case R.id.fab_link:
                 showToast("Link action clicked!");
@@ -83,11 +72,29 @@ speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelected
 ```
 
 ### Optional steps
+#### Add the main action click listener
+```java
+speedDialView.setOnSpeedDialChangeListener(new SpeedDialView.OnSpeedDialChangeListener() {
+    @Override
+    public void onMainActionSelected() {
+        // Call your main action here and than close the menu
+        if (mSpeedDialView.isSpeedDialOpen()) {
+            mSpeedDialView.closeSpeedDial();
+        }
+    }
+
+    @Override
+    public void onSpeedDialToggleChanged(boolean isOpen) {
+        Log.d(TAG, "Speed dial toggle state changed. Open = " + isOpen);
+    }
+});
+```
+
 #### Customizing the items
 The `SpeedDialActionItem.Builder` provides several setters to customize the aspect of one item:
 
 ```java
-mSpeedDialView.addFabOptionItem(
+mSpeedDialView.addSpeedDialActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable.ic_custom_color)
                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
                 .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
@@ -101,7 +108,7 @@ mSpeedDialView.addFabOptionItem(
 Is is also possible to specify a theme to easily change the FAB background and ripple effect color:
 
 ```java
-mSpeedDialView.addFabOptionItem(
+mSpeedDialView.addSpeedDialActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
                 .setLabel(getString(R.string.label_custom_theme))
                 .setTheme(R.style.AppTheme_Purple)
