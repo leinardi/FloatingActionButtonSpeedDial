@@ -469,7 +469,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 mMainFabOpenDrawable = AppCompatResources.getDrawable(getContext(), openDrawableRes);
             }
             int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdFabCloseSrc, NOT_SET);
-            if (openDrawableRes != NOT_SET) {
+            if (closeDrawableRes != NOT_SET) {
                 final Drawable drawable = AppCompatResources.getDrawable(context, closeDrawableRes);
                 mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -UiUtils.ROTATION_ANGLE);
             }
