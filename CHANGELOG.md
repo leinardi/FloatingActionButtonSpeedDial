@@ -18,7 +18,7 @@
     - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.openSpeedDial()`
     - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggleSpeedDial()`
     - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnSpeedDialActionSelectedListener()`
-  
+ - minor fixes
 
 ## [1.0-alpha03] - 2018-04-02
 - fixed #4: FAB icons rotate only once
