@@ -120,7 +120,8 @@ public class UiUtils {
     /**
      * Closing animation.
      *
-     * @param view view that starts that animation.
+     * @param view       view that starts that animation.
+     * @param removeView true to remove the view when the animation is over, false otherwise.
      */
     public static void shrinkAnim(final View view, final boolean removeView) {
         ViewCompat.animate(view).cancel();
