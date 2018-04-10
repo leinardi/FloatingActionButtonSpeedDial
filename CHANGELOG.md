@@ -4,20 +4,20 @@
 - android support library 27.1.1
 - several API changes:
     - added `SpeedDialActionItem.Builder(@IdRes int id, @Nullable Drawable d)`
-    - added `SpeedDialView.setOnSpeedDialChangeListener(OnSpeedDialChangeListener l)`
+    - added `SpeedDialView.setOnChangeListener(OnChangeListener l)`
     - removed `SpeedDialView.setMainFabOnClickListener(OnClickListener l)`
-    - renamed `OnOptionFabSelectedListener` to `OnSpeedDialClickListener`
-    - renamed `SpeedDialView.setOptionFabSelectedListener()` to `SpeedDialView.setOnSpeedDialActionSelectedListener()`
-    - renamed `SpeedDialView.addAllFabOptionItem()` to `SpeedDialView.addAllSpeedDialActionItems()`
-    - renamed `SpeedDialView.addFabOptionItem()` to `SpeedDialView.addSpeedDialActionItem()`
-    - renamed `SpeedDialView.replaceFabOptionItem()` to `SpeedDialView.replaceSpeedDialActionItem()`
-    - renamed `SpeedDialView.removeFabOptionItemById()` to `SpeedDialView.removeSpeedDialActionItemById()`
-    - renamed `SpeedDialView.removeFabOptionItem()` to `SpeedDialView.removeSpeedDialActionItem()`
-    - renamed `SpeedDialView.isFabMenuOpen()` to `SpeedDialView.isSpeedDialOpen()`
-    - renamed `SpeedDialView.closeOptionsMenu()` to `SpeedDialView.closeSpeedDial()`
-    - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.openSpeedDial()`
-    - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggleSpeedDial()`
-    - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnSpeedDialActionSelectedListener()`
+    - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnActionSelectedListener()`
+    - renamed `OnOptionFabSelectedListener` to `OnActionSelectedListener`
+    - renamed `SpeedDialView.setOptionFabSelectedListener()` to `SpeedDialView.setOnActionSelectedListener()`
+    - renamed `SpeedDialView.addAllFabOptionItem()` to `SpeedDialView.addAllActionItems()`
+    - renamed `SpeedDialView.addFabOptionItem()` to `SpeedDialView.addActionItem()`
+    - renamed `SpeedDialView.replaceFabOptionItem()` to `SpeedDialView.replaceActionItem()`
+    - renamed `SpeedDialView.removeFabOptionItemById()` to `SpeedDialView.removeActionItemById()`
+    - renamed `SpeedDialView.removeFabOptionItem()` to `SpeedDialView.removeActionItem()`
+    - renamed `SpeedDialView.isFabMenuOpen()` to `SpeedDialView.isOpen()`
+    - renamed `SpeedDialView.closeOptionsMenu()` to `SpeedDialView.close()`
+    - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.open()`
+    - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggle()`
  - minor fixes
 
 ## [1.0-alpha03] - 2018-04-02
