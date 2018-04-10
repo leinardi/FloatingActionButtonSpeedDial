@@ -706,7 +706,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
          * not enough space to be displayed.
          *
          * @return true if enabled
-         * @attr ref android.support.design.R.styleable#FloatingActionButton_Behavior_Layout_behavior_autoHide
          */
         public boolean isAutoHideEnabled() {
             return mAutoHideEnabled;
@@ -718,7 +717,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
          * and {@link BottomSheetBehavior}.
          *
          * @param autoHide true to enable automatic hiding
-         * @attr ref android.support.design.R.styleable#FloatingActionButton_Behavior_Layout_behavior_autoHide
          */
         public void setAutoHideEnabled(boolean autoHide) {
             mAutoHideEnabled = autoHide;

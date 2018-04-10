@@ -26,35 +26,33 @@ if (isMavenAvailable) {
     apply plugin: 'com.github.dcendents.android-maven'
 
     install {
-        repositories.mavenInstaller {
-            pom.project {
-                name mvn_config.artifact_id
-                description mvn_config.description
+        repositories.mavenInstaller.pom.project {
+            name mvn_config.artifact_id
+            description mvn_config.description
+            url mvn_config.website
+            inceptionYear mvn_config.inception_year
+
+            packaging 'aar'
+            groupId mvn_config.group_id
+            artifactId mvn_config.artifact_id
+            version mvn_config.version
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection mvn_config.vcs_url
                 url mvn_config.website
-                inceptionYear mvn_config.inception_year
 
-                packaging 'aar'
-                groupId mvn_config.group_id
-                artifactId mvn_config.artifact_id
-                version mvn_config.version
-
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution 'repo'
-                    }
-                }
-                scm {
-                    connection mvn_config.vcs_url
-                    url mvn_config.website
-
-                }
-                developers {
-                    developer {
-                        name "Roberto Leinardi"
-                        email "roberto@leinardi.com"
-                    }
+            }
+            developers {
+                developer {
+                    name "Roberto Leinardi"
+                    email "roberto@leinardi.com"
                 }
             }
         }
@@ -68,7 +66,6 @@ if (isMavenAvailable) {
     task javadoc(type: Javadoc) {
         source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        failOnError false
     }
 
     task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -78,6 +75,10 @@ if (isMavenAvailable) {
     artifacts {
         archives javadocJar
         archives sourcesJar
+    }
+
+    afterEvaluate {
+        javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
     }
 
     apply from: rootProject.file('bintray.gradle')
