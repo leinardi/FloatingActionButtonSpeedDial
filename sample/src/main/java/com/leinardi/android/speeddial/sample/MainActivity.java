@@ -121,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
         //Set option fabs clicklisteners.
         mSpeedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
             @Override
-            public void onActionSelected(SpeedDialActionItem actionItem) {
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
                 switch (actionItem.getId()) {
                     case R.id.fab_no_label:
                         showToast("No label action clicked!");
                         break;
                     case R.id.fab_long_label:
                         showSnackbar(actionItem.getLabel() + " clicked!");
-                        break;
+                        return true;
                     case R.id.fab_custom_color:
                         showToast(actionItem.getLabel() + " clicked!");
                         break;
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                         getTheme()))
                                 .setLabel(getString(R.string.label_replace_action))
                                 .create(), ADD_ACTION_POSITION);
-                        break;
+                        return true;
                     case R.id.fab_replace_action:
                         mSpeedDialView.replaceActionItem(new SpeedDialActionItem.Builder(R.id
                                 .fab_remove_action,
@@ -152,13 +152,14 @@ public class MainActivity extends AppCompatActivity {
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_accent,
                                         getTheme()))
                                 .create(), ADD_ACTION_POSITION);
-                        break;
+                        return true;
                     case R.id.fab_remove_action:
                         mSpeedDialView.removeActionItemById(R.id.fab_remove_action);
-                        break;
+                        return true;
                     default:
                         break;
                 }
+                return false;
             }
         });
 
