@@ -28,12 +28,26 @@ Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 
 ## How to use
 ### Gradle setup
+#### Stable releases
 The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```
 implementation "com.leinardi.android:speed-dial:<latest version>"
 ```
+#### Snapshots (development branch)
+You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
+
+Add the JitPack repository to your build file:
+```
+maven { url 'https://jitpack.io' }
+```
+
+Add the dependency
+```
+implementation 'com.github.leinardi:FloatingActionButtonSpeedDial:master-SNAPSHOT'
+```
+
 ### Basic use
 Add the `SpeedDialView` to your layout:
 
@@ -181,6 +195,24 @@ https://www.youtube.com/watch?v=tWowiF5ElAg
 ### API 27, API 16, bottom and left expansion
 <img src="/art/screenshot_api_27.png" width="215"/> <img src="/art/screenshot_api_16.png" width="215"/> <img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="215"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="215"/>
 
+## FAQ
+### How can I change the maximum length of the label?
+You can set a different value for the max length of the label overriding `sd_label_max_width`:
+```
+<dimen name="sd_label_max_width">240dp</dimen>
+```
+### How can I create a new resource ID, required by the `SpeedDialActionItem.Builder`?
+It can be done in XML using the `<item type="id" />`:
+```
+    <item name="fab_action1" type="id" />
+    <item name="fab_action2" type="id" />
+    <item name="fab_action3" type="id" />
+    <item name="fab_action4" type="id" />
+</resources>
+```
+More info [here](https://developer.android.com/guide/topics/resources/more-resources.html#Id).
+### How can I change the color of the overlay / touch guard layout?
+The color of the `SpeedDialOverlayLayout` can be changed simply using the `android:background` attribute or, programmatically, using the equivalent setter like any other view.
 
 ## Changelog
 See the [CHANGELOG.md](/CHANGELOG.md)
