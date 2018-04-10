@@ -22,13 +22,13 @@
     <style name="SpeedDial.Base" />
 
     <style name="SpeedDial.Base.FabLabelStyle">
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:textColor">@color/sd_label_text_color</item>
-        <item name="android:maxWidth">160dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
+        <item name="android:maxWidth">@dimen/sd_label_max_width</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/sd_label_text_color</item>
     </style>
 
     <style name="SpeedDial.FabLabelStyle" parent="SpeedDial.Base.FabLabelStyle">

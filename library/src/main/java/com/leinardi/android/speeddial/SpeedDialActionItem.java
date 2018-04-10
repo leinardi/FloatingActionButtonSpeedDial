@@ -80,7 +80,7 @@ public class SpeedDialActionItem implements Parcelable {
     /**
      * Gets the current Drawable, or null if no Drawable has been assigned.
      *
-     * @param context A context to retrieve the Drawable from (needed for {@link SpeedDialActionItem.Builder(int, int)}.
+     * @param context A context to retrieve the Drawable from (needed for SpeedDialActionItem.Builder(int, int).
      * @return the speed dial item drawable, or null if no drawable has been assigned.
      */
     @Nullable
@@ -153,7 +153,7 @@ public class SpeedDialActionItem implements Parcelable {
         /**
          * Creates a builder for a speed dial action item that uses the a {@link DrawableRes} as icon.
          * <p class="note">This does Bitmap reading and decoding on the UI thread, which can cause a latency hiccup.
-         * If that's a concern, consider using {@link #Builder(int, Drawable)} instead.</p>
+         * If that's a concern, consider using Builder(int, Drawable) instead.</p>
          *
          * @param id               the identifier for this action item. The identifier must be unique to the instance
          *                         of {@link SpeedDialView}. The identifier should be a positive number.
