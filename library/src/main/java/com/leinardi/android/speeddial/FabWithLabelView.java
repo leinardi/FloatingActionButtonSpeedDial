@@ -36,7 +36,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leinardi.android.speeddial.SpeedDialView.OnSpeedDialActionSelectedListener;
+import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
@@ -55,7 +55,7 @@ final class FabWithLabelView extends LinearLayout {
     private CardView mLabelCardView;
     private boolean mIsLabelEnable;
     private SpeedDialActionItem mSpeedDialActionItem;
-    private OnSpeedDialActionSelectedListener mOnSpeedDialActionSelectedListener;
+    private OnActionSelectedListener mOnActionSelectedListener;
     @FloatingActionButton.Size
     private int mCurrentFabSize;
 
@@ -173,20 +173,20 @@ final class FabWithLabelView extends LinearLayout {
      *
      * @param listener listener to set.
      */
-    public void setOnSpeedDialActionSelectedListener(OnSpeedDialActionSelectedListener listener) {
-        mOnSpeedDialActionSelectedListener = listener;
-        if (mOnSpeedDialActionSelectedListener != null) {
+    public void setOnActionSelectedListener(OnActionSelectedListener listener) {
+        mOnActionSelectedListener = listener;
+        if (mOnActionSelectedListener != null) {
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnSpeedDialActionSelectedListener.onActionSelected(getSpeedDialActionItem());
+                    mOnActionSelectedListener.onActionSelected(getSpeedDialActionItem());
                 }
             });
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (getSpeedDialActionItem().isLabelClickable() && isLabelEnable()) {
-                        mOnSpeedDialActionSelectedListener.onActionSelected(getSpeedDialActionItem());
+                        mOnActionSelectedListener.onActionSelected(getSpeedDialActionItem());
                     }
                 }
             });
