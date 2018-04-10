@@ -69,7 +69,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private boolean mIsOpen = false;
     private Drawable mMainFabOpenDrawable = null;
     private Drawable mMainFabCloseDrawable = null;
-    private OnActionSelectedListener mOnActionSelectedListener;
     @Nullable
     private SpeedDialOverlayLayout mOverlayLayout;
     @ExpansionMode
@@ -77,6 +76,22 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private boolean mRotateOnToggle = true;
     @Nullable
     private OnChangeListener mOnChangeListener;
+    @Nullable
+    private OnActionSelectedListener mOnActionSelectedListener;
+    private OnActionSelectedListener mOnActionSelectedProxyListener = new OnActionSelectedListener() {
+        @Override
+        public boolean onActionSelected(SpeedDialActionItem actionItem) {
+            if (mOnActionSelectedListener != null) {
+                boolean consumed = mOnActionSelectedListener.onActionSelected(actionItem);
+                if (!consumed) {
+                    close();
+                }
+                return consumed;
+            } else {
+                return false;
+            }
+        }
+    };
 
     public SpeedDialView(Context context) {
         super(context);
@@ -196,7 +211,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
      *
      * @param actionItem {@link SpeedDialActionItem} to be appended to this list
-     * @param position            index at which the specified element is to be inserted
+     * @param position   index at which the specified element is to be inserted
      */
     public void addActionItem(SpeedDialActionItem actionItem, int position) {
         addActionItem(actionItem, position, true);
@@ -207,8 +222,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
      *
      * @param actionItem {@link SpeedDialActionItem} to be appended to this list
-     * @param position            index at which the specified element is to be inserted
-     * @param animate             true to animate the insertion, false to insert instantly
+     * @param position   index at which the specified element is to be inserted
+     * @param animate    true to animate the insertion, false to insert instantly
      */
     public void addActionItem(SpeedDialActionItem actionItem, int position, boolean animate) {
         FabWithLabelView oldView = findFabWithLabelViewById(actionItem.getId());
@@ -273,7 +288,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * parameter.
      *
      * @param newActionItem {@link SpeedDialActionItem} to use for the replacement
-     * @param position               the index of the {@link SpeedDialActionItem} to be replaced
+     * @param position      the index of the {@link SpeedDialActionItem} to be replaced
      * @return true if this list contained the specified element
      */
     public boolean replaceActionItem(SpeedDialActionItem newActionItem, int position) {
@@ -327,11 +342,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      *
      * @param listener listener to set.
      */
-    public void setOnActionSelectedListener(final OnActionSelectedListener listener) {
+    public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
         mOnActionSelectedListener = listener;
+
         for (int index = 0; index < mFabWithLabelViews.size(); index++) {
             final FabWithLabelView fabWithLabelView = mFabWithLabelViews.get(index);
-            fabWithLabelView.setOnActionSelectedListener(mOnActionSelectedListener);
+            fabWithLabelView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
         }
     }
 
@@ -420,8 +436,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     @Nullable
     private SpeedDialActionItem removeActionItem(FabWithLabelView view,
-                                                          @Nullable Iterator<FabWithLabelView> it,
-                                                          boolean animate) {
+                                                 @Nullable Iterator<FabWithLabelView> it,
+                                                 boolean animate) {
         if (view != null) {
             SpeedDialActionItem speedDialActionItem = view.getSpeedDialActionItem();
             if (it != null) {
@@ -527,7 +543,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         newView.setSpeedDialActionItem(speedDialActionItem);
         newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
-        newView.setOnActionSelectedListener(mOnActionSelectedListener);
+        newView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
         return newView;
     }
 
@@ -651,8 +667,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
          * Called when a speed dial action has been clicked.
          *
          * @param actionItem the {@link SpeedDialActionItem} that was selected.
+         * @return true if the callback consumed the click, false otherwise.
          */
-        void onActionSelected(SpeedDialActionItem actionItem);
+        boolean onActionSelected(SpeedDialActionItem actionItem);
     }
 
     @Retention(SOURCE)

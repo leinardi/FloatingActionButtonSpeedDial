@@ -73,13 +73,13 @@ Add the click listeners:
 ```java
 speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
     @Override
-    public void onActionSelected(SpeedDialActionItem speedDialActionItem) {
+    public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
         switch (speedDialActionItem.getId()) {
             case R.id.fab_link:
                 showToast("Link action clicked!");
-                break;
+                return false; // true to keep the Speed Dial open
             default:
-                break;
+                return false;
         }
     }
 });
