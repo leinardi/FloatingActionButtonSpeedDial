@@ -50,14 +50,14 @@ Add the items to the `SpeedDialView`:
 
 ```java
 SpeedDialView speedDialView = findViewById(R.id.speedDial);
-speedDialView.addSpeedDialActionItem(
+speedDialView.addActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
                 .create()
 );
 ```
 Add the click listeners:
 ```java
-speedDialView.setOnSpeedDialActionSelectedListener(new SpeedDialView.OnSpeedDialActionSelectedListener() {
+speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
     @Override
     public void onActionSelected(SpeedDialActionItem speedDialActionItem) {
         switch (speedDialActionItem.getId()) {
@@ -74,17 +74,17 @@ speedDialView.setOnSpeedDialActionSelectedListener(new SpeedDialView.OnSpeedDial
 ### Optional steps
 #### Add the main action click listener
 ```java
-speedDialView.setOnSpeedDialChangeListener(new SpeedDialView.OnSpeedDialChangeListener() {
+speedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
     @Override
     public void onMainActionSelected() {
         // Call your main action here and than close the menu
-        if (mSpeedDialView.isSpeedDialOpen()) {
-            mSpeedDialView.closeSpeedDial();
+        if (mSpeedDialView.isOpen()) {
+            mSpeedDialView.close();
         }
     }
 
     @Override
-    public void onSpeedDialToggleChanged(boolean isOpen) {
+    public void onToggleChanged(boolean isOpen) {
         Log.d(TAG, "Speed dial toggle state changed. Open = " + isOpen);
     }
 });
@@ -94,7 +94,7 @@ speedDialView.setOnSpeedDialChangeListener(new SpeedDialView.OnSpeedDialChangeLi
 The `SpeedDialActionItem.Builder` provides several setters to customize the aspect of one item:
 
 ```java
-mSpeedDialView.addSpeedDialActionItem(
+mSpeedDialView.addActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable.ic_custom_color)
                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
                 .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
@@ -108,7 +108,7 @@ mSpeedDialView.addSpeedDialActionItem(
 Is is also possible to specify a theme to easily change the FAB background and ripple effect color:
 
 ```java
-mSpeedDialView.addSpeedDialActionItem(
+mSpeedDialView.addActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
                 .setLabel(getString(R.string.label_custom_theme))
                 .setTheme(R.style.AppTheme_Purple)
@@ -135,8 +135,8 @@ You simply need to add the `SpeedDialOverlayLayout` to your layout:
 and then provide the instance of that layout to the `SpeedDialView`:
 
 ```java
-SpeedDialOverlayLayout speedDialOverlayLayout = findViewById(R.id.overlay);
-mSpeedDialView.setSpeedDialOverlayLayout(speedDialOverlayLayout);
+SpeedDialOverlayLayout overlayLayout = findViewById(R.id.overlay);
+mSpeedDialView.setSpeedDialOverlayLayout(overlayLayout);
 ```
 
 #### Hiding the FAB when scrolling a `RecyclerView` or a `NestedScrollView`
