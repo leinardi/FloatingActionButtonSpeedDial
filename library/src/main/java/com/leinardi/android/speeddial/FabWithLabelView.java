@@ -54,7 +54,9 @@ final class FabWithLabelView extends LinearLayout {
     private FloatingActionButton mFab;
     private CardView mLabelCardView;
     private boolean mIsLabelEnable;
+    @Nullable
     private SpeedDialActionItem mSpeedDialActionItem;
+    @Nullable
     private OnActionSelectedListener mOnActionSelectedListener;
     @FloatingActionButton.Size
     private int mCurrentFabSize;
@@ -64,7 +66,7 @@ final class FabWithLabelView extends LinearLayout {
         init(context, null);
     }
 
-    public FabWithLabelView(Context context, AttributeSet attrs) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -123,6 +125,7 @@ final class FabWithLabelView extends LinearLayout {
         return mFab;
     }
 
+    @Nullable
     public SpeedDialActionItem getSpeedDialActionItem() {
         return mSpeedDialActionItem;
     }
@@ -131,7 +134,8 @@ final class FabWithLabelView extends LinearLayout {
         mSpeedDialActionItem = actionItem;
         setId(actionItem.getId());
         setLabel(actionItem.getLabel());
-        setLabelClickable(getSpeedDialActionItem().isLabelClickable());
+        SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+        setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
 
         int iconTintColor = actionItem.getFabImageTintColor();
 
@@ -179,14 +183,22 @@ final class FabWithLabelView extends LinearLayout {
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnActionSelectedListener.onActionSelected(getSpeedDialActionItem());
+                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                    if (mOnActionSelectedListener != null
+                            && speedDialActionItem != null) {
+                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
+                    }
                 }
             });
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (getSpeedDialActionItem().isLabelClickable() && isLabelEnable()) {
-                        mOnActionSelectedListener.onActionSelected(getSpeedDialActionItem());
+                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                    if (mOnActionSelectedListener != null
+                            && speedDialActionItem != null
+                            && speedDialActionItem.isLabelClickable()
+                            && isLabelEnable()) {
+                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
                     }
                 }
             });
@@ -194,6 +206,7 @@ final class FabWithLabelView extends LinearLayout {
             getFab().setOnClickListener(null);
             getLabelBackground().setOnClickListener(null);
         }
+
     }
 
     /**
@@ -202,7 +215,7 @@ final class FabWithLabelView extends LinearLayout {
      * @param context context.
      * @param attrs   attributes.
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, @Nullable AttributeSet attrs) {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
 
         mFab = rootView.findViewById(R.id.fab);
@@ -279,7 +292,7 @@ final class FabWithLabelView extends LinearLayout {
      *
      * @param mDrawable drawable to set.
      */
-    private void setFabIcon(Drawable mDrawable) {
+    private void setFabIcon(@Nullable Drawable mDrawable) {
         mFab.setImageDrawable(mDrawable);
     }
 
@@ -288,7 +301,7 @@ final class FabWithLabelView extends LinearLayout {
      *
      * @param sequence label to set.
      */
-    private void setLabel(CharSequence sequence) {
+    private void setLabel(@Nullable CharSequence sequence) {
         if (!TextUtils.isEmpty(sequence)) {
             mLabelTextView.setText(sequence);
             setLabelEnable(getOrientation() == HORIZONTAL);
