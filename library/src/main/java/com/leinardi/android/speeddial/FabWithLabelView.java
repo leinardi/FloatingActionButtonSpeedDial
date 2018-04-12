@@ -47,7 +47,7 @@ import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
  * View that contains fab button and its label.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-final class FabWithLabelView extends LinearLayout {
+public final class FabWithLabelView extends LinearLayout {
     private static final String TAG = FabWithLabelView.class.getSimpleName();
 
     private TextView mLabelTextView;
