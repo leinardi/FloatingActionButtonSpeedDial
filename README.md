@@ -28,7 +28,7 @@ Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 
 ## How to use
 ### Gradle setup
-#### Stable releases
+#### Official releases
 The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
