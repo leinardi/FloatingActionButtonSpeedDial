@@ -46,7 +46,7 @@
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:clickable_overlay="true"/>
+        app:clickable_overlay="true" />
 
     <com.leinardi.android.speeddial.SpeedDialView
         android:id="@+id/speedDial"
@@ -56,8 +56,8 @@
         android:layout_margin="2dp"
         app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
         app:sdExpansionMode="top"
-        app:sdFabCloseSrc="@drawable/ic_camera_alt_white_24dp"
-        app:sdFabRotateOnToggle="true"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
+        app:sdMainFabCloseRotateAngle="90"
+        app:sdMainFabCloseSrc="@drawable/ic_camera_alt_white_24dp"
+        app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

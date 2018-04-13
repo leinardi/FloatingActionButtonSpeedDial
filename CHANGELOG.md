@@ -19,6 +19,11 @@
     - renamed `SpeedDialView.closeOptionsMenu()` to `SpeedDialView.close()`
     - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.open()`
     - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggle()`
+    - removed attributes `android:src`
+    - renamed attributes `srcCompat` to `sdMainFabOpenSrc`
+    - renamed attributes `sdFabCloseSrc` to `sdMainFabCloseSrc`
+    - removed attributes `sdFabRotateOnToggle`
+    - added attributes `sdMainFabCloseRotateAngle`
  - minor fixes
 
 ## [1.0-alpha03] - 2018-04-02
