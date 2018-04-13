@@ -27,10 +27,9 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedDialView">
-        <attr name="android:src" />
-        <attr name="srcCompat" />
-        <attr name="sdFabCloseSrc" format="reference" />
-        <attr name="sdFabRotateOnToggle" format="boolean" />
+        <attr name="sdMainFabOpenSrc" format="reference" />
+        <attr name="sdMainFabCloseSrc" format="reference" />
+        <attr name="sdMainFabCloseRotateAngle" format="float" />
         <attr name="sdExpansionMode" format="enum">
             <enum name="top" value="0" />
             <enum name="bottom" value="1" />

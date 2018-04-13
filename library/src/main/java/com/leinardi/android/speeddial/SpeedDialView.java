@@ -77,7 +77,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private SpeedDialOverlayLayout mOverlayLayout;
     @ExpansionMode
     private int mExpansionMode = TOP;
-    private boolean mRotateOnToggle = true;
+    private float mMainFabCloseRotateAngle;
     @Nullable
     private OnChangeListener mOnChangeListener;
     @Nullable
@@ -397,12 +397,26 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         return mIsOpen;
     }
 
-    public boolean isRotateOnToggle() {
-        return mRotateOnToggle;
+    public float getMainFabCloseRotateAngle() {
+        return mMainFabCloseRotateAngle;
     }
 
-    public void setRotateOnToggle(boolean rotateOnToggle) {
-        mRotateOnToggle = rotateOnToggle;
+    public void setMainFabCloseRotateAngle(float mainFabCloseRotateAngle) {
+        mMainFabCloseRotateAngle = mainFabCloseRotateAngle;
+    }
+
+    public void setMainFabOpenDrawable(@Nullable Drawable drawable) {
+        mMainFabOpenDrawable = drawable;
+        updateMainFabDrawable();
+    }
+
+    public void setMainFabCloseDrawable(@Nullable Drawable drawable) {
+        if (drawable == null) {
+            mMainFabCloseDrawable = null;
+        } else {
+            mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -mMainFabCloseRotateAngle);
+        }
+        updateMainFabDrawable();
     }
 
     @Nullable
@@ -487,20 +501,17 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
-            if (openDrawableRes == NOT_SET) {
-                openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
-            }
+            setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
+                    mMainFabCloseRotateAngle));
+            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenSrc, NOT_SET);
             if (openDrawableRes != NOT_SET) {
-                mMainFabOpenDrawable = AppCompatResources.getDrawable(getContext(), openDrawableRes);
+                setMainFabOpenDrawable(AppCompatResources.getDrawable(getContext(), openDrawableRes));
             }
-            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdFabCloseSrc, NOT_SET);
+            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabCloseSrc, NOT_SET);
             if (closeDrawableRes != NOT_SET) {
-                final Drawable drawable = AppCompatResources.getDrawable(context, closeDrawableRes);
-                mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -UiUtils.ROTATION_ANGLE);
+                setMainFabCloseDrawable(AppCompatResources.getDrawable(context, closeDrawableRes));
             }
-            mExpansionMode = attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode);
-            mRotateOnToggle = attr.getBoolean(R.styleable.SpeedDialView_sdFabRotateOnToggle, mRotateOnToggle);
+            setExpansionMode(attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode));
             //            int color = attr.getColor(
             //                    R.styleable.SpeedDialView_color,
             //                    UiUtils.getAccentColor(context));
@@ -510,8 +521,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         } finally {
             attr.recycle();
         }
-        mMainFab.setImageDrawable(mMainFabOpenDrawable);
-        setExpansionMode(mExpansionMode);
     }
 
     private FloatingActionButton createMainFab() {
@@ -563,28 +572,38 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         mIsOpen = show;
         visibilitySetup(show);
-        if (show) {
+        updateMainFabDrawable();
+        showHideOverlay(show);
+        if (mOnChangeListener != null) {
+            mOnChangeListener.onToggleChanged(show);
+        }
+    }
+
+    private void updateMainFabDrawable() {
+        if (isOpen()) {
             if (mMainFabCloseDrawable != null) {
                 mMainFab.setImageDrawable(mMainFabCloseDrawable);
             }
-            UiUtils.rotateForward(mMainFab, mRotateOnToggle);
+            UiUtils.rotateForward(mMainFab, mMainFabCloseRotateAngle, true);
+        } else {
+            UiUtils.rotateBackward(mMainFab, true);
+            if (mMainFabCloseDrawable != null) {
+                mMainFab.setImageDrawable(mMainFabOpenDrawable);
+            }
+        }
+    }
+
+    private void updateElevation() {
+        if (isOpen()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_open_elevation));
             } else {
                 bringToFront();
             }
         } else {
-            UiUtils.rotateBackward(mMainFab, mRotateOnToggle);
-            if (mMainFabCloseDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabOpenDrawable);
-            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_close_elevation));
             }
-        }
-        showHideOverlay(show);
-        if (mOnChangeListener != null) {
-            mOnChangeListener.onToggleChanged(show);
         }
     }
 
