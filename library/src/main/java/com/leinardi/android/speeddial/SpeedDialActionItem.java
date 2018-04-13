@@ -33,7 +33,7 @@ import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {
-    public static final int NOT_SET = Integer.MIN_VALUE;
+    public static final int NOT_SET = 0;
     @IdRes
     private final int mId;
     @Nullable

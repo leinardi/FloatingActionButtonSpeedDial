@@ -29,6 +29,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
         versionName build_versions.version_name
+        consumerProguardFiles 'consumer-proguard-rules.pro'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }

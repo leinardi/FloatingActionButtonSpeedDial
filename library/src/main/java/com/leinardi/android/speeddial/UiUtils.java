@@ -26,11 +26,11 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -90,7 +90,7 @@ public class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -113,7 +113,7 @@ public class UiUtils {
                 .alpha(1F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
@@ -129,7 +129,7 @@ public class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -158,7 +158,7 @@ public class UiUtils {
                 .rotation(ROTATION_ANGLE)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
@@ -174,7 +174,7 @@ public class UiUtils {
                 .rotation(0.0F)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
