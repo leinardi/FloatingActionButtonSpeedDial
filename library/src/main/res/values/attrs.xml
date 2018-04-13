@@ -28,7 +28,9 @@
 
     <declare-styleable name="SpeedDialView">
         <attr name="sdMainFabOpenSrc" format="reference" />
+        <attr name="sdMainFabOpenBackgroundColor" format="color" />
         <attr name="sdMainFabCloseSrc" format="reference" />
+        <attr name="sdMainFabCloseBackgroundColor" format="color" />
         <attr name="sdMainFabCloseRotateAngle" format="float" />
         <attr name="sdExpansionMode" format="enum">
             <enum name="top" value="0" />
