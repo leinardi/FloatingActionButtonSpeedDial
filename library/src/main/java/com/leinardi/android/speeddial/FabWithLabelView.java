@@ -47,13 +47,13 @@ import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
  * View that contains fab button and its label.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public final class FabWithLabelView extends LinearLayout {
+public class FabWithLabelView extends LinearLayout {
     private static final String TAG = FabWithLabelView.class.getSimpleName();
 
     private TextView mLabelTextView;
     private FloatingActionButton mFab;
     private CardView mLabelCardView;
-    private boolean mIsLabelEnable;
+    private boolean mIsLabelEnabled;
     @Nullable
     private SpeedDialActionItem mSpeedDialActionItem;
     @Nullable
@@ -80,7 +80,7 @@ public final class FabWithLabelView extends LinearLayout {
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
         getFab().setVisibility(visibility);
-        if (isLabelEnable()) {
+        if (isLabelEnabled()) {
             getLabelBackground().setVisibility(visibility);
         }
     }
@@ -90,7 +90,7 @@ public final class FabWithLabelView extends LinearLayout {
         super.setOrientation(orientation);
         setFabSize(mCurrentFabSize);
         if (orientation == VERTICAL) {
-            setLabelEnable(false);
+            setLabelEnabled(false);
         } else {
             setLabel(mLabelTextView.getText().toString());
         }
@@ -99,16 +99,16 @@ public final class FabWithLabelView extends LinearLayout {
     /**
      * Return true if button has label, false otherwise.
      */
-    public boolean isLabelEnable() {
-        return mIsLabelEnable;
+    public boolean isLabelEnabled() {
+        return mIsLabelEnabled;
     }
 
     /**
      * Enables or disables label of button.
      */
-    private void setLabelEnable(boolean enable) {
-        mIsLabelEnable = enable;
-        mLabelCardView.setVisibility(enable ? View.VISIBLE : View.GONE);
+    private void setLabelEnabled(boolean enabled) {
+        mIsLabelEnabled = enabled;
+        mLabelCardView.setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -177,7 +177,7 @@ public final class FabWithLabelView extends LinearLayout {
      *
      * @param listener listener to set.
      */
-    public void setOnActionSelectedListener(OnActionSelectedListener listener) {
+    public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
         mOnActionSelectedListener = listener;
         if (mOnActionSelectedListener != null) {
             getFab().setOnClickListener(new OnClickListener() {
@@ -196,8 +196,7 @@ public final class FabWithLabelView extends LinearLayout {
                     SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
                     if (mOnActionSelectedListener != null
                             && speedDialActionItem != null
-                            && speedDialActionItem.isLabelClickable()
-                            && isLabelEnable()) {
+                            && speedDialActionItem.isLabelClickable()) {
                         mOnActionSelectedListener.onActionSelected(speedDialActionItem);
                     }
                 }
@@ -304,9 +303,9 @@ public final class FabWithLabelView extends LinearLayout {
     private void setLabel(@Nullable CharSequence sequence) {
         if (!TextUtils.isEmpty(sequence)) {
             mLabelTextView.setText(sequence);
-            setLabelEnable(getOrientation() == HORIZONTAL);
+            setLabelEnabled(getOrientation() == HORIZONTAL);
         } else {
-            setLabelEnable(false);
+            setLabelEnabled(false);
         }
     }
 
@@ -321,15 +320,15 @@ public final class FabWithLabelView extends LinearLayout {
      *
      * @param color color to set.
      */
-    private void setFabBackgroundColor(int color) {
+    private void setFabBackgroundColor(@ColorInt int color) {
         mFab.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
-    private void setLabelColor(int color) {
+    private void setLabelColor(@ColorInt int color) {
         mLabelTextView.setTextColor(color);
     }
 
-    private void setLabelBackgroundColor(int color) {
+    private void setLabelBackgroundColor(@ColorInt int color) {
         mLabelCardView.setCardBackgroundColor(ColorStateList.valueOf(color));
     }
 }

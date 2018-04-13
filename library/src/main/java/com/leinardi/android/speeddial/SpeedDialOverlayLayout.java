@@ -61,47 +61,35 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
      * @param clickableOverlay True to enable the click, false otherwise.
      */
     public void setClickableOverlay(boolean clickableOverlay) {
-        this.mClickableOverlay = clickableOverlay;
+        mClickableOverlay = clickableOverlay;
         setOnClickListener(mClickListener);
     }
 
     public void setAnimationDuration(int animationDuration) {
-        this.mAnimationDuration = animationDuration;
+        mAnimationDuration = animationDuration;
     }
 
     public void show() {
-        toggle(true);
+        show(true);
     }
 
-    public void show(boolean immediately) {
-        toggle(true, immediately);
+    public void show(boolean animate) {
+        if (animate) {
+            UiUtils.fadeInAnim(this);
+        } else {
+            setVisibility(VISIBLE);
+        }
     }
 
     public void hide() {
-        toggle(false);
+        hide(true);
     }
 
-    public void hide(boolean immediately) {
-        toggle(false, immediately);
-    }
-
-    public void toggle(boolean show) {
-        toggle(show, false);
-    }
-
-    public void toggle(final boolean show, boolean immediately) {
-        if (show) {
-            if (immediately) {
-                setVisibility(VISIBLE);
-            } else {
-                UiUtils.fadeInAnim(this);
-            }
+    public void hide(boolean animate) {
+        if (animate) {
+            UiUtils.fadeOutAnim(this);
         } else {
-            if (immediately) {
-                setVisibility(GONE);
-            } else {
-                UiUtils.fadeOutAnim(this);
-            }
+            setVisibility(GONE);
         }
     }
 

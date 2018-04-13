@@ -64,6 +64,8 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
+    private static final String STATE_KEY_SUPER = "superState";
+    private static final String STATE_KEY_IS_OPEN = "isOpen";
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     private FloatingActionButton mMainFab;
     private boolean mIsOpen = false;
@@ -407,13 +409,13 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("superState", super.onSaveInstanceState());
+        bundle.putParcelable(STATE_KEY_SUPER, super.onSaveInstanceState());
         ArrayList<SpeedDialActionItem> speedDialActionItems = new ArrayList<>(mFabWithLabelViews.size());
         for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
             speedDialActionItems.add(fabWithLabelView.getSpeedDialActionItem());
         }
         bundle.putParcelableArrayList(SpeedDialActionItem.class.getName(), speedDialActionItems);
-        bundle.putBoolean("IsOpen", mIsOpen);
+        bundle.putBoolean(STATE_KEY_IS_OPEN, mIsOpen);
         return bundle;
     }
 
@@ -427,8 +429,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 //                Collections.reverse(speedDialActionItems);
                 addAllActionItems(speedDialActionItems);
             }
-            toggle(bundle.getBoolean("IsOpen", mIsOpen));
-            state = bundle.getParcelable("superState");
+            toggle(bundle.getBoolean(STATE_KEY_IS_OPEN, mIsOpen));
+            state = bundle.getParcelable(STATE_KEY_SUPER);
         }
         super.onRestoreInstanceState(state);
     }
@@ -641,7 +643,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         fabWithLabelView.setAlpha(1);
         fabWithLabelView.setVisibility(View.VISIBLE);
         enlargeAnim(fabWithLabelView.getFab(), delay);
-        if (fabWithLabelView.isLabelEnable()) {
+        if (fabWithLabelView.isLabelEnabled()) {
             CardView labelBackground = fabWithLabelView.getLabelBackground();
             ViewCompat.animate(labelBackground).cancel();
             Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.sd_fade_and_translate_in);
