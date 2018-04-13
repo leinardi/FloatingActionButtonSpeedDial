@@ -41,7 +41,7 @@ import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
 import static android.support.design.widget.FloatingActionButton.SIZE_NORMAL;
-import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
+import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 
 /**
  * View that contains fab button and its label.
@@ -140,26 +140,26 @@ public class FabWithLabelView extends LinearLayout {
         int iconTintColor = actionItem.getFabImageTintColor();
 
         Drawable drawable = actionItem.getFabImageDrawable(getContext());
-        if (drawable != null && iconTintColor != NOT_SET) {
+        if (drawable != null && iconTintColor != RESOURCE_NOT_SET) {
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable.mutate(), iconTintColor);
         }
         setFabIcon(drawable);
 
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
-        if (fabBackgroundColor == NOT_SET) {
+        if (fabBackgroundColor == RESOURCE_NOT_SET) {
             fabBackgroundColor = UiUtils.getPrimaryColor(getContext());
         }
         setFabBackgroundColor(fabBackgroundColor);
 
         int labelColor = actionItem.getLabelColor();
-        if (labelColor == NOT_SET) {
+        if (labelColor == RESOURCE_NOT_SET) {
             labelColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_text_color,
                     getContext().getTheme());
         }
         setLabelColor(labelColor);
         int labelBackgroundColor = actionItem.getLabelBackgroundColor();
-        if (labelBackgroundColor == NOT_SET) {
+        if (labelBackgroundColor == RESOURCE_NOT_SET) {
             labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.cardview_light_background,
                     getContext().getTheme());
         }
@@ -230,9 +230,9 @@ public class FabWithLabelView extends LinearLayout {
                 R.styleable.FabWithLabelView, 0, 0);
 
         try {
-            @DrawableRes int src = attr.getResourceId(R.styleable.FabWithLabelView_srcCompat, NOT_SET);
-            if (src == NOT_SET) {
-                src = attr.getResourceId(R.styleable.FabWithLabelView_android_src, NOT_SET);
+            @DrawableRes int src = attr.getResourceId(R.styleable.FabWithLabelView_srcCompat, RESOURCE_NOT_SET);
+            if (src == RESOURCE_NOT_SET) {
+                src = attr.getResourceId(R.styleable.FabWithLabelView_android_src, RESOURCE_NOT_SET);
             }
             SpeedDialActionItem.Builder builder = new SpeedDialActionItem.Builder(getId(), src);
             String labelText = attr.getString(R.styleable.FabWithLabelView_fabLabel);
@@ -240,10 +240,10 @@ public class FabWithLabelView extends LinearLayout {
             @ColorInt int fabBackgroundColor = UiUtils.getPrimaryColor(context);
             fabBackgroundColor = attr.getColor(R.styleable.FabWithLabelView_fabBackgroundColor, fabBackgroundColor);
             builder.setFabBackgroundColor(fabBackgroundColor);
-            @ColorInt int labelColor = NOT_SET;
+            @ColorInt int labelColor = RESOURCE_NOT_SET;
             labelColor = attr.getColor(R.styleable.FabWithLabelView_fabLabelColor, labelColor);
             builder.setLabelColor(labelColor);
-            @ColorInt int labelBackgroundColor = NOT_SET;
+            @ColorInt int labelBackgroundColor = RESOURCE_NOT_SET;
             labelBackgroundColor = attr.getColor(R.styleable.FabWithLabelView_fabLabelBackgroundColor,
                     labelBackgroundColor);
             builder.setLabelBackgroundColor(labelBackgroundColor);

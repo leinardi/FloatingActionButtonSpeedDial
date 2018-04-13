@@ -17,12 +17,14 @@
 package com.leinardi.android.speeddial;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
@@ -54,7 +56,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
+import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.BOTTOM;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.LEFT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.RIGHT;
@@ -73,6 +75,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private Drawable mMainFabOpenDrawable = null;
     @Nullable
     private Drawable mMainFabCloseDrawable = null;
+    @ColorInt
+    private int mMainFabOpenBackgroundColor;
+    @ColorInt
+    private int mMainFabCloseBackgroundColor;
     @Nullable
     private SpeedDialOverlayLayout mOverlayLayout;
     @ExpansionMode
@@ -419,6 +425,24 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         updateMainFabDrawable();
     }
 
+    public int getMainFabOpenBackgroundColor() {
+        return mMainFabOpenBackgroundColor;
+    }
+
+    public void setMainFabOpenBackgroundColor(int mainFabOpenBackgroundColor) {
+        mMainFabOpenBackgroundColor = mainFabOpenBackgroundColor;
+        updateMainFabBackgroundColor();
+    }
+
+    public int getMainFabCloseBackgroundColor() {
+        return mMainFabCloseBackgroundColor;
+    }
+
+    public void setMainFabCloseBackgroundColor(int mainFabCloseBackgroundColor) {
+        mMainFabCloseBackgroundColor = mainFabCloseBackgroundColor;
+        updateMainFabBackgroundColor();
+    }
+
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
@@ -503,15 +527,21 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         try {
             setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
                     mMainFabCloseRotateAngle));
-            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenSrc, NOT_SET);
-            if (openDrawableRes != NOT_SET) {
+            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenSrc,
+                    RESOURCE_NOT_SET);
+            if (openDrawableRes != RESOURCE_NOT_SET) {
                 setMainFabOpenDrawable(AppCompatResources.getDrawable(getContext(), openDrawableRes));
             }
-            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabCloseSrc, NOT_SET);
-            if (closeDrawableRes != NOT_SET) {
+            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabCloseSrc, RESOURCE_NOT_SET);
+            if (closeDrawableRes != RESOURCE_NOT_SET) {
                 setMainFabCloseDrawable(AppCompatResources.getDrawable(context, closeDrawableRes));
             }
             setExpansionMode(attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode));
+
+            setMainFabOpenBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabOpenBackgroundColor,
+                    mMainFabOpenBackgroundColor));
+            setMainFabCloseBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabCloseBackgroundColor,
+                    mMainFabCloseBackgroundColor));
             //            int color = attr.getColor(
             //                    R.styleable.SpeedDialView_color,
             //                    UiUtils.getAccentColor(context));
@@ -555,7 +585,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private FabWithLabelView createNewFabWithLabelView(SpeedDialActionItem speedDialActionItem) {
         FabWithLabelView newView;
         int theme = speedDialActionItem.getTheme();
-        if (theme == NOT_SET) {
+        if (theme == RESOURCE_NOT_SET) {
             newView = new FabWithLabelView(getContext());
         } else {
             newView = new FabWithLabelView(new ContextThemeWrapper(getContext(), theme), null, theme);
@@ -573,6 +603,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         mIsOpen = show;
         visibilitySetup(show);
         updateMainFabDrawable();
+        updateMainFabBackgroundColor();
         showHideOverlay(show);
         if (mOnChangeListener != null) {
             mOnChangeListener.onToggleChanged(show);
@@ -590,6 +621,18 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             if (mMainFabCloseDrawable != null) {
                 mMainFab.setImageDrawable(mMainFabOpenDrawable);
             }
+        }
+    }
+
+    private void updateMainFabBackgroundColor() {
+        int color;
+        if (isOpen()) {
+            color = mMainFabOpenBackgroundColor;
+        } else {
+            color = mMainFabCloseBackgroundColor;
+        }
+        if (color != RESOURCE_NOT_SET) {
+            mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
         }
     }
 
