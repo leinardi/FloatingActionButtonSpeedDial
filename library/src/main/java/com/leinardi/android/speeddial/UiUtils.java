@@ -27,6 +27,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,15 @@ public class UiUtils {
      * @param view view to animate.
      */
     public static void fadeOutAnim(final View view) {
-        ViewCompat.animate(view).cancel();
+        if (BuildConfig.DEBUG) {
+            Log.d("tt", "d");
+        } else
+
+        {
+            Log.d("tt", "d");
+        }
+        ViewCompat.animate(view).cancel
+                ();
         view.setAlpha(1F);
         view.setVisibility(VISIBLE);
         ViewCompat.animate(view)
@@ -98,6 +107,9 @@ public class UiUtils {
                     }
                 })
                 .start();
+        // uncomment to show that NullAway is actually running
+                 Object x = null;
+                 x.hashCode();
     }
 
     /**
