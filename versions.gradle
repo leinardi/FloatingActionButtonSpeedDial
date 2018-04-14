@@ -199,7 +199,7 @@ deps.violations_plugin = "se.bjurr.violations:violation-comments-to-github-gradl
 ext.deps = deps
 
 def build_versions = [:]
-build_versions.min_sdk = 15
+build_versions.min_sdk = 14
 build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.3"
 build_versions.java_version = JavaVersion.VERSION_1_7
