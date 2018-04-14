@@ -1,12 +1,13 @@
 # Change Log
 
-## [1.0-alpha04] - 2018-04-08
+## [1.0-alpha04] - 2018-04-14
 - android support library 27.1.1
 - several API changes:
+    - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnActionSelectedListener()`
+    - renamed `FabWithLabelView.isLabelEnable()` to `FabWithLabelView.isLabelEnabled()`
     - added `SpeedDialActionItem.Builder(@IdRes int id, @Nullable Drawable d)`
     - added `SpeedDialView.setOnChangeListener(OnChangeListener l)`
     - removed `SpeedDialView.setMainFabOnClickListener(OnClickListener l)`
-    - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnActionSelectedListener()`
     - renamed `OnOptionFabSelectedListener` to `OnActionSelectedListener`
     - renamed `SpeedDialView.setOptionFabSelectedListener()` to `SpeedDialView.setOnActionSelectedListener()`
     - renamed `SpeedDialView.addAllFabOptionItem()` to `SpeedDialView.addAllActionItems()`
@@ -18,6 +19,11 @@
     - renamed `SpeedDialView.closeOptionsMenu()` to `SpeedDialView.close()`
     - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.open()`
     - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggle()`
+    - removed attributes `android:src`
+    - renamed attributes `srcCompat` to `sdMainFabOpenSrc`
+    - renamed attributes `sdFabCloseSrc` to `sdMainFabCloseSrc`
+    - removed attributes `sdFabRotateOnToggle`
+    - added attributes `sdMainFabCloseRotateAngle`
  - minor fixes
 
 ## [1.0-alpha03] - 2018-04-02

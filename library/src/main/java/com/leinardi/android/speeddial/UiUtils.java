@@ -26,17 +26,16 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class UiUtils {
-    public static final float ROTATION_ANGLE = 45.0F;
     private static final int SHORT_ANIM_TIME = 200;
 
     private UiUtils() {
@@ -90,7 +89,7 @@ public class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -113,7 +112,7 @@ public class UiUtils {
                 .alpha(1F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
@@ -129,7 +128,7 @@ public class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -147,18 +146,18 @@ public class UiUtils {
     }
 
     /**
-     * Rotate a view of {@link #ROTATION_ANGLE} degrees.
+     * Rotate a view of the specified degrees.
      *
      * @param view    The view to rotate.
      * @param animate true to animate the rotation, false to be instant.
      * @see #rotateBackward(View, boolean)
      */
-    public static void rotateForward(View view, boolean animate) {
+    public static void rotateForward(View view, float angle, boolean animate) {
         ViewCompat.animate(view)
-                .rotation(ROTATION_ANGLE)
+                .rotation(angle)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
@@ -167,18 +166,21 @@ public class UiUtils {
      *
      * @param view    The view to rotate.
      * @param animate true to animate the rotation, false to be instant.
-     * @see #rotateForward(View, boolean)
+     * @see #rotateForward(View, float, boolean)
      */
     public static void rotateBackward(View view, boolean animate) {
         ViewCompat.animate(view)
                 .rotation(0.0F)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
     public static Drawable getRotateDrawable(final Drawable drawable, final float angle) {
+        if (angle == 0) {
+            return drawable;
+        }
         final Drawable[] drawables = {drawable};
         return new LayerDrawable(drawables) {
             @Override

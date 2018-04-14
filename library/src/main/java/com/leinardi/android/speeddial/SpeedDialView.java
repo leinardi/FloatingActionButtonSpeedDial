@@ -17,12 +17,14 @@
 package com.leinardi.android.speeddial;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
@@ -54,7 +56,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
+import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.BOTTOM;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.LEFT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.RIGHT;
@@ -64,6 +66,8 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
+    private static final String STATE_KEY_SUPER = "superState";
+    private static final String STATE_KEY_IS_OPEN = "isOpen";
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     private FloatingActionButton mMainFab;
     private boolean mIsOpen = false;
@@ -71,11 +75,15 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private Drawable mMainFabOpenDrawable = null;
     @Nullable
     private Drawable mMainFabCloseDrawable = null;
+    @ColorInt
+    private int mMainFabOpenBackgroundColor;
+    @ColorInt
+    private int mMainFabCloseBackgroundColor;
     @Nullable
     private SpeedDialOverlayLayout mOverlayLayout;
     @ExpansionMode
     private int mExpansionMode = TOP;
-    private boolean mRotateOnToggle = true;
+    private float mMainFabCloseRotateAngle;
     @Nullable
     private OnChangeListener mOnChangeListener;
     @Nullable
@@ -395,25 +403,57 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         return mIsOpen;
     }
 
-    public boolean isRotateOnToggle() {
-        return mRotateOnToggle;
+    public float getMainFabCloseRotateAngle() {
+        return mMainFabCloseRotateAngle;
     }
 
-    public void setRotateOnToggle(boolean rotateOnToggle) {
-        mRotateOnToggle = rotateOnToggle;
+    public void setMainFabCloseRotateAngle(float mainFabCloseRotateAngle) {
+        mMainFabCloseRotateAngle = mainFabCloseRotateAngle;
+    }
+
+    public void setMainFabOpenDrawable(@Nullable Drawable drawable) {
+        mMainFabOpenDrawable = drawable;
+        updateMainFabDrawable();
+    }
+
+    public void setMainFabCloseDrawable(@Nullable Drawable drawable) {
+        if (drawable == null) {
+            mMainFabCloseDrawable = null;
+        } else {
+            mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -mMainFabCloseRotateAngle);
+        }
+        updateMainFabDrawable();
+    }
+
+    public int getMainFabOpenBackgroundColor() {
+        return mMainFabOpenBackgroundColor;
+    }
+
+    public void setMainFabOpenBackgroundColor(int mainFabOpenBackgroundColor) {
+        mMainFabOpenBackgroundColor = mainFabOpenBackgroundColor;
+        updateMainFabBackgroundColor();
+    }
+
+    public int getMainFabCloseBackgroundColor() {
+        return mMainFabCloseBackgroundColor;
+    }
+
+    public void setMainFabCloseBackgroundColor(int mainFabCloseBackgroundColor) {
+        mMainFabCloseBackgroundColor = mainFabCloseBackgroundColor;
+        updateMainFabBackgroundColor();
     }
 
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("superState", super.onSaveInstanceState());
+        bundle.putParcelable(STATE_KEY_SUPER, super.onSaveInstanceState());
         ArrayList<SpeedDialActionItem> speedDialActionItems = new ArrayList<>(mFabWithLabelViews.size());
         for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
             speedDialActionItems.add(fabWithLabelView.getSpeedDialActionItem());
         }
         bundle.putParcelableArrayList(SpeedDialActionItem.class.getName(), speedDialActionItems);
-        bundle.putBoolean("IsOpen", mIsOpen);
+        bundle.putBoolean(STATE_KEY_IS_OPEN, mIsOpen);
         return bundle;
     }
 
@@ -427,8 +467,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 //                Collections.reverse(speedDialActionItems);
                 addAllActionItems(speedDialActionItems);
             }
-            toggle(bundle.getBoolean("IsOpen", mIsOpen));
-            state = bundle.getParcelable("superState");
+            toggle(bundle.getBoolean(STATE_KEY_IS_OPEN, mIsOpen));
+            state = bundle.getParcelable(STATE_KEY_SUPER);
         }
         super.onRestoreInstanceState(state);
     }
@@ -485,20 +525,23 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
-            if (openDrawableRes == NOT_SET) {
-                openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
+            setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
+                    mMainFabCloseRotateAngle));
+            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenSrc,
+                    RESOURCE_NOT_SET);
+            if (openDrawableRes != RESOURCE_NOT_SET) {
+                setMainFabOpenDrawable(AppCompatResources.getDrawable(getContext(), openDrawableRes));
             }
-            if (openDrawableRes != NOT_SET) {
-                mMainFabOpenDrawable = AppCompatResources.getDrawable(getContext(), openDrawableRes);
+            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabCloseSrc, RESOURCE_NOT_SET);
+            if (closeDrawableRes != RESOURCE_NOT_SET) {
+                setMainFabCloseDrawable(AppCompatResources.getDrawable(context, closeDrawableRes));
             }
-            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdFabCloseSrc, NOT_SET);
-            if (closeDrawableRes != NOT_SET) {
-                final Drawable drawable = AppCompatResources.getDrawable(context, closeDrawableRes);
-                mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -UiUtils.ROTATION_ANGLE);
-            }
-            mExpansionMode = attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode);
-            mRotateOnToggle = attr.getBoolean(R.styleable.SpeedDialView_sdFabRotateOnToggle, mRotateOnToggle);
+            setExpansionMode(attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode));
+
+            setMainFabOpenBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabOpenBackgroundColor,
+                    mMainFabOpenBackgroundColor));
+            setMainFabCloseBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabCloseBackgroundColor,
+                    mMainFabCloseBackgroundColor));
             //            int color = attr.getColor(
             //                    R.styleable.SpeedDialView_color,
             //                    UiUtils.getAccentColor(context));
@@ -508,8 +551,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         } finally {
             attr.recycle();
         }
-        mMainFab.setImageDrawable(mMainFabOpenDrawable);
-        setExpansionMode(mExpansionMode);
     }
 
     private FloatingActionButton createMainFab() {
@@ -544,7 +585,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private FabWithLabelView createNewFabWithLabelView(SpeedDialActionItem speedDialActionItem) {
         FabWithLabelView newView;
         int theme = speedDialActionItem.getTheme();
-        if (theme == NOT_SET) {
+        if (theme == RESOURCE_NOT_SET) {
             newView = new FabWithLabelView(getContext());
         } else {
             newView = new FabWithLabelView(new ContextThemeWrapper(getContext(), theme), null, theme);
@@ -561,28 +602,51 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         mIsOpen = show;
         visibilitySetup(show);
-        if (show) {
+        updateMainFabDrawable();
+        updateMainFabBackgroundColor();
+        showHideOverlay(show);
+        if (mOnChangeListener != null) {
+            mOnChangeListener.onToggleChanged(show);
+        }
+    }
+
+    private void updateMainFabDrawable() {
+        if (isOpen()) {
             if (mMainFabCloseDrawable != null) {
                 mMainFab.setImageDrawable(mMainFabCloseDrawable);
             }
-            UiUtils.rotateForward(mMainFab, mRotateOnToggle);
+            UiUtils.rotateForward(mMainFab, mMainFabCloseRotateAngle, true);
+        } else {
+            UiUtils.rotateBackward(mMainFab, true);
+            if (mMainFabCloseDrawable != null) {
+                mMainFab.setImageDrawable(mMainFabOpenDrawable);
+            }
+        }
+    }
+
+    private void updateMainFabBackgroundColor() {
+        int color;
+        if (isOpen()) {
+            color = mMainFabOpenBackgroundColor;
+        } else {
+            color = mMainFabCloseBackgroundColor;
+        }
+        if (color != RESOURCE_NOT_SET) {
+            mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
+    }
+
+    private void updateElevation() {
+        if (isOpen()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_open_elevation));
             } else {
                 bringToFront();
             }
         } else {
-            UiUtils.rotateBackward(mMainFab, mRotateOnToggle);
-            if (mMainFabCloseDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabOpenDrawable);
-            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_close_elevation));
             }
-        }
-        showHideOverlay(show);
-        if (mOnChangeListener != null) {
-            mOnChangeListener.onToggleChanged(show);
         }
     }
 
@@ -641,7 +705,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         fabWithLabelView.setAlpha(1);
         fabWithLabelView.setVisibility(View.VISIBLE);
         enlargeAnim(fabWithLabelView.getFab(), delay);
-        if (fabWithLabelView.isLabelEnable()) {
+        if (fabWithLabelView.isLabelEnabled()) {
             CardView labelBackground = fabWithLabelView.getLabelBackground();
             ViewCompat.animate(labelBackground).cancel();
             Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.sd_fade_and_translate_in);

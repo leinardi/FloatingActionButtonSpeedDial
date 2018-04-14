@@ -33,7 +33,7 @@ import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {
-    public static final int NOT_SET = Integer.MIN_VALUE;
+    public static final int RESOURCE_NOT_SET = 0;
     @IdRes
     private final int mId;
     @Nullable
@@ -89,7 +89,7 @@ public class SpeedDialActionItem implements Parcelable {
     public Drawable getFabImageDrawable(Context context) {
         if (mFabImageDrawable != null) {
             return mFabImageDrawable;
-        } else if (mFabImageResource != NOT_SET) {
+        } else if (mFabImageResource != RESOURCE_NOT_SET) {
             return AppCompatResources.getDrawable(context, mFabImageResource);
         } else {
             return null;
@@ -138,20 +138,20 @@ public class SpeedDialActionItem implements Parcelable {
         @Nullable
         private Drawable mFabImageDrawable;
         @ColorInt
-        private int mFabImageTintColor = NOT_SET;
+        private int mFabImageTintColor = RESOURCE_NOT_SET;
         @Nullable
         private String mLabel;
         @ColorInt
-        private int mFabBackgroundColor = NOT_SET;
+        private int mFabBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mLabelColor = NOT_SET;
+        private int mLabelColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mLabelBackgroundColor = NOT_SET;
+        private int mLabelBackgroundColor = RESOURCE_NOT_SET;
         private boolean mLabelClickable = true;
         @FloatingActionButton.Size
         private int mFabSize = SIZE_AUTO;
         @StyleRes
-        private int mTheme = NOT_SET;
+        private int mTheme = RESOURCE_NOT_SET;
 
         /**
          * Creates a builder for a speed dial action item that uses the a {@link DrawableRes} as icon.
@@ -178,7 +178,7 @@ public class SpeedDialActionItem implements Parcelable {
         public Builder(@IdRes int id, @Nullable Drawable drawable) {
             mId = id;
             mFabImageDrawable = drawable;
-            mFabImageResource = NOT_SET;
+            mFabImageResource = RESOURCE_NOT_SET;
         }
 
         public Builder setLabel(@Nullable String label) {
