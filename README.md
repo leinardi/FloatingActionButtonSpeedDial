@@ -12,7 +12,7 @@
 Android library providing an implementation of the [Material Design Floating Action Button Speed Dial](https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-transitions).
 
 ## Features
-- [x] MinSdk 15
+- [x] MinSdk 14
 - [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support) 
 - [x] Same animations as in [Inbox by Gmail](https://play.google.com/store/apps/details?id=com.google.android.apps.inbox)
 - [x] Option to have different icons for open/close state
