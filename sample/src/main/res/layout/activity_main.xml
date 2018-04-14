@@ -57,7 +57,7 @@
         app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
         app:sdExpansionMode="top"
         app:sdMainFabCloseRotateAngle="90"
-        app:sdMainFabCloseSrc="@drawable/ic_camera_alt_white_24dp"
+        app:sdMainFabCloseSrc="@drawable/ic_pencil_alt_white_24dp"
         app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
