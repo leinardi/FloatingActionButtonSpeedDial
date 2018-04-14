@@ -7,24 +7,37 @@ os:
 addons:
   apt_packages:
     - pandoc
-before_install:
+
+before_cache:
+  # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    # Gradle dependencies
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+    # Android build cache (see https://developer.android.com/studio/build/build-cache.html)
+    - $HOME/.android/build-cache
+
+before_script:
   - mkdir -p $ANDROID_HOME/licenses
   - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $ANDROID_HOME/licenses/android-sdk-license
   - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROID_HOME/licenses/android-sdk-license
-
-android:
-  components:
-    - tools
-    - platform-tools
-    - tools
-    - build-tools-27.0.3
-    - android-27
-  licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - google-gdk-license-.+
+  - mkdir -p $HOME/.android # silence sdkmanager warning
+  - echo 'count=0' > $HOME/.android/repositories.cfg # silence sdkmanager warning
+  - echo y | $ANDROID_HOME/tools/bin/sdkmanager 'tools' 'platform-tools' 'build-tools;27.0.3' > /dev/null
+  - echo y | $ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-27' > /dev/null
 
 script:
-  - ./gradlew clean check dependencyUpdate --profile
+  - set -o pipefail
+  - ./gradlew clean build :library:check --profile --continue 2>&1 | tee build.log
+  - set +o pipefail
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+      ./gradlew violationCommentsToGitHub -DGITHUB_PULLREQUESTID=$TRAVIS_PULL_REQUEST -DGITHUB_OAUTH2TOKEN=$GITHUB_OAUTH2TOKEN --info
+    fi
   - pandoc `ls -1rt build/reports/profile/profile-*.html | tail -n1` -t plain
-  - cat build/dependencyUpdates/report.txt
+  - ./gradlew dependencyUpdate # I must run this separately due to issues with the support library resolutionStrategy

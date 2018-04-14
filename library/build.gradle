@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply from: rootProject.file('checkstyle.gradle')
+apply plugin: 'net.ltgt.errorprone'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -28,6 +29,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
         versionName build_versions.version_name
+        consumerProguardFiles 'consumer-proguard-rules.pro'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -38,8 +40,17 @@ android {
     }
 }
 
+tasks.withType(JavaCompile) {
+    // remove the if condition if you want to run NullAway on test code
+    if (!name.toLowerCase().contains("test")) {
+        // remove "-Xep:NullAway:ERROR" to have NullAway only emit warnings
+        options.compilerArgs += ["-Xep:NullAway:ERROR", "-XepOpt:NullAway:AnnotatedPackages=com.leinardi.android.speeddial"]
+    }
+}
+
 dependencies {
     api deps.support.app_compat
     api deps.support.design
     api deps.support.cardview
+    annotationProcessor "com.uber.nullaway:nullaway:0.4.2"
 }

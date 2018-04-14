@@ -21,9 +21,9 @@
 ext.deps = [:]
 def versions = [:]
 versions.android_checkstyle_plugin = "1.0.0"
-versions.android_gradle_plugin = "3.1.0"
-versions.android_maven_gradle_plugin = "2.0"
-versions.androidthings = "0.6.1-devpreview"
+versions.android_gradle_plugin = "3.1.1"
+versions.android_maven_gradle_plugin = "2.1"
+versions.androidthings = "0.7-devpreview"
 versions.apache_commons = "2.5"
 versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.1.0"
 versions.atsl_rules = "1.0.1"
@@ -41,6 +41,7 @@ versions.driver_hd44780 = "0.2"
 versions.driver_lsm9ds1 = "0.3"
 versions.driver_sh1106 = "0.2"
 versions.driver_tsl256x = "0.1"
+versions.errorprone_plugin = "0.0.13"
 versions.espresso = "3.0.1"
 versions.glide = "3.8.0"
 versions.gradle_bintray_plugin = "1.8.0"
@@ -60,8 +61,9 @@ versions.play_services = "11.6.2"
 versions.retrofit = "2.3.0"
 versions.rx_android = "2.0.1"
 versions.rxjava2 = "2.1.9"
-versions.support = "27.1.0"
+versions.support = "27.1.1"
 versions.timber = "4.6.0"
+versions.violations_plugin = "1.40"
 ext.versions = versions
 
 def deps = [:]
@@ -179,6 +181,7 @@ deps.driver_hd44780 = "com.leinardi.android.things:driver-hd44780:$versions.driv
 deps.driver_lsm9ds1 = "com.leinardi.android.things:driver-lsm9ds1:$versions.driver_lsm9ds1"
 deps.driver_sh1106 = "com.leinardi.android.things:driver-sh1106:$versions.driver_sh1106"
 deps.driver_tsl256x = "com.leinardi.android.things:driver-tsl256x:$versions.driver_tsl256x"
+deps.errorprone_plugin = "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
 deps.glide = "com.github.bumptech.glide:glide:$versions.glide"
 deps.gradle_bintray_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradle_bintray_plugin"
 deps.gradle_versions_plugin = "com.github.ben-manes:gradle-versions-plugin:$versions.gradle_versions_plugin"
@@ -192,21 +195,24 @@ deps.pio_softpwm = "com.leinardi.android.things:pio-softpwm:$versions.pio_softpw
 deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+deps.violations_plugin = "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
 ext.deps = deps
 
 def build_versions = [:]
-build_versions.min_sdk = 15
+build_versions.min_sdk = 14
 build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.3"
 build_versions.java_version = JavaVersion.VERSION_1_7
 build_versions.version_code = 'git rev-list --count HEAD'.execute().text.trim() as int
-build_versions.version_name = "1.0-alpha03"
+build_versions.version_name = "1.0-alpha04"
 ext.build_versions = build_versions
 
 
 static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
+    handler.mavenCentral()
+    handler.maven { url "https://plugins.gradle.org/m2/" }
     handler.maven { url 'https://dl.bintray.com/leinardi/android' }
 }
 

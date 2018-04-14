@@ -61,47 +61,35 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
      * @param clickableOverlay True to enable the click, false otherwise.
      */
     public void setClickableOverlay(boolean clickableOverlay) {
-        this.mClickableOverlay = clickableOverlay;
+        mClickableOverlay = clickableOverlay;
         setOnClickListener(mClickListener);
     }
 
     public void setAnimationDuration(int animationDuration) {
-        this.mAnimationDuration = animationDuration;
+        mAnimationDuration = animationDuration;
     }
 
     public void show() {
-        toggle(true);
+        show(true);
     }
 
-    public void show(boolean immediately) {
-        toggle(true, immediately);
+    public void show(boolean animate) {
+        if (animate) {
+            UiUtils.fadeInAnim(this);
+        } else {
+            setVisibility(VISIBLE);
+        }
     }
 
     public void hide() {
-        toggle(false);
+        hide(true);
     }
 
-    public void hide(boolean immediately) {
-        toggle(false, immediately);
-    }
-
-    public void toggle(boolean show) {
-        toggle(show, false);
-    }
-
-    public void toggle(final boolean show, boolean immediately) {
-        if (show) {
-            if (immediately) {
-                setVisibility(VISIBLE);
-            } else {
-                UiUtils.fadeInAnim(this);
-            }
+    public void hide(boolean animate) {
+        if (animate) {
+            UiUtils.fadeOutAnim(this);
         } else {
-            if (immediately) {
-                setVisibility(GONE);
-            } else {
-                UiUtils.fadeOutAnim(this);
-            }
+            setVisibility(GONE);
         }
     }
 
@@ -111,7 +99,7 @@ public class SpeedDialOverlayLayout extends RelativeLayout {
         super.setOnClickListener(hasClickableOverlay() ? clickListener : null);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, @Nullable AttributeSet attrs) {
         TypedArray attr = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SpeedDialOverlayLayout, 0, 0);
         int overlayColor = ResourcesCompat.getColor(getResources(), R.color.sd_overlay_color, context.getTheme());
         try {

@@ -16,35 +16,32 @@
 
 package com.leinardi.android.speeddial;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.content.res.AppCompatResources;
 
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {
-    public static final int NOT_SET = Integer.MIN_VALUE;
-    public static final Creator<SpeedDialActionItem> CREATOR = new Creator<SpeedDialActionItem>() {
-        @Override
-        public SpeedDialActionItem createFromParcel(Parcel source) {
-            return new SpeedDialActionItem(source);
-        }
-
-        @Override
-        public SpeedDialActionItem[] newArray(int size) {
-            return new SpeedDialActionItem[size];
-        }
-    };
+    public static final int RESOURCE_NOT_SET = 0;
     @IdRes
     private final int mId;
+    @Nullable
     private final String mLabel;
     @DrawableRes
     private final int mFabImageResource;
+    @Nullable
+    private final Drawable mFabImageDrawable;
     @ColorInt
     private final int mFabImageTintColor;
     @ColorInt
@@ -63,7 +60,8 @@ public class SpeedDialActionItem implements Parcelable {
         mId = builder.mId;
         mLabel = builder.mLabel;
         mFabImageTintColor = builder.mFabImageTintColor;
-        mFabImageResource = builder.mImageResource;
+        mFabImageResource = builder.mFabImageResource;
+        mFabImageDrawable = builder.mFabImageDrawable;
         mFabBackgroundColor = builder.mFabBackgroundColor;
         mLabelColor = builder.mLabelColor;
         mLabelBackgroundColor = builder.mLabelBackgroundColor;
@@ -72,30 +70,30 @@ public class SpeedDialActionItem implements Parcelable {
         mTheme = builder.mTheme;
     }
 
-    protected SpeedDialActionItem(Parcel in) {
-        this.mId = in.readInt();
-        this.mLabel = in.readString();
-        this.mFabImageResource = in.readInt();
-        this.mFabImageTintColor = in.readInt();
-        this.mFabBackgroundColor = in.readInt();
-        this.mLabelColor = in.readInt();
-        this.mLabelBackgroundColor = in.readInt();
-        this.mLabelClickable = in.readByte() != 0;
-        this.mFabSize = in.readInt();
-        this.mTheme = in.readInt();
-    }
-
     public int getId() {
         return mId;
     }
 
+    @Nullable
     public String getLabel() {
         return mLabel;
     }
 
-    @DrawableRes
-    public int getFabImageResource() {
-        return mFabImageResource;
+    /**
+     * Gets the current Drawable, or null if no Drawable has been assigned.
+     *
+     * @param context A context to retrieve the Drawable from (needed for SpeedDialActionItem.Builder(int, int).
+     * @return the speed dial item drawable, or null if no drawable has been assigned.
+     */
+    @Nullable
+    public Drawable getFabImageDrawable(Context context) {
+        if (mFabImageDrawable != null) {
+            return mFabImageDrawable;
+        } else if (mFabImageResource != RESOURCE_NOT_SET) {
+            return AppCompatResources.getDrawable(context, mFabImageResource);
+        } else {
+            return null;
+        }
     }
 
     @ColorInt
@@ -126,25 +124,6 @@ public class SpeedDialActionItem implements Parcelable {
         return mTheme;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mId);
-        dest.writeString(this.mLabel);
-        dest.writeInt(this.mFabImageResource);
-        dest.writeInt(this.mFabImageTintColor);
-        dest.writeInt(this.mFabBackgroundColor);
-        dest.writeInt(this.mLabelColor);
-        dest.writeInt(this.mLabelBackgroundColor);
-        dest.writeByte(this.mLabelClickable ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.mFabSize);
-        dest.writeInt(this.mTheme);
-    }
-
     // Disabled due to https://issuetracker.google.com/issues/77303906
     @FloatingActionButton.Size
     /* public */ int getFabSize() {
@@ -155,28 +134,54 @@ public class SpeedDialActionItem implements Parcelable {
         @IdRes
         private final int mId;
         @DrawableRes
-        private final int mImageResource;
+        private final int mFabImageResource;
+        @Nullable
+        private Drawable mFabImageDrawable;
         @ColorInt
-        private int mFabImageTintColor = NOT_SET;
+        private int mFabImageTintColor = RESOURCE_NOT_SET;
+        @Nullable
         private String mLabel;
         @ColorInt
-        private int mFabBackgroundColor = NOT_SET;
+        private int mFabBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mLabelColor = NOT_SET;
+        private int mLabelColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mLabelBackgroundColor = NOT_SET;
+        private int mLabelBackgroundColor = RESOURCE_NOT_SET;
         private boolean mLabelClickable = true;
         @FloatingActionButton.Size
         private int mFabSize = SIZE_AUTO;
         @StyleRes
-        private int mTheme = NOT_SET;
+        private int mTheme = RESOURCE_NOT_SET;
 
-        public Builder(@IdRes int id, @DrawableRes int imageResource) {
+        /**
+         * Creates a builder for a speed dial action item that uses the a {@link DrawableRes} as icon.
+         * <p class="note">This does Bitmap reading and decoding on the UI thread, which can cause a latency hiccup.
+         * If that's a concern, consider using Builder(int, Drawable) instead.</p>
+         *
+         * @param id               the identifier for this action item. The identifier must be unique to the instance
+         *                         of {@link SpeedDialView}. The identifier should be a positive number.
+         * @param fabImageResource resId the resource identifier of the drawable
+         */
+        public Builder(@IdRes int id, @DrawableRes int fabImageResource) {
             mId = id;
-            mImageResource = imageResource;
+            mFabImageResource = fabImageResource;
+            mFabImageDrawable = null;
         }
 
-        public Builder setLabel(String label) {
+        /**
+         * Creates a builder for a speed dial action item that uses the a {@link Drawable} as icon.
+         *
+         * @param id       the identifier for this action item. The identifier must be unique to the instance
+         *                 of {@link SpeedDialView}. The identifier should be a positive number.
+         * @param drawable the Drawable to set, or null to clear the content
+         */
+        public Builder(@IdRes int id, @Nullable Drawable drawable) {
+            mId = id;
+            mFabImageDrawable = drawable;
+            mFabImageResource = RESOURCE_NOT_SET;
+        }
+
+        public Builder setLabel(@Nullable String label) {
             mLabel = label;
             return this;
         }
@@ -222,4 +227,51 @@ public class SpeedDialActionItem implements Parcelable {
         }
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mId);
+        dest.writeString(this.mLabel);
+        dest.writeInt(this.mFabImageResource);
+        dest.writeParcelable(UiUtils.getBitmapFromDrawable(this.mFabImageDrawable), flags);
+        dest.writeInt(this.mFabImageTintColor);
+        dest.writeInt(this.mFabBackgroundColor);
+        dest.writeInt(this.mLabelColor);
+        dest.writeInt(this.mLabelBackgroundColor);
+        dest.writeByte(this.mLabelClickable ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.mFabSize);
+        dest.writeInt(this.mTheme);
+    }
+
+    protected SpeedDialActionItem(Parcel in) {
+        this.mId = in.readInt();
+        this.mLabel = in.readString();
+        this.mFabImageResource = in.readInt();
+        this.mFabImageDrawable =
+                UiUtils.getDrawableFromBitmap((Bitmap) in.readParcelable(Bitmap.class.getClassLoader()));
+        this.mFabImageTintColor = in.readInt();
+        this.mFabBackgroundColor = in.readInt();
+        this.mLabelColor = in.readInt();
+        this.mLabelBackgroundColor = in.readInt();
+        this.mLabelClickable = in.readByte() != 0;
+        this.mFabSize = in.readInt();
+        this.mTheme = in.readInt();
+    }
+
+    public static final Creator<SpeedDialActionItem> CREATOR = new Creator<SpeedDialActionItem>() {
+        @Override
+        public SpeedDialActionItem createFromParcel(Parcel source) {
+            return new SpeedDialActionItem(source);
+        }
+
+        @Override
+        public SpeedDialActionItem[] newArray(int size) {
+            return new SpeedDialActionItem[size];
+        }
+    };
 }

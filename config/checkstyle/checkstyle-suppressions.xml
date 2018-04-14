@@ -26,5 +26,6 @@
     <suppress checks="JavadocStyle" files=".*[\\/]src[\\/]test[\\/]" />
     <suppress checks="VisibilityModifier" files=".*[\\/]src[\\/]test[\\/]" />
     <suppress checks="MemberName" files=".*[\\/]model[\\/]" />
-    <suppress checks=".*" files=".*[\\/]build[\\/]" />
+    <suppress checks=".*" files=".*[\\/]build/generated[\\/]" />
+    <suppress checks=".*" files=".*[\\/]build/intermediates[\\/]" />
 </suppressions>

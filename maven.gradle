@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.github.dcendents.android-maven'
+def isMavenAvailable = false
+try {
+    "mvn -version".execute().waitFor() // Check if Maven binary is available
+    isMavenAvailable = true
+} catch (IOException ignore) {
+    logger.warn("Maven binary not available, pubishing to Bintray not possible.")
+}
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
+if (isMavenAvailable) {
+    apply plugin: 'com.github.dcendents.android-maven'
+
+    install {
+        repositories.mavenInstaller.pom.project {
             name mvn_config.artifact_id
             description mvn_config.description
             url mvn_config.website
@@ -49,23 +57,29 @@ install {
             }
         }
     }
-}
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
 
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    afterEvaluate {
+        javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+    }
+
+    apply from: rootProject.file('bintray.gradle')
 }

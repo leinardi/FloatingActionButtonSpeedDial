@@ -1,19 +1,20 @@
 # Floating Action Button Speed Dial
 
 [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)
-[![GitHub release](https://img.shields.io/github/release/leinardi/FloatingActionButtonSpeedDial/all.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/releases)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/leinardi/FloatingActionButtonSpeedDial.svg?columns=all&style=plastic)](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
 
-Android library providing an implementation of the Material Design Floating Action Button Speed Dial.
 
-![Demo](/art/demo_1.gif)
+<img src="/art/demo_1.gif" width="290" align="right" hspace="0" />
+
+Android library providing an implementation of the [Material Design Floating Action Button Speed Dial](https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-transitions).
 
 ## Features
-- [x] MinSdk 15
+- [x] MinSdk 14
 - [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support) 
-- [x] Same animations as in Inbox by Gmail
+- [x] Same animations as in [Inbox by Gmail](https://play.google.com/store/apps/details?id=com.google.android.apps.inbox)
 - [x] Option to have different icons for open/close state
 - [x] Optional overlay/touch guard layout
 - [x] Support for bottom, left and right menu expansion (left and right have no labels)
@@ -22,24 +23,31 @@ Android library providing an implementation of the Material Design Floating Acti
 - [x] Support for VectorDrawable
 - [x] Easy to use
 
-## To Do
-- [x] Publish first alpha release
-- [ ] Publish first beta release
-- [ ] Publish first stable release
-- [ ] Add label to main FAB (blocked by https://issuetracker.google.com/issues/77303906)
-- [ ] Add FAB size option (blocked by https://issuetracker.google.com/issues/77303906)
-- [ ] Clean up code 
-- [ ] Add Javadoc
-- [ ] Write tests
+## Development status
+Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) board.
 
 ## How to use
 ### Gradle setup
+#### Official releases
 The library is available on Jcenter so no additonal repository is required.
 
-Dependencies entry (latest version: [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
+Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```
-implementation "com.leinardi.android:speed-dial:<latest version>"
+implementation "com.leinardi.android:speed-dial:1.0-alpha04"
 ```
+#### Snapshots (development branch)
+You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
+
+Add the JitPack repository to your build file:
+```
+maven { url 'https://jitpack.io' }
+```
+
+Add the dependency
+```
+implementation 'com.github.leinardi:FloatingActionButtonSpeedDial:master-SNAPSHOT'
+```
+
 ### Basic use
 Add the `SpeedDialView` to your layout:
 
@@ -49,44 +57,86 @@ Add the `SpeedDialView` to your layout:
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
-    app:srcCompat="@drawable/ic_add_white_24dp" />
+    app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
 ```
 
 Add the items to the `SpeedDialView`:
 
 ```java
 SpeedDialView speedDialView = findViewById(R.id.speedDial);
-speedDialView.addFabOptionItem(
+speedDialView.addActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
                 .create()
 );
 ```
 Add the click listeners:
 ```java
-speedDialView.setMainFabOnClickListener(new View.OnClickListener() {
+speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
     @Override
-    public void onClick(View view) {
-        if (speedDialView.isFabMenuOpen()) {
-            speedDialView.closeOptionsMenu();
-        }
-    }
-});
-
-speedDialView.setOptionFabSelectedListener(new SpeedDialView.OnOptionFabSelectedListener() {
-    @Override
-    public void onOptionFabSelected(SpeedDialActionItem speedDialActionItem) {
+    public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
         switch (speedDialActionItem.getId()) {
             case R.id.fab_link:
                 showToast("Link action clicked!");
-                break;
+                return false; // true to keep the Speed Dial open
             default:
-                break;
+                return false;
         }
     }
 });
 ```
 
 ### Optional steps
+#### Add the main action click listener
+```java
+speedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
+    @Override
+    public void onMainActionSelected() {
+        // Call your main action here and than close the menu
+        if (mSpeedDialView.isOpen()) {
+            mSpeedDialView.close();
+        }
+    }
+
+    @Override
+    public void onToggleChanged(boolean isOpen) {
+        Log.d(TAG, "Speed dial toggle state changed. Open = " + isOpen);
+    }
+});
+```
+
+#### Customizing the items
+The `SpeedDialActionItem.Builder` provides several setters to customize the aspect of one item:
+
+```java
+mSpeedDialView.addActionItem(
+        new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable.ic_custom_color)
+                .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
+                .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+                .setLabel(getString(R.string.label_custom_color))
+                .setLabelColor(Color.WHITE)
+                .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+                .setLabelClickable(false)
+                .create()
+);
+```
+Is is also possible to specify a theme to easily change the FAB background and ripple effect color:
+
+```java
+mSpeedDialView.addActionItem(
+        new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
+                .setLabel(getString(R.string.label_custom_theme))
+                .setTheme(R.style.AppTheme_Purple)
+                .create());
+```
+```xml
+<style name="AppTheme.Purple" parent="AppTheme">
+    <item name="colorPrimary">@color/material_purple_500</item>
+    <item name="colorPrimaryDark">@color/material_purple_700</item>
+    <item name="colorAccent">@color/material_purple_a700</item>
+    <item name="colorControlHighlight">@color/material_purple_200</item>
+</style>
+```
+
 #### Adding an overlay/touch guard when the menu is open (like Inbox by Gmail)
 You simply need to add the `SpeedDialOverlayLayout` to your layout:
 
@@ -99,8 +149,8 @@ You simply need to add the `SpeedDialOverlayLayout` to your layout:
 and then provide the instance of that layout to the `SpeedDialView`:
 
 ```java
-SpeedDialOverlayLayout speedDialOverlayLayout = findViewById(R.id.overlay);
-mSpeedDialView.setSpeedDialOverlayLayout(speedDialOverlayLayout);
+SpeedDialOverlayLayout overlayLayout = findViewById(R.id.overlay);
+mSpeedDialView.setSpeedDialOverlayLayout(overlayLayout);
 ```
 
 #### Hiding the FAB when scrolling a `RecyclerView` or a `NestedScrollView`
@@ -132,21 +182,38 @@ params.setBehavior(new SpeedDialView.NoBehavior());
 speedDialView.requestLayout();
 ```
 
+### Sample project
 A fully working example is available [here](/sample).
 
 ## Demo
 ### Video
 https://www.youtube.com/watch?v=tWowiF5ElAg
-### App
+### Sample app
 [![Get it on the Play Store](/art/playstore_getiton.png)](https://play.google.com/store/apps/details?id=com.leinardi.android.speeddial.sample)
 
 ## Screenshots
-### API 27 and 16
-<img src="/art/screenshot_api_27.png" width="360"/> <img src="/art/screenshot_api_16.png" width="360"/>
+### API 27, API 16, bottom and left expansion
+<img src="/art/screenshot_api_27.png" width="215"/> <img src="/art/screenshot_api_16.png" width="215"/> <img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="215"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="215"/>
 
-### Bottom and left expansion
-<img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="360"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="360"/>
-
+## FAQ
+### How can I change the maximum length of the label?
+You can set a different value for the max length of the label overriding `sd_label_max_width`:
+```
+<dimen name="sd_label_max_width">240dp</dimen>
+```
+### How can I create a new resource ID, required by the `SpeedDialActionItem.Builder`?
+It can be done in XML using the `<item type="id" />`:
+```
+<resources>
+    <item name="fab_action1" type="id" />
+    <item name="fab_action2" type="id" />
+    <item name="fab_action3" type="id" />
+    <item name="fab_action4" type="id" />
+</resources>
+```
+More info [here](https://developer.android.com/guide/topics/resources/more-resources.html#Id).
+### How can I change the color of the overlay / touch guard layout?
+The color of the `SpeedDialOverlayLayout` can be changed simply using the `android:background` attribute or, programmatically, using the equivalent setter like any other view.
 
 ## Changelog
 See the [CHANGELOG.md](/CHANGELOG.md)

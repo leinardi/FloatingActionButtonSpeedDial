@@ -17,12 +17,14 @@
 package com.leinardi.android.speeddial;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
@@ -54,7 +56,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.leinardi.android.speeddial.SpeedDialActionItem.NOT_SET;
+import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.BOTTOM;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.LEFT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.RIGHT;
@@ -62,20 +64,44 @@ import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.TOP;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-@CoordinatorLayout.DefaultBehavior(SpeedDialView.SnackbarBehavior.class)
-public class SpeedDialView extends LinearLayout {
+public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
+    private static final String STATE_KEY_SUPER = "superState";
+    private static final String STATE_KEY_IS_OPEN = "isOpen";
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     private FloatingActionButton mMainFab;
-    private boolean mIsFabMenuOpen = false;
-    private Drawable mMainFabOpenDrawable = null;
-    private Drawable mMainFabCloseDrawable = null;
-    private OnOptionFabSelectedListener mOnOptionFabSelectedListener;
+    private boolean mIsOpen = false;
     @Nullable
-    private SpeedDialOverlayLayout mSpeedDialOverlayLayout;
+    private Drawable mMainFabOpenDrawable = null;
+    @Nullable
+    private Drawable mMainFabCloseDrawable = null;
+    @ColorInt
+    private int mMainFabOpenBackgroundColor;
+    @ColorInt
+    private int mMainFabCloseBackgroundColor;
+    @Nullable
+    private SpeedDialOverlayLayout mOverlayLayout;
     @ExpansionMode
     private int mExpansionMode = TOP;
-    private boolean mRotateOnToggle = true;
+    private float mMainFabCloseRotateAngle;
+    @Nullable
+    private OnChangeListener mOnChangeListener;
+    @Nullable
+    private OnActionSelectedListener mOnActionSelectedListener;
+    private OnActionSelectedListener mOnActionSelectedProxyListener = new OnActionSelectedListener() {
+        @Override
+        public boolean onActionSelected(SpeedDialActionItem actionItem) {
+            if (mOnActionSelectedListener != null) {
+                boolean consumed = mOnActionSelectedListener.onActionSelected(actionItem);
+                if (!consumed) {
+                    close();
+                }
+                return consumed;
+            } else {
+                return false;
+            }
+        }
+    };
 
     public SpeedDialView(Context context) {
         super(context);
@@ -136,8 +162,8 @@ public class SpeedDialView extends LinearLayout {
     }
 
     public void hide(@Nullable OnVisibilityChangedListener listener) {
-        if (isFabMenuOpen()) {
-            closeOptionsMenu();
+        if (isOpen()) {
+            close();
             // Workaround for mMainFab.hide() breaking the rotate anim
             ViewCompat.animate(mMainFab).rotation(0).setDuration(0).start();
         }
@@ -145,53 +171,80 @@ public class SpeedDialView extends LinearLayout {
     }
 
     @Nullable
-    public SpeedDialOverlayLayout getSpeedDialOverlayLayout() {
-        return mSpeedDialOverlayLayout;
+    public SpeedDialOverlayLayout getOverlayLayout() {
+        return mOverlayLayout;
     }
 
     /**
-     * Add the overlay/touch guard view to appear together with the option menu.
+     * Add the overlay/touch guard view to appear together with the speed dial menu.
      *
-     * @param speedDialOverlayLayout The view to add.
+     * @param overlayLayout The view to add.
      */
-    public void setSpeedDialOverlayLayout(@Nullable SpeedDialOverlayLayout speedDialOverlayLayout) {
-        if (speedDialOverlayLayout != null) {
-            speedDialOverlayLayout.setOnClickListener(new OnClickListener() {
+    public void setOverlayLayout(@Nullable SpeedDialOverlayLayout overlayLayout) {
+        if (overlayLayout != null) {
+            overlayLayout.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    closeOptionsMenu();
+                    close();
                 }
             });
-        } else if (mSpeedDialOverlayLayout != null) {
+        } else if (mOverlayLayout != null) {
             setOnClickListener(null);
         }
-        mSpeedDialOverlayLayout = speedDialOverlayLayout;
+        mOverlayLayout = overlayLayout;
     }
 
-    public void addAllFabOptionItem(Collection<SpeedDialActionItem> speedDialActionItemList) {
-        for (SpeedDialActionItem speedDialActionItem : speedDialActionItemList) {
-            addFabOptionItem(speedDialActionItem);
+    /**
+     * Appends all of the {@link SpeedDialActionItem} to the end of the list, in the order that they are returned by
+     * the specified
+     * collection's Iterator.
+     *
+     * @param actionItemCollection collection containing {@link SpeedDialActionItem} to be added to this list
+     */
+    public void addAllActionItems(Collection<SpeedDialActionItem> actionItemCollection) {
+        for (SpeedDialActionItem speedDialActionItem : actionItemCollection) {
+            addActionItem(speedDialActionItem);
         }
     }
 
-    public void addFabOptionItem(SpeedDialActionItem speedDialActionItem) {
-        addFabOptionItem(speedDialActionItem, mFabWithLabelViews.size());
+    /**
+     * Appends the specified {@link SpeedDialActionItem} to the end of this list.
+     *
+     * @param speedDialActionItem {@link SpeedDialActionItem} to be appended to this list
+     */
+    public void addActionItem(SpeedDialActionItem speedDialActionItem) {
+        addActionItem(speedDialActionItem, mFabWithLabelViews.size());
     }
 
-    public void addFabOptionItem(SpeedDialActionItem speedDialActionItem, int position) {
-        addFabOptionItem(speedDialActionItem, position, true);
+    /**
+     * Inserts the specified {@link SpeedDialActionItem} at the specified position in this list. Shifts the element
+     * currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     *
+     * @param actionItem {@link SpeedDialActionItem} to be appended to this list
+     * @param position   index at which the specified element is to be inserted
+     */
+    public void addActionItem(SpeedDialActionItem actionItem, int position) {
+        addActionItem(actionItem, position, true);
     }
 
-    public void addFabOptionItem(SpeedDialActionItem speedDialActionItem, int position, boolean animate) {
-        FabWithLabelView oldView = findFabWithLabelViewById(speedDialActionItem.getId());
+    /**
+     * Inserts the specified {@link SpeedDialActionItem} at the specified position in this list. Shifts the element
+     * currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     *
+     * @param actionItem {@link SpeedDialActionItem} to be appended to this list
+     * @param position   index at which the specified element is to be inserted
+     * @param animate    true to animate the insertion, false to insert instantly
+     */
+    public void addActionItem(SpeedDialActionItem actionItem, int position, boolean animate) {
+        FabWithLabelView oldView = findFabWithLabelViewById(actionItem.getId());
         if (oldView != null) {
-            replaceFabOptionItem(oldView.getSpeedDialActionItem(), speedDialActionItem);
+            replaceActionItem(oldView.getSpeedDialActionItem(), actionItem);
         } else {
-            FabWithLabelView newView = createNewFabWithLabelView(speedDialActionItem);
+            FabWithLabelView newView = createNewFabWithLabelView(actionItem);
             int layoutPosition = getLayoutPosition(position);
             addView(newView, layoutPosition);
             mFabWithLabelViews.add(position, newView);
-            if (isFabMenuOpen()) {
+            if (isOpen()) {
                 if (animate) {
                     showWithAnimationFabWithLabelView(newView, 0);
                 }
@@ -201,53 +254,102 @@ public class SpeedDialView extends LinearLayout {
         }
     }
 
-    private int getLayoutPosition(int position) {
-        if (mExpansionMode == TOP || mExpansionMode == LEFT) {
-            return mFabWithLabelViews.size() - position;
+    /**
+     * Removes the {@link SpeedDialActionItem} at the specified position in this list. Shifts any subsequent elements
+     * to the left (subtracts one from their indices).
+     *
+     * @param position the index of the {@link SpeedDialActionItem} to be removed
+     * @return the {@link SpeedDialActionItem} that was removed from the list
+     */
+    @Nullable
+    public SpeedDialActionItem removeActionItem(int position) {
+        SpeedDialActionItem speedDialActionItem = mFabWithLabelViews.get(position).getSpeedDialActionItem();
+        removeActionItem(speedDialActionItem);
+        return speedDialActionItem;
+    }
+
+    /**
+     * Removes the specified {@link SpeedDialActionItem} from this list, if it is present. If the list does not
+     * contain the element, it is unchanged.
+     * <p>
+     * Returns true if this list contained the specified element (or equivalently, if this list changed
+     * as a result of the call).
+     *
+     * @param actionItem {@link SpeedDialActionItem} to be removed from this list, if present
+     * @return true if this list contained the specified element
+     */
+    public boolean removeActionItem(@Nullable SpeedDialActionItem actionItem) {
+        return actionItem != null && removeActionItemById(actionItem.getId()) != null;
+    }
+
+    /**
+     * Finds and removes the first {@link SpeedDialActionItem} with the given ID, if it is present. If the list does not
+     * contain the element, it is unchanged.
+     *
+     * @param idRes the ID to search for
+     * @return the {@link SpeedDialActionItem} that was removed from the list, or null otherwise
+     */
+    @Nullable
+    public SpeedDialActionItem removeActionItemById(@IdRes int idRes) {
+        return removeActionItem(findFabWithLabelViewById(idRes));
+    }
+
+    /**
+     * Replace the {@link SpeedDialActionItem} at the specified position in this list with the one provided as
+     * parameter.
+     *
+     * @param newActionItem {@link SpeedDialActionItem} to use for the replacement
+     * @param position      the index of the {@link SpeedDialActionItem} to be replaced
+     * @return true if this list contained the specified element
+     */
+    public boolean replaceActionItem(SpeedDialActionItem newActionItem, int position) {
+        return replaceActionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(),
+                newActionItem);
+    }
+
+    /**
+     * Replace an already added {@link SpeedDialActionItem} with the one provided as parameter.
+     *
+     * @param oldSpeedDialActionItem the old {@link SpeedDialActionItem} to remove
+     * @param newSpeedDialActionItem the new {@link SpeedDialActionItem} to add
+     * @return true if this list contained the specified element
+     */
+    public boolean replaceActionItem(@Nullable SpeedDialActionItem oldSpeedDialActionItem,
+                                     SpeedDialActionItem newSpeedDialActionItem) {
+        if (oldSpeedDialActionItem == null) {
+            return false;
         } else {
-            return position + 1;
-        }
-    }
-
-    public boolean removeFabOptionItem(int position) {
-        return removeFabOptionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem());
-    }
-
-    public boolean removeFabOptionItem(SpeedDialActionItem speedDialActionItem) {
-        return removeFabOptionItemById(speedDialActionItem.getId());
-    }
-
-    public boolean removeFabOptionItemById(@IdRes int idRes) {
-        return removeFabOptionItem(findFabWithLabelViewById(idRes));
-    }
-
-    public boolean replaceFabOptionItem(SpeedDialActionItem newSpeedDialActionItem, int position) {
-        return replaceFabOptionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(), newSpeedDialActionItem);
-    }
-
-    public boolean replaceFabOptionItem(SpeedDialActionItem oldSpeedDialActionItem, SpeedDialActionItem
-            newSpeedDialActionItem) {
-        FabWithLabelView oldView = findFabWithLabelViewById(oldSpeedDialActionItem.getId());
-        if (oldView != null) {
-            int index = mFabWithLabelViews.indexOf(oldView);
-            if (index < 0) {
+            FabWithLabelView oldView = findFabWithLabelViewById(oldSpeedDialActionItem.getId());
+            if (oldView != null) {
+                int index = mFabWithLabelViews.indexOf(oldView);
+                if (index < 0) {
+                    return false;
+                }
+                removeActionItem(findFabWithLabelViewById(newSpeedDialActionItem.getId()), null, false);
+                removeActionItem(findFabWithLabelViewById(oldSpeedDialActionItem.getId()), null, false);
+                addActionItem(newSpeedDialActionItem, index, false);
+                return true;
+            } else {
                 return false;
             }
-            removeFabOptionItem(findFabWithLabelViewById(newSpeedDialActionItem.getId()), null, false);
-            removeFabOptionItem(findFabWithLabelViewById(oldSpeedDialActionItem.getId()), null, false);
-            addFabOptionItem(newSpeedDialActionItem, index, false);
-            return true;
-        } else {
-            return false;
         }
     }
 
-    public void clearFabOptionItems() {
+    /**
+     * Removes all of the {@link SpeedDialActionItem} from this list.
+     */
+    public void clearActionItems() {
         Iterator<FabWithLabelView> it = mFabWithLabelViews.iterator();
         while (it.hasNext()) {
             FabWithLabelView fabWithLabelView = it.next();
-            removeFabOptionItem(fabWithLabelView, it, true);
+            removeActionItem(fabWithLabelView, it, true);
         }
+    }
+
+    @NonNull
+    @Override
+    public CoordinatorLayout.Behavior getBehavior() {
+        return new SnackbarBehavior();
     }
 
     /**
@@ -255,80 +357,103 @@ public class SpeedDialView extends LinearLayout {
      *
      * @param listener listener to set.
      */
-    public void setOptionFabSelectedListener(final OnOptionFabSelectedListener listener) {
-        mOnOptionFabSelectedListener = listener;
-        for (int optionFabIndex = 0; optionFabIndex < mFabWithLabelViews.size(); optionFabIndex++) {
-            final FabWithLabelView fabWithLabelView = mFabWithLabelViews.get(optionFabIndex);
-            fabWithLabelView.setOptionFabSelectedListener(mOnOptionFabSelectedListener);
+    public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
+        mOnActionSelectedListener = listener;
+
+        for (int index = 0; index < mFabWithLabelViews.size(); index++) {
+            final FabWithLabelView fabWithLabelView = mFabWithLabelViews.get(index);
+            fabWithLabelView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
         }
     }
 
     /**
      * Set Main FloatingActionButton ClickMOnOptionFabSelectedListener.
      *
-     * @param listener listener to set.
+     * @param onChangeListener listener to set.
      */
-    public void setMainFabOnClickListener(@Nullable final OnClickListener listener) {
-        mMainFab.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                if (!mIsFabMenuOpen && !mFabWithLabelViews.isEmpty()) {
-                    openOptionsMenu();
-                } else {
-                    if (listener == null) {
-                        closeOptionsMenu();
-                    } else {
-                        listener.onClick(view);
-                    }
-                }
-            }
-        });
+    public void setOnChangeListener(@Nullable final OnChangeListener onChangeListener) {
+        mOnChangeListener = onChangeListener;
     }
 
     /**
-     * Opens options menu.
+     * Opens speed dial menu.
      */
-    public void openOptionsMenu() {
-        toggleOptionsMenu(true);
+    public void open() {
+        toggle(true);
     }
 
     /**
-     * Closes options menu.
+     * Closes speed dial menu.
      */
-    public void closeOptionsMenu() {
-        toggleOptionsMenu(false);
-    }
-
-    public void toggleOptionsMenu() {
-        toggleOptionsMenu(!mIsFabMenuOpen);
+    public void close() {
+        toggle(false);
     }
 
     /**
-     * Return returns true if menu opened,false otherwise.
+     * Toggles speed dial menu.
      */
-    public boolean isFabMenuOpen() {
-        return mIsFabMenuOpen;
+    public void toggle() {
+        toggle(!mIsOpen);
     }
 
-    public boolean isRotateOnToggle() {
-        return mRotateOnToggle;
+    /**
+     * Return returns true if speed dial menu is open,false otherwise.
+     */
+    public boolean isOpen() {
+        return mIsOpen;
     }
 
-    public void setRotateOnToggle(boolean rotateOnToggle) {
-        mRotateOnToggle = rotateOnToggle;
+    public float getMainFabCloseRotateAngle() {
+        return mMainFabCloseRotateAngle;
+    }
+
+    public void setMainFabCloseRotateAngle(float mainFabCloseRotateAngle) {
+        mMainFabCloseRotateAngle = mainFabCloseRotateAngle;
+    }
+
+    public void setMainFabOpenDrawable(@Nullable Drawable drawable) {
+        mMainFabOpenDrawable = drawable;
+        updateMainFabDrawable();
+    }
+
+    public void setMainFabCloseDrawable(@Nullable Drawable drawable) {
+        if (drawable == null) {
+            mMainFabCloseDrawable = null;
+        } else {
+            mMainFabCloseDrawable = UiUtils.getRotateDrawable(drawable, -mMainFabCloseRotateAngle);
+        }
+        updateMainFabDrawable();
+    }
+
+    public int getMainFabOpenBackgroundColor() {
+        return mMainFabOpenBackgroundColor;
+    }
+
+    public void setMainFabOpenBackgroundColor(int mainFabOpenBackgroundColor) {
+        mMainFabOpenBackgroundColor = mainFabOpenBackgroundColor;
+        updateMainFabBackgroundColor();
+    }
+
+    public int getMainFabCloseBackgroundColor() {
+        return mMainFabCloseBackgroundColor;
+    }
+
+    public void setMainFabCloseBackgroundColor(int mainFabCloseBackgroundColor) {
+        mMainFabCloseBackgroundColor = mainFabCloseBackgroundColor;
+        updateMainFabBackgroundColor();
     }
 
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("superState", super.onSaveInstanceState());
+        bundle.putParcelable(STATE_KEY_SUPER, super.onSaveInstanceState());
         ArrayList<SpeedDialActionItem> speedDialActionItems = new ArrayList<>(mFabWithLabelViews.size());
         for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
             speedDialActionItems.add(fabWithLabelView.getSpeedDialActionItem());
         }
         bundle.putParcelableArrayList(SpeedDialActionItem.class.getName(), speedDialActionItems);
-        bundle.putBoolean("IsFabMenuOpen", mIsFabMenuOpen);
+        bundle.putBoolean(STATE_KEY_IS_OPEN, mIsOpen);
         return bundle;
     }
 
@@ -340,26 +465,37 @@ public class SpeedDialView extends LinearLayout {
                     .class.getName());
             if (speedDialActionItems != null && !speedDialActionItems.isEmpty()) {
                 //                Collections.reverse(speedDialActionItems);
-                addAllFabOptionItem(speedDialActionItems);
+                addAllActionItems(speedDialActionItems);
             }
-            toggleOptionsMenu(bundle.getBoolean("IsFabMenuOpen", mIsFabMenuOpen));
-            state = bundle.getParcelable("superState");
+            toggle(bundle.getBoolean(STATE_KEY_IS_OPEN, mIsOpen));
+            state = bundle.getParcelable(STATE_KEY_SUPER);
         }
         super.onRestoreInstanceState(state);
     }
 
-    private boolean removeFabOptionItem(FabWithLabelView view, @Nullable Iterator<FabWithLabelView> it, boolean
-            animate) {
+    private int getLayoutPosition(int position) {
+        if (mExpansionMode == TOP || mExpansionMode == LEFT) {
+            return mFabWithLabelViews.size() - position;
+        } else {
+            return position + 1;
+        }
+    }
+
+    @Nullable
+    private SpeedDialActionItem removeActionItem(@Nullable FabWithLabelView view,
+                                                 @Nullable Iterator<FabWithLabelView> it,
+                                                 boolean animate) {
         if (view != null) {
+            SpeedDialActionItem speedDialActionItem = view.getSpeedDialActionItem();
             if (it != null) {
                 it.remove();
             } else {
                 mFabWithLabelViews.remove(view);
             }
 
-            if (isFabMenuOpen()) {
+            if (isOpen()) {
                 if (mFabWithLabelViews.isEmpty()) {
-                    closeOptionsMenu();
+                    close();
                 }
                 if (animate) {
                     UiUtils.shrinkAnim(view, true);
@@ -369,17 +505,18 @@ public class SpeedDialView extends LinearLayout {
             } else {
                 removeView(view);
             }
-            return true;
+            return speedDialActionItem;
         } else {
-            return false;
+            return null;
         }
     }
 
-    private boolean removeFabOptionItem(FabWithLabelView view) {
-        return removeFabOptionItem(view, null, true);
+    @Nullable
+    private SpeedDialActionItem removeActionItem(@Nullable FabWithLabelView view) {
+        return removeActionItem(view, null, true);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, @Nullable AttributeSet attrs) {
         mMainFab = createMainFab();
         addView(mMainFab);
         setClipChildren(false);
@@ -388,19 +525,23 @@ public class SpeedDialView extends LinearLayout {
         }
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
-            if (openDrawableRes == NOT_SET) {
-                openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_srcCompat, NOT_SET);
+            setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
+                    mMainFabCloseRotateAngle));
+            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenSrc,
+                    RESOURCE_NOT_SET);
+            if (openDrawableRes != RESOURCE_NOT_SET) {
+                setMainFabOpenDrawable(AppCompatResources.getDrawable(getContext(), openDrawableRes));
             }
-            if (openDrawableRes != NOT_SET) {
-                mMainFabOpenDrawable = AppCompatResources.getDrawable(getContext(), openDrawableRes);
+            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabCloseSrc, RESOURCE_NOT_SET);
+            if (closeDrawableRes != RESOURCE_NOT_SET) {
+                setMainFabCloseDrawable(AppCompatResources.getDrawable(context, closeDrawableRes));
             }
-            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdFabCloseSrc, NOT_SET);
-            if (openDrawableRes != NOT_SET) {
-                mMainFabCloseDrawable = UiUtils.getRotateDrawable(context, closeDrawableRes);
-            }
-            mExpansionMode = attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode);
-            mRotateOnToggle = attr.getBoolean(R.styleable.SpeedDialView_sdFabRotateOnToggle, mRotateOnToggle);
+            setExpansionMode(attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, mExpansionMode));
+
+            setMainFabOpenBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabOpenBackgroundColor,
+                    mMainFabOpenBackgroundColor));
+            setMainFabCloseBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabCloseBackgroundColor,
+                    mMainFabCloseBackgroundColor));
             //            int color = attr.getColor(
             //                    R.styleable.SpeedDialView_color,
             //                    UiUtils.getAccentColor(context));
@@ -410,8 +551,6 @@ public class SpeedDialView extends LinearLayout {
         } finally {
             attr.recycle();
         }
-        mMainFab.setImageDrawable(mMainFabOpenDrawable);
-        setExpansionMode(mExpansionMode);
     }
 
     private FloatingActionButton createMainFab() {
@@ -426,57 +565,97 @@ public class SpeedDialView extends LinearLayout {
         floatingActionButton.setClickable(true);
         floatingActionButton.setFocusable(true);
         floatingActionButton.setSize(FloatingActionButton.SIZE_NORMAL);
+        floatingActionButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                if (!mIsOpen && !mFabWithLabelViews.isEmpty()) {
+                    open();
+                } else {
+                    if (mOnChangeListener == null) {
+                        close();
+                    } else {
+                        mOnChangeListener.onMainActionSelected();
+                    }
+                }
+            }
+        });
         return floatingActionButton;
     }
 
     private FabWithLabelView createNewFabWithLabelView(SpeedDialActionItem speedDialActionItem) {
         FabWithLabelView newView;
         int theme = speedDialActionItem.getTheme();
-        if (theme == NOT_SET) {
+        if (theme == RESOURCE_NOT_SET) {
             newView = new FabWithLabelView(getContext());
         } else {
             newView = new FabWithLabelView(new ContextThemeWrapper(getContext(), theme), null, theme);
         }
         newView.setSpeedDialActionItem(speedDialActionItem);
         newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
-        newView.setOptionFabSelectedListener(mOnOptionFabSelectedListener);
+        newView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
         return newView;
     }
 
-    private void toggleOptionsMenu(boolean show) {
-        if (mIsFabMenuOpen == show) {
+    private void toggle(boolean show) {
+        if (mIsOpen == show) {
             return;
         }
-        mIsFabMenuOpen = show;
+        mIsOpen = show;
         visibilitySetup(show);
-        if (show) {
+        updateMainFabDrawable();
+        updateMainFabBackgroundColor();
+        showHideOverlay(show);
+        if (mOnChangeListener != null) {
+            mOnChangeListener.onToggleChanged(show);
+        }
+    }
+
+    private void updateMainFabDrawable() {
+        if (isOpen()) {
             if (mMainFabCloseDrawable != null) {
                 mMainFab.setImageDrawable(mMainFabCloseDrawable);
             }
-            UiUtils.rotateForward(mMainFab, mRotateOnToggle);
+            UiUtils.rotateForward(mMainFab, mMainFabCloseRotateAngle, true);
+        } else {
+            UiUtils.rotateBackward(mMainFab, true);
+            if (mMainFabCloseDrawable != null) {
+                mMainFab.setImageDrawable(mMainFabOpenDrawable);
+            }
+        }
+    }
+
+    private void updateMainFabBackgroundColor() {
+        int color;
+        if (isOpen()) {
+            color = mMainFabOpenBackgroundColor;
+        } else {
+            color = mMainFabCloseBackgroundColor;
+        }
+        if (color != RESOURCE_NOT_SET) {
+            mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
+    }
+
+    private void updateElevation() {
+        if (isOpen()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_open_elevation));
             } else {
                 bringToFront();
             }
         } else {
-            UiUtils.rotateBackward(mMainFab, mRotateOnToggle);
-            if (mMainFabCloseDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabOpenDrawable);
-            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setElevation(getResources().getDimension(R.dimen.sd_close_elevation));
             }
         }
-        showHideOverlay(show);
     }
 
     private void showHideOverlay(boolean show) {
-        if (mSpeedDialOverlayLayout != null) {
+        if (mOverlayLayout != null) {
             if (show) {
-                mSpeedDialOverlayLayout.show();
+                mOverlayLayout.show();
             } else {
-                mSpeedDialOverlayLayout.hide();
+                mOverlayLayout.hide();
             }
         }
     }
@@ -492,7 +671,7 @@ public class SpeedDialView extends LinearLayout {
     }
 
     /**
-     * Menu opening animation.
+     * SpeedDial opening animation.
      *
      * @param view view that starts that animation.
      */
@@ -526,7 +705,7 @@ public class SpeedDialView extends LinearLayout {
         fabWithLabelView.setAlpha(1);
         fabWithLabelView.setVisibility(View.VISIBLE);
         enlargeAnim(fabWithLabelView.getFab(), delay);
-        if (fabWithLabelView.isLabelEnable()) {
+        if (fabWithLabelView.isLabelEnabled()) {
             CardView labelBackground = fabWithLabelView.getLabelBackground();
             ViewCompat.animate(labelBackground).cancel();
             Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.sd_fade_and_translate_in);
@@ -538,8 +717,40 @@ public class SpeedDialView extends LinearLayout {
     /**
      * Listener for handling events on option fab's.
      */
-    public interface OnOptionFabSelectedListener {
-        void onOptionFabSelected(SpeedDialActionItem speedDialActionItem);
+    public interface OnChangeListener {
+        /**
+         * Called when the main action has been clicked.
+         */
+        void onMainActionSelected();
+
+        /**
+         * Called when the toggle state of the speed dial menu changes (eg. it is opened or closed).
+         *
+         * @param isOpen true if the speed dial is open, false otherwise.
+         */
+        void onToggleChanged(boolean isOpen);
+    }
+
+    /**
+     * Listener for handling events on option fab's.
+     */
+    public interface OnActionSelectedListener {
+        /**
+         * Called when a speed dial action has been clicked.
+         *
+         * @param actionItem the {@link SpeedDialActionItem} that was selected.
+         * @return true if the callback consumed the click, false otherwise.
+         */
+        boolean onActionSelected(SpeedDialActionItem actionItem);
+    }
+
+    @Retention(SOURCE)
+    @IntDef({TOP, BOTTOM, LEFT, RIGHT})
+    public @interface ExpansionMode {
+        int TOP = 0;
+        int BOTTOM = 1;
+        int LEFT = 2;
+        int RIGHT = 3;
     }
 
     /**
@@ -551,7 +762,9 @@ public class SpeedDialView extends LinearLayout {
     public static class SnackbarBehavior extends CoordinatorLayout.Behavior<View> {
         private static final boolean AUTO_HIDE_DEFAULT = true;
 
+        @Nullable
         private Rect mTmpRect;
+        @Nullable
         private OnVisibilityChangedListener mInternalAutoHideListener;
         private boolean mAutoHideEnabled;
 
@@ -584,7 +797,6 @@ public class SpeedDialView extends LinearLayout {
          * not enough space to be displayed.
          *
          * @return true if enabled
-         * @attr ref android.support.design.R.styleable#FloatingActionButton_Behavior_Layout_behavior_autoHide
          */
         public boolean isAutoHideEnabled() {
             return mAutoHideEnabled;
@@ -596,7 +808,6 @@ public class SpeedDialView extends LinearLayout {
          * and {@link BottomSheetBehavior}.
          *
          * @param autoHide true to enable automatic hiding
-         * @attr ref android.support.design.R.styleable#FloatingActionButton_Behavior_Layout_behavior_autoHide
          */
         public void setAutoHideEnabled(boolean autoHide) {
             mAutoHideEnabled = autoHide;
@@ -791,14 +1002,5 @@ public class SpeedDialView extends LinearLayout {
         public NoBehavior(Context context, AttributeSet attrs) {
             super(context, attrs);
         }
-    }
-
-    @Retention(SOURCE)
-    @IntDef({TOP, BOTTOM, LEFT, RIGHT})
-    public @interface ExpansionMode {
-        int TOP = 0;
-        int BOTTOM = 1;
-        int LEFT = 2;
-        int RIGHT = 3;
     }
 }

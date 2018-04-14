@@ -22,22 +22,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.content.res.AppCompatResources;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-class UiUtils {
+public class UiUtils {
     private static final int SHORT_ANIM_TIME = 200;
-    private static final float ROTATION_ANGLE = 45.0F;
 
     private UiUtils() {
     }
@@ -90,7 +89,7 @@ class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -113,14 +112,15 @@ class UiUtils {
                 .alpha(1F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
     /**
      * Closing animation.
      *
-     * @param view view that starts that animation.
+     * @param view       view that starts that animation.
+     * @param removeView true to remove the view when the animation is over, false otherwise.
      */
     public static void shrinkAnim(final View view, final boolean removeView) {
         ViewCompat.animate(view).cancel();
@@ -128,7 +128,7 @@ class UiUtils {
                 .alpha(0F)
                 .withLayer()
                 .setDuration(SHORT_ANIM_TIME)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -146,18 +146,18 @@ class UiUtils {
     }
 
     /**
-     * Rotate a view of {@link #ROTATION_ANGLE} degrees.
+     * Rotate a view of the specified degrees.
      *
      * @param view    The view to rotate.
      * @param animate true to animate the rotation, false to be instant.
      * @see #rotateBackward(View, boolean)
      */
-    public static void rotateForward(View view, boolean animate) {
+    public static void rotateForward(View view, float angle, boolean animate) {
         ViewCompat.animate(view)
-                .rotation(ROTATION_ANGLE)
+                .rotation(angle)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
@@ -166,26 +166,73 @@ class UiUtils {
      *
      * @param view    The view to rotate.
      * @param animate true to animate the rotation, false to be instant.
-     * @see #rotateForward(View, boolean)
+     * @see #rotateForward(View, float, boolean)
      */
     public static void rotateBackward(View view, boolean animate) {
         ViewCompat.animate(view)
                 .rotation(0.0F)
                 .withLayer()
                 .setDuration(animate ? SHORT_ANIM_TIME : 0)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
 
-    public static Drawable getRotateDrawable(Context context, @DrawableRes int drawableRes) {
-        final Drawable drawable = AppCompatResources.getDrawable(context, drawableRes);
-        Canvas canvas = new Canvas();
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap
-                .Config.ARGB_8888);
-        canvas.setBitmap(bitmap);
-        canvas.rotate(-ROTATION_ANGLE, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        drawable.draw(canvas);
-        return new BitmapDrawable(context.getResources(), bitmap);
+    public static Drawable getRotateDrawable(final Drawable drawable, final float angle) {
+        if (angle == 0) {
+            return drawable;
+        }
+        final Drawable[] drawables = {drawable};
+        return new LayerDrawable(drawables) {
+            @Override
+            public void draw(final Canvas canvas) {
+                canvas.save();
+                canvas.rotate(angle, drawable.getBounds().width() / 2, drawable.getBounds().height() / 2);
+                super.draw(canvas);
+                canvas.restore();
+            }
+        };
+    }
+
+    /**
+     * Creates a {@link Bitmap} from a {@link Drawable}.
+     */
+    @Nullable
+    public static Bitmap getBitmapFromDrawable(@Nullable Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        } else {
+            Bitmap bitmap;
+            if (drawable instanceof BitmapDrawable) {
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                if (bitmapDrawable.getBitmap() != null) {
+                    return bitmapDrawable.getBitmap();
+                }
+            }
+
+            if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+                // Single color bitmap will be created of 1x1 pixel
+                bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+            } else {
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap
+                        .Config.ARGB_8888);
+            }
+
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        }
+    }
+
+    /**
+     * Creates a {@link Drawable} from a {@link Bitmap}.
+     */
+    @Nullable
+    public static Drawable getDrawableFromBitmap(@Nullable Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        } else {
+            return new BitmapDrawable(bitmap);
+        }
     }
 }
