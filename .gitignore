@@ -46,3 +46,5 @@ captures/
 .externalNativeBuild
 
 .DS_Store
+
+keystore/
