@@ -48,3 +48,4 @@ captures/
 .DS_Store
 
 keystore/
+.gitmodules
