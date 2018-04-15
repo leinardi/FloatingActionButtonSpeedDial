@@ -17,7 +17,6 @@
 package com.leinardi.android.speeddial;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -155,8 +154,6 @@ public class SpeedDialActionItem implements Parcelable {
 
         /**
          * Creates a builder for a speed dial action item that uses the a {@link DrawableRes} as icon.
-         * <p class="note">This does Bitmap reading and decoding on the UI thread, which can cause a latency hiccup.
-         * If that's a concern, consider using Builder(int, Drawable) instead.</p>
          *
          * @param id               the identifier for this action item. The identifier must be unique to the instance
          *                         of {@link SpeedDialView}. The identifier should be a positive number.
@@ -170,6 +167,8 @@ public class SpeedDialActionItem implements Parcelable {
 
         /**
          * Creates a builder for a speed dial action item that uses the a {@link Drawable} as icon.
+         * <p class="note">{@link Drawable} are not parcelables so is not possible to restore them when the view is
+         * recreated for example after an orientation change. If possible always use the {@link #Builder(int, int)}</p>
          *
          * @param id       the identifier for this action item. The identifier must be unique to the instance
          *                 of {@link SpeedDialView}. The identifier should be a positive number.
@@ -238,7 +237,6 @@ public class SpeedDialActionItem implements Parcelable {
         dest.writeInt(this.mId);
         dest.writeString(this.mLabel);
         dest.writeInt(this.mFabImageResource);
-        dest.writeParcelable(UiUtils.getBitmapFromDrawable(this.mFabImageDrawable), flags);
         dest.writeInt(this.mFabImageTintColor);
         dest.writeInt(this.mFabBackgroundColor);
         dest.writeInt(this.mLabelColor);
@@ -252,8 +250,7 @@ public class SpeedDialActionItem implements Parcelable {
         this.mId = in.readInt();
         this.mLabel = in.readString();
         this.mFabImageResource = in.readInt();
-        this.mFabImageDrawable =
-                UiUtils.getDrawableFromBitmap((Bitmap) in.readParcelable(Bitmap.class.getClassLoader()));
+        this.mFabImageDrawable = null;
         this.mFabImageTintColor = in.readInt();
         this.mFabBackgroundColor = in.readInt();
         this.mLabelColor = in.readInt();

@@ -16,47 +16,36 @@
 
 package com.leinardi.android.speeddial.sample;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialOverlayLayout;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.leinardi.android.speeddial.sample.usecases.BaseUseCaseActivity;
+import com.leinardi.android.speeddial.sample.usecases.UseCasesActivity;
 
 /**
- * Main activity of the sample project
+ * Sample project
  */
 @SuppressWarnings("PMD") // sample project with long methods
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseUseCaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int DATASET_COUNT = 60;
     private static final int ADD_ACTION_POSITION = 4;
-    private String[] mDataset;
     private SpeedDialView mSpeedDialView;
-    private Toast mToast;
-    private Snackbar mSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initToolbar();
-        initDataset();
-        initRecyclerView();
         initSpeedDial(savedInstanceState == null);
+
     }
 
     private void initSpeedDial(boolean addActionItems) {
@@ -105,11 +94,9 @@ public class MainActivity extends AppCompatActivity {
         //Set main action clicklistener.
         mSpeedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
             @Override
-            public void onMainActionSelected() {
+            public boolean onMainActionSelected() {
                 showToast("Main action clicked!");
-                if (mSpeedDialView.isOpen()) {
-                    mSpeedDialView.close();
-                }
+                return false;
             }
 
             @Override
@@ -125,10 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (actionItem.getId()) {
                     case R.id.fab_no_label:
                         showToast("No label action clicked!");
-                        break;
+                        return false; // To close the Speed Dial
                     case R.id.fab_long_label:
                         showSnackbar(actionItem.getLabel() + " clicked!");
-                        return true;
+                        break;
                     case R.id.fab_custom_color:
                         showToast(actionItem.getLabel() + " clicked!");
                         break;
@@ -143,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                         getTheme()))
                                 .setLabel(getString(R.string.label_replace_action))
                                 .create(), ADD_ACTION_POSITION);
-                        return true;
+                        break;
                     case R.id.fab_replace_action:
                         mSpeedDialView.replaceActionItem(new SpeedDialActionItem.Builder(R.id
                                 .fab_remove_action,
@@ -152,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
                                 .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_accent,
                                         getTheme()))
                                 .create(), ADD_ACTION_POSITION);
-                        return true;
+                        break;
                     case R.id.fab_remove_action:
                         mSpeedDialView.removeActionItemById(R.id.fab_remove_action);
-                        return true;
+                        break;
                     default:
                         break;
                 }
-                return false;
+                return true; // To keep the Speed Dial open
             }
         });
 
@@ -167,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -183,62 +169,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
-
-    private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        CustomAdapter adapter = new CustomAdapter(mDataset);
-        // Set CustomAdapter as the adapter for RecyclerView.
-        recyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void showToast(String text) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-        mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-        mToast.show();
-    }
-
-    private void showSnackbar(String text) {
-        mSnackbar = Snackbar.make(mSpeedDialView, text, Snackbar.LENGTH_SHORT);
-        mSnackbar.setAction("Close", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSnackbar.dismiss();
-            }
-        });
-        mSnackbar.show();
-    }
-
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private void initDataset() {
-        mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_use_cases) {
+            startActivity(new Intent(MainActivity.this, UseCasesActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_main;
     }
 }

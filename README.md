@@ -32,19 +32,19 @@ Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
-```
+```groovy
 implementation "com.leinardi.android:speed-dial:1.0-alpha04"
 ```
 #### Snapshots (development branch)
 You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
 
 Add the JitPack repository to your build file:
-```
+```groovy
 maven { url 'https://jitpack.io' }
 ```
 
 Add the dependency
-```
+```groovy
 implementation 'com.github.leinardi:FloatingActionButtonSpeedDial:master-SNAPSHOT'
 ```
 
@@ -91,10 +91,8 @@ speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedList
 speedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
     @Override
     public void onMainActionSelected() {
-        // Call your main action here and than close the menu
-        if (mSpeedDialView.isOpen()) {
-            mSpeedDialView.close();
-        }
+        // Call your main action here
+        return false; // true to keep the Speed Dial open
     }
 
     @Override
@@ -196,14 +194,9 @@ https://www.youtube.com/watch?v=tWowiF5ElAg
 <img src="/art/screenshot_api_27.png" width="215"/> <img src="/art/screenshot_api_16.png" width="215"/> <img src="/art/screenshot_api_27_top_fab_bottom_expansion.png" width="215"/> <img src="/art/screenshot_api_27_bottom_fab_left_expansion.png" width="215"/>
 
 ## FAQ
-### How can I change the maximum length of the label?
-You can set a different value for the max length of the label overriding `sd_label_max_width`:
-```
-<dimen name="sd_label_max_width">240dp</dimen>
-```
 ### How can I create a new resource ID, required by the `SpeedDialActionItem.Builder`?
 It can be done in XML using the `<item type="id" />`:
-```
+```xml
 <resources>
     <item name="fab_action1" type="id" />
     <item name="fab_action2" type="id" />
@@ -211,9 +204,27 @@ It can be done in XML using the `<item type="id" />`:
     <item name="fab_action4" type="id" />
 </resources>
 ```
+
+### How can I change the maximum length of the label?
+You can set a different value for the max length of the label overriding `sd_label_max_width`:
+```
+<dimen name="sd_label_max_width">240dp</dimen>
+```
+
 More info [here](https://developer.android.com/guide/topics/resources/more-resources.html#Id).
+
 ### How can I change the color of the overlay / touch guard layout?
 The color of the `SpeedDialOverlayLayout` can be changed simply using the `android:background` attribute or, programmatically, using the equivalent setter like any other view.
+
+### How can I prevent the overlay / touch guard layout from going over the `Toolbar` inside a `CoordinatorLayout`?
+It can be done using the attribute `app:layout_behavior="@string/appbar_scrolling_view_behavior"`:
+```xml
+<com.leinardi.android.speeddial.SpeedDialOverlayLayout
+    android:id="@+id/overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+```
 
 ## Changelog
 See the [CHANGELOG.md](/CHANGELOG.md)
