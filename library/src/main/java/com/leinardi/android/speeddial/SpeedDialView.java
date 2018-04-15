@@ -29,6 +29,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -40,11 +41,14 @@ import android.support.design.widget.FloatingActionButton.OnVisibilityChangedLis
 import android.support.v4.view.ViewCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -217,6 +221,27 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             setOnClickListener(null);
         }
         mOverlayLayout = overlayLayout;
+    }
+
+    /**
+     * Inflate a menu resource into this SpeedDialView. Any existing Action item will be removed.
+     * <p class="note">Using the Menu resource it is possible to specify only the ID, the icon and the label of the
+     * Action item. No color customization is available.</p>
+     *
+     * @param menuRes Menu resource to inflate
+     */
+    public void inflate(@MenuRes int menuRes) {
+        clearActionItems();
+        PopupMenu popupMenu = new PopupMenu(getContext(), new View(getContext()));
+        popupMenu.inflate(menuRes);
+        Menu menu = popupMenu.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            SpeedDialActionItem actionItem = new SpeedDialActionItem.Builder(menuItem.getItemId(), menuItem.getIcon())
+                    .setLabel(menuItem.getTitle() != null ? menuItem.getTitle().toString() : null)
+                    .create();
+            addActionItem(actionItem);
+        }
     }
 
     /**
