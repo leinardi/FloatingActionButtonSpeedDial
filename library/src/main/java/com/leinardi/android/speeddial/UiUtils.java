@@ -41,7 +41,7 @@ public class UiUtils {
     private UiUtils() {
     }
 
-    static int getPrimaryColor(Context context) {
+    public static int getPrimaryColor(Context context) {
         int colorAttr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             colorAttr = android.R.attr.colorPrimary;
@@ -54,7 +54,7 @@ public class UiUtils {
         return outValue.data;
     }
 
-    static int getAccentColor(Context context) {
+    public static int getAccentColor(Context context) {
         int colorAttr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             colorAttr = android.R.attr.colorAccent;
@@ -67,12 +67,12 @@ public class UiUtils {
         return outValue.data;
     }
 
-    static int dpToPx(Context context, float dp) {
+    public static int dpToPx(Context context, float dp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics));
     }
 
-    static int pxToDp(float px) {
+    public static int pxToDp(float px) {
         return Math.round(px / Resources.getSystem().getDisplayMetrics().density);
     }
 

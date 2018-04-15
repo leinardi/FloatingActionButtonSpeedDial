@@ -22,6 +22,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.leinardi.android.speeddial.UiUtils;
 import com.leinardi.android.speeddial.sample.BuildConfig;
 import com.leinardi.android.speeddial.sample.CustomAdapter;
 import com.leinardi.android.speeddial.sample.R;
@@ -101,6 +103,32 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                         mSpeedDial.setMainFabCloseRotateAngle(90);
                     } else if (id == R.id.action_rotation_angle_180) {
                         mSpeedDial.setMainFabCloseRotateAngle(180);
+                    } else if (id == R.id.action_main_fab_background_color_open_primary) {
+                        mSpeedDial.setMainFabOpenBackgroundColor(UiUtils.getPrimaryColor(BaseUseCaseActivity.this));
+                    } else if (id == R.id.action_main_fab_background_color_open_orange) {
+                        mSpeedDial.setMainFabOpenBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_orange_500, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_open_purple) {
+                        mSpeedDial.setMainFabOpenBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_purple_500, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_open_white) {
+                        mSpeedDial.setMainFabOpenBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_open_none) {
+                        mSpeedDial.setMainFabOpenBackgroundColor(0);
+                    } else if (id == R.id.action_main_fab_background_color_close_primary) {
+                        mSpeedDial.setMainFabCloseBackgroundColor(UiUtils.getPrimaryColor(BaseUseCaseActivity.this));
+                    } else if (id == R.id.action_main_fab_background_color_close_orange) {
+                        mSpeedDial.setMainFabCloseBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_orange_500, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_close_purple) {
+                        mSpeedDial.setMainFabCloseBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_purple_500, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_close_white) {
+                        mSpeedDial.setMainFabCloseBackgroundColor(
+                                ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()));
+                    } else if (id == R.id.action_main_fab_background_color_close_none) {
+                        mSpeedDial.setMainFabCloseBackgroundColor(0);
                     }
                     return true;
                 }
