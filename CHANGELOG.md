@@ -2,6 +2,7 @@
 
 ## [1.0-alpha04] - 2018-04-14
 - android support library 27.1.1
+- lowered minSdk from 15 to 14
 - several API changes:
     - renamed `FabWithLabelView.setOptionFabSelectedListener()` to `FabWithLabelView.setOnActionSelectedListener()`
     - renamed `FabWithLabelView.isLabelEnable()` to `FabWithLabelView.isLabelEnabled()`
