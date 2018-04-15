@@ -30,7 +30,7 @@ versions.atsl_rules = "1.0.1"
 versions.atsl_runner = "1.0.1"
 versions.commons_io = "2.6"
 versions.commons_lang3 = "3.7"
-versions.constraint_layout = "1.0.2"
+versions.constraint_layout = "1.1.0"
 versions.dagger = "2.14.1"
 versions.dexmaker = "2.2.0"
 versions.driver_bmx280 = "0.4"
@@ -204,7 +204,7 @@ build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.3"
 build_versions.java_version = JavaVersion.VERSION_1_7
 build_versions.version_code = 'git rev-list --count HEAD'.execute().text.trim() as int
-build_versions.version_name = "1.0-alpha04"
+build_versions.version_name = "1.0-alpha05"
 ext.build_versions = build_versions
 
 

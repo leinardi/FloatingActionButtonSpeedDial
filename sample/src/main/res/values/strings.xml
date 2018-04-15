@@ -16,10 +16,34 @@
 
 <resources>
     <string name="app_name">FAB Speed Dial Sample</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_version">v%1$s</string>
+    <string name="use_case_1">UC1</string>
     <string name="label_custom_color">Custom colors</string>
     <string name="label_custom_theme">Custom theme</string>
     <string name="label_add_action">Add action</string>
     <string name="label_replace_action">Replace action</string>
     <string name="label_remove_action">Remove action</string>
+    <string name="action_use_cases">Use cases</string>
+    <string name="action_show_hide_fab">Show/hide FAB</string>
+    <string name="action_show_snackbar">Show snackbar</string>
+    <string name="action_add_action_item">Add action item</string>
+    <string name="action_remove_action_item">Remove action item</string>
+    <string name="expansion_mode">Expansion mode</string>
+    <string name="top">Top</string>
+    <string name="left">Left</string>
+    <string name="bottom">Bottom</string>
+    <string name="right">Right</string>
+    <string name="rotation_angle">Rotation angle</string>
+    <string name="zero_degrees">0 degrees</string>
+    <string name="forty_five_degrees">45 degrees</string>
+    <string name="ninety_degrees">90 degrees</string>
+    <string name="one_hundred_eighty_degrees">180 degrees</string>
+    <string name="main_fab_color">Main FAB color</string>
+    <string name="orange">Orange</string>
+    <string name="white">White</string>
+    <string name="primary">Primary</string>
+    <string name="purple">Purple</string>
+    <string name="main_fab_color_open">Main FAB color open</string>
+    <string name="main_fab_color_close">Main FAB color close</string>
+    <string name="none">None</string>
 </resources>

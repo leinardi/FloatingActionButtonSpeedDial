@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.0-alpha05] - 2018-04-15
+- `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
+  for example after an orientation change. If possible always use the `DrawableRes`.
+- Fixed Expansion mode and rotate angle not persisted on orientation change
+- Fixed inverted behavior for `SpeedDialView.setMainFabOpenBackgroundColor` 
+  and `SpeedDialView.setMainFabCloseBackgroundColor`
+- Added `SpeedDialView.getActionItems()`
+- `SpeedDialView.OnChangeListener.onMainActionSelected()` now returns true to keep the Speed Dial open, false to close it
+
 ## [1.0-alpha04] - 2018-04-14
 - android support library 27.1.1
 - lowered minSdk from 15 to 14
