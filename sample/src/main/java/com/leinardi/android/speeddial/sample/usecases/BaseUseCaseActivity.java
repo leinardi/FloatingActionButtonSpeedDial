@@ -133,7 +133,7 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            toolbarBottom.inflateMenu(R.menu.menu_use_cases);
+            toolbarBottom.inflateMenu(R.menu.menu_base_use_case);
         }
     }
 

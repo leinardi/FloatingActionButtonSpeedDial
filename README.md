@@ -49,6 +49,7 @@ implementation 'com.github.leinardi:FloatingActionButtonSpeedDial:master-SNAPSHO
 ```
 
 ### Basic use
+#### `SpeedDialView`
 Add the `SpeedDialView` to your layout:
 
 ```xml
@@ -60,15 +61,25 @@ Add the `SpeedDialView` to your layout:
     app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
 ```
 
+#### Action items
 Add the items to the `SpeedDialView`:
-
 ```java
 SpeedDialView speedDialView = findViewById(R.id.speedDial);
 speedDialView.addActionItem(
         new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
                 .create()
 );
+
 ```
+
+If the color customization is not requested, it is also possible to inflate the Action items
+form a Menu Resource:
+```java
+speedDialView.inflate(R.menu.menu_speed_dial);
+```
+Only the attributes `android:id`, `android:icon` and `android:title` are supported.
+
+#### Click listeners
 Add the click listeners:
 ```java
 speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {

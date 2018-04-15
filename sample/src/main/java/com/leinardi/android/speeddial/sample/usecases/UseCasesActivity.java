@@ -20,8 +20,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 import com.leinardi.android.speeddial.sample.R;
 
 public class UseCasesActivity extends AppCompatActivity {
@@ -33,10 +34,16 @@ public class UseCasesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.useCase1).setOnClickListener(new View.OnClickListener() {
+        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+
+        speedDialView.inflate(R.menu.menu_use_cases);
+        speedDialView.open();
+
+        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
                 startActivity(new Intent(UseCasesActivity.this, UseCase1Activity.class));
+                return true;
             }
         });
     }

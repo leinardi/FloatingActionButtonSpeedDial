@@ -1,6 +1,7 @@
 # Change Log
 
 ## [1.0-alpha05] - 2018-04-15
+- Added Menu Resource support (no color customization possible)
 - `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
   for example after an orientation change. If possible always use the `DrawableRes`.
 - Fixed Expansion mode and rotate angle not persisted on orientation change

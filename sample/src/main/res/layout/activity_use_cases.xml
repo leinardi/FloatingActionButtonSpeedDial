@@ -45,13 +45,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:gravity="bottom|end"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/useCase1"
-                android:layout_width="match_parent"
+            <com.leinardi.android.speeddial.SpeedDialView
+                android:id="@+id/speedDial"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Use case 1" />
+                android:layout_margin="2dp"
+                app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

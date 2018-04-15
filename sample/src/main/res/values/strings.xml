@@ -17,7 +17,7 @@
 <resources>
     <string name="app_name">FAB Speed Dial Sample</string>
     <string name="app_version">v%1$s</string>
-    <string name="use_case_1">UC1</string>
+    <string name="use_case_1">Minimal setup</string>
     <string name="label_custom_color">Custom colors</string>
     <string name="label_custom_theme">Custom theme</string>
     <string name="label_add_action">Add action</string>
