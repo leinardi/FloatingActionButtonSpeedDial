@@ -1079,6 +1079,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
     public static class ScrollingViewSnackbarBehavior extends SnackbarBehavior {
+        private boolean mWasShownAlready = false;
+
         public ScrollingViewSnackbarBehavior() {
         }
 
@@ -1094,6 +1096,14 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
         @Override
         public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+            if (!mWasShownAlready
+                    && dependency instanceof RecyclerView
+                    && (
+                    ((RecyclerView) dependency).getAdapter() == null
+                            || ((RecyclerView) dependency).getAdapter().getItemCount() == 0)) {
+                show(child);
+                mWasShownAlready = true;
+            }
             return dependency instanceof RecyclerView || super.layoutDependsOn(parent, child, dependency);
         }
 
@@ -1102,6 +1112,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
             super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed,
                     type);
+            mWasShownAlready = false;
             if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
                 hide(child);
             } else if (dyConsumed < 0) {

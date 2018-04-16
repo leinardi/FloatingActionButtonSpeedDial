@@ -136,4 +136,10 @@
             </item>
         </menu>
     </item>
+    <item
+        android:id="@+id/action_toggle_list"
+        android:icon="@drawable/ic_list_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_list"
+        app:showAsAction="ifRoom" />
 </menu>

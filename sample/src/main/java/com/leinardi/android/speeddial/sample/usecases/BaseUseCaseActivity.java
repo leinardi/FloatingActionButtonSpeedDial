@@ -45,6 +45,8 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
     private Toast mToast;
     private Snackbar mSnackbar;
     private SpeedDialView mSpeedDial;
+    private RecyclerView mRecyclerView;
+    private CustomAdapter mCustomAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,6 +131,12 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                                 ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()));
                     } else if (id == R.id.action_main_fab_background_color_close_none) {
                         mSpeedDial.setMainFabCloseBackgroundColor(0);
+                    } else if (id == R.id.action_toggle_list) {
+                        if (mRecyclerView.getAdapter() == null) {
+                            mRecyclerView.setAdapter(mCustomAdapter);
+                        } else {
+                            mRecyclerView.setAdapter(null);
+                        }
                     }
                     return true;
                 }
@@ -139,13 +147,13 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         initDataset();
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        if (recyclerView != null) {
-            CustomAdapter adapter = new CustomAdapter(mDataset);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        if (mRecyclerView != null) {
+            mCustomAdapter = new CustomAdapter(mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.
-            recyclerView.setAdapter(adapter);
+            mRecyclerView.setAdapter(mCustomAdapter);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
+            mRecyclerView.setLayoutManager(layoutManager);
         }
     }
 
