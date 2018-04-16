@@ -8,6 +8,7 @@
 - Fixed inverted behavior for `SpeedDialView.setMainFabOpenBackgroundColor` 
   and `SpeedDialView.setMainFabCloseBackgroundColor`
 - Added `SpeedDialView.getActionItems()`
+- Added `SpeedDialView.getMainFab()`
 - `SpeedDialView.OnChangeListener.onMainActionSelected()` now returns true to keep the Speed Dial open, false to close it
 
 ## [1.0-alpha04] - 2018-04-14
