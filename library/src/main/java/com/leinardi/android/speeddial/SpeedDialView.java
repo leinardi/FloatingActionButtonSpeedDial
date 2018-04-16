@@ -462,6 +462,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         return mInstanceState.mIsOpen;
     }
 
+    public FloatingActionButton getMainFab() {
+        return mMainFab;
+    }
+
     public float getMainFabCloseRotateAngle() {
         return mInstanceState.mMainFabCloseRotateAngle;
     }
