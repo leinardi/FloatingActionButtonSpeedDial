@@ -56,12 +56,6 @@ public class MainActivity extends BaseUseCaseActivity {
                     .ic_link_white_24dp)
                     .create());
 
-            mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
-                    .ic_lorem_ipsum)
-                    .setLabel("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
-                            "incididunt ut labore et dolore magna aliqua.")
-                    .create());
-
             Drawable drawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_custom_color);
             mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, drawable)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000,
@@ -71,6 +65,12 @@ public class MainActivity extends BaseUseCaseActivity {
                     .setLabelColor(Color.WHITE)
                     .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary,
                             getTheme()))
+                    .create());
+
+            mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
+                    .ic_lorem_ipsum)
+                    .setLabel("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+                            "incididunt ut labore et dolore magna aliqua.")
                     .create());
 
             drawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_add_white_24dp);
@@ -96,7 +96,7 @@ public class MainActivity extends BaseUseCaseActivity {
             @Override
             public boolean onMainActionSelected() {
                 showToast("Main action clicked!");
-                return false;
+                return false; // True to keep the Speed Dial open
             }
 
             @Override
@@ -111,14 +111,15 @@ public class MainActivity extends BaseUseCaseActivity {
             public boolean onActionSelected(SpeedDialActionItem actionItem) {
                 switch (actionItem.getId()) {
                     case R.id.fab_no_label:
-                        showToast("No label action clicked!");
-                        return false; // To close the Speed Dial
+                        showToast("No label action clicked!\nClosing with animation");
+                        mSpeedDialView.close(); // To close the Speed Dial with animation
+                        return true; // false will close it without animation
                     case R.id.fab_long_label:
                         showSnackbar(actionItem.getLabel() + " clicked!");
                         break;
                     case R.id.fab_custom_color:
-                        showToast(actionItem.getLabel() + " clicked!");
-                        break;
+                        showToast(actionItem.getLabel() + " clicked!\nClosing without animation.");
+                        return false; // closes without animation (same as mSpeedDialView.close(false); return false;)
                     case R.id.fab_custom_theme:
                         showToast(actionItem.getLabel() + " clicked!");
                         break;

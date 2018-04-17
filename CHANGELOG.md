@@ -10,6 +10,7 @@
 - Added `SpeedDialView.getActionItems()`
 - Added `SpeedDialView.getMainFab()`
 - `SpeedDialView.OnChangeListener.onMainActionSelected()` now returns true to keep the Speed Dial open, false to close it
+- Optional no animation for open/close/toggle
 
 ## [1.0-alpha04] - 2018-04-14
 - android support library 27.1.1
