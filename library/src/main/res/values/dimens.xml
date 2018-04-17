@@ -22,5 +22,5 @@
     <dimen name="sd_fab_side_margin">12dp</dimen>|
     <dimen name="sd_label_max_width">160dp</dimen>
     <dimen name="sd_open_elevation">8dp</dimen>
-    <dimen name="sd_overlay_elevation">5dp</dimen>
+    <dimen name="sd_overlay_elevation">@dimen/sd_close_elevation</dimen>
 </resources>
