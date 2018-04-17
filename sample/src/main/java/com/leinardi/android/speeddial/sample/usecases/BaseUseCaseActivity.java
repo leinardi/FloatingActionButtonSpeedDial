@@ -24,9 +24,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -67,8 +69,10 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Toolbar toolbarBottom = findViewById(R.id.toolbar_bottom);
-        if (toolbarBottom != null) {
-            toolbarBottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        toolbarBottom.setContentInsetsAbsolute(0, 0);
+        ActionMenuView actionMenuView = findViewById(R.id.amvMenu);
+        if (actionMenuView != null) {
+            actionMenuView.setOnMenuItemClickListener(new ActionMenuView.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
@@ -141,7 +145,10 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            toolbarBottom.inflateMenu(R.menu.menu_base_use_case);
+
+            MenuInflater inflater = getMenuInflater();
+            // use amvMenu here
+            inflater.inflate(R.menu.menu_base_use_case, actionMenuView.getMenu());
         }
     }
 
@@ -161,7 +168,7 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
         mToast.show();
     }
 
