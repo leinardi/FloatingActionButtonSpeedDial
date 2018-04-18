@@ -1,16 +1,16 @@
 # Change Log
 
 ## [1.0-alpha05] - 2018-04-15
-- Added Menu Resource support (no color customization possible)
+- added Menu Resource support (no color customization possible)
 - `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
   for example after an orientation change. If possible always use the `DrawableRes`.
-- Fixed Expansion mode and rotate angle not persisted on orientation change
-- Fixed inverted behavior for `SpeedDialView.setMainFabOpenBackgroundColor` 
+- fixed Expansion mode and rotate angle not persisted on orientation change
+- fixed inverted behavior for `SpeedDialView.setMainFabOpenBackgroundColor` 
   and `SpeedDialView.setMainFabCloseBackgroundColor`
-- Added `SpeedDialView.getActionItems()`
-- Added `SpeedDialView.getMainFab()`
+- added `SpeedDialView.getActionItems()`
+- added `SpeedDialView.getMainFab()`
 - `SpeedDialView.OnChangeListener.onMainActionSelected()` now returns true to keep the Speed Dial open, false to close it
-- Optional no animation for open/close/toggle
+- optional no animation for open/close/toggle
 
 ## [1.0-alpha04] - 2018-04-14
 - android support library 27.1.1
