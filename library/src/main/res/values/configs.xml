@@ -15,16 +15,8 @@
   ~ limitations under the License.
   -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:anim/decelerate_interpolator">
-
-    <alpha
-        android:duration="@integer/sd_open_animation_duration"
-        android:fromAlpha="0"
-        android:toAlpha="1.0" />
-
-    <translate
-        android:duration="@integer/sd_open_animation_duration"
-        android:fromYDelta="100%"
-        android:toYDelta="0%" />
-</set>
+<resources>
+    <integer name="sd_close_animation_duration">200</integer>
+    <integer name="sd_open_animation_duration">200</integer>
+    <integer name="sd_rotate_animation_duration">200</integer>
+</resources>
