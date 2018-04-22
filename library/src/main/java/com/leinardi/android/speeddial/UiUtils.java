@@ -36,7 +36,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class UiUtils {
-    private static final int SHORT_ANIM_TIME = 200;
 
     private UiUtils() {
     }
@@ -88,7 +87,7 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(0F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
@@ -111,7 +110,7 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(1F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_open_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
@@ -127,7 +126,7 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(0F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
@@ -156,7 +155,8 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .rotation(angle)
                 .withLayer()
-                .setDuration(animate ? SHORT_ANIM_TIME : 0)
+                .setDuration(animate ?
+                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
@@ -172,7 +172,8 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .rotation(0.0F)
                 .withLayer()
-                .setDuration(animate ? SHORT_ANIM_TIME : 0)
+                .setDuration(animate ?
+                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
