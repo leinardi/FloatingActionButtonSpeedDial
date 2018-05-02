@@ -68,7 +68,7 @@ import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.RIGHT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.TOP;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
 public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
     private static final String STATE_KEY_SUPER = "superState";
@@ -319,7 +319,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * @param position the index of the {@link SpeedDialActionItem} to be removed
      * @return the {@link SpeedDialActionItem} that was removed from the list
      */
-    @SuppressWarnings("UnusedReturnValue")
     @Nullable
     public SpeedDialActionItem removeActionItem(int position) {
         SpeedDialActionItem speedDialActionItem = mFabWithLabelViews.get(position).getSpeedDialActionItem();
@@ -337,7 +336,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * @param actionItem {@link SpeedDialActionItem} to be removed from this list, if present
      * @return true if this list contained the specified element
      */
-    @SuppressWarnings("UnusedReturnValue")
     public boolean removeActionItem(@Nullable SpeedDialActionItem actionItem) {
         return actionItem != null && removeActionItemById(actionItem.getId()) != null;
     }
@@ -362,7 +360,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * @param position      the index of the {@link SpeedDialActionItem} to be replaced
      * @return true if this list contained the specified element
      */
-    @SuppressWarnings("UnusedReturnValue")
     public boolean replaceActionItem(SpeedDialActionItem newActionItem, int position) {
         return replaceActionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(),
                 newActionItem);
