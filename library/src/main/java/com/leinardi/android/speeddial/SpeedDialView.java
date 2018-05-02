@@ -614,7 +614,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            setUseReverseAnimationOnClose(attr.getBoolean(R.styleable.SpeedDialView_sdReverseAnimationOnClose, false));
+            setUseReverseAnimationOnClose(attr.getBoolean(R.styleable.SpeedDialView_sdReverseAnimationOnClose,
+                    getUseReverseAnimationOnClose()));
 
             setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
                     getMainFabCloseRotateAngle()));
@@ -787,10 +788,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             }
 
             @Override
-            public void onAnimationStart(Animation animation) { }
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
-            public void onAnimationRepeat(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
         view.startAnimation(anim);
     }
@@ -853,10 +856,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 }
 
                 @Override
-                public void onAnimationStart(Animation animation) { }
+                public void onAnimationStart(Animation animation) {
+                }
 
                 @Override
-                public void onAnimationRepeat(Animation animation) { }
+                public void onAnimationRepeat(Animation animation) {
+                }
             });
             animation.setStartOffset(delay);
             labelBackground.startAnimation(animation);
