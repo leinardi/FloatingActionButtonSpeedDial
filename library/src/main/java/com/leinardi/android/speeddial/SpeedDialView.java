@@ -613,7 +613,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            setUseReverseAnimationOnClose(attr.getBoolean(R.styleable.SpeedDialView_sdReverseAnimationOnClose,
+            setUseReverseAnimationOnClose(attr.getBoolean(R.styleable.SpeedDialView_sdUseReverseAnimationOnClose,
                     getUseReverseAnimationOnClose()));
 
             setMainFabCloseRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabCloseRotateAngle,
