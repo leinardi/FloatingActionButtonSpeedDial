@@ -141,6 +141,8 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                         } else {
                             mRecyclerView.setAdapter(null);
                         }
+                    } else if (id == R.id.action_toggle_reverse_animation) {
+                        mSpeedDial.setUseReverseAnimationOnClose(!mSpeedDial.getUseReverseAnimationOnClose());
                     }
                     return true;
                 }

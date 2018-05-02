@@ -31,6 +31,8 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -113,6 +115,48 @@ public class UiUtils {
                 .setDuration(view.getContext().getResources().getInteger(R.integer.sd_open_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
+    }
+
+    /**
+     * SpeedDial opening animation.
+     *
+     * @param view        view that starts that animation.
+     * @param startOffset a delay in time to start the animation
+     */
+    public static void enlargeAnim(View view, long startOffset) {
+        ViewCompat.animate(view).cancel();
+        view.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_in);
+        anim.setStartOffset(startOffset);
+        view.startAnimation(anim);
+    }
+
+    /**
+     * SpeedDial closing animation.
+     *
+     * @param view        view that starts that animation.
+     * @param startOffset a delay in time to start the animation
+     */
+    public static void shrinkAnim(final View view, long startOffset) {
+        ViewCompat.animate(view).cancel();
+        view.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_out);
+        anim.setStartOffset(startOffset);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        view.startAnimation(anim);
     }
 
     /**

@@ -27,6 +27,7 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedDialView">
+        <attr name="sdUseReverseAnimationOnClose" format="boolean" />
         <attr name="sdMainFabOpenSrc" format="reference" />
         <attr name="sdMainFabOpenBackgroundColor" format="color" />
         <attr name="sdMainFabCloseSrc" format="reference" />
