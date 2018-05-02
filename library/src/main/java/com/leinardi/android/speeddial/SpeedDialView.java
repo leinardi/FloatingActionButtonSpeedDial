@@ -550,6 +550,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             if (instanceState != null
                     && instanceState.mSpeedDialActionItems != null
                     && !instanceState.mSpeedDialActionItems.isEmpty()) {
+                setUseReverseAnimationOnClose(instanceState.mUseReverseAnimationOnClose);
                 setMainFabCloseRotateAngle(instanceState.mMainFabCloseRotateAngle);
                 setMainFabCloseBackgroundColor(instanceState.mMainFabCloseBackgroundColor);
                 setMainFabOpenBackgroundColor(instanceState.mMainFabOpenBackgroundColor);
