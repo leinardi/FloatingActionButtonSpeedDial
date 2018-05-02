@@ -120,14 +120,13 @@ public class UiUtils {
     /**
      * SpeedDial opening animation.
      *
-     * @param context     the context that is calling the method
      * @param view        view that starts that animation.
      * @param startOffset a delay in time to start the animation
      */
-    public static void enlargeAnim(Context context, View view, long startOffset) {
+    public static void enlargeAnim(View view, long startOffset) {
         ViewCompat.animate(view).cancel();
         view.setVisibility(View.VISIBLE);
-        Animation anim = AnimationUtils.loadAnimation(context, R.anim.sd_scale_fade_and_translate_in);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_in);
         anim.setStartOffset(startOffset);
         view.startAnimation(anim);
     }
@@ -135,14 +134,13 @@ public class UiUtils {
     /**
      * SpeedDial closing animation.
      *
-     * @param context     the context that is calling the method
      * @param view        view that starts that animation.
      * @param startOffset a delay in time to start the animation
      */
-    public static void shrinkAnim(Context context, final View view, long startOffset) {
+    public static void shrinkAnim(final View view, long startOffset) {
         ViewCompat.animate(view).cancel();
         view.setVisibility(View.VISIBLE);
-        Animation anim = AnimationUtils.loadAnimation(context, R.anim.sd_scale_fade_and_translate_out);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_out);
         anim.setStartOffset(startOffset);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
