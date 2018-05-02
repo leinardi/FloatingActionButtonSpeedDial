@@ -758,46 +758,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     /**
-     * SpeedDial opening animation.
-     *
-     * @param view view that starts that animation.
-     */
-    private void enlargeAnim(View view, long startOffset) {
-        ViewCompat.animate(view).cancel();
-        view.setVisibility(View.VISIBLE);
-        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.sd_scale_fade_and_translate_in);
-        anim.setStartOffset(startOffset);
-        view.startAnimation(anim);
-    }
-
-    /**
-     * SpeedDial closing animation.
-     *
-     * @param view view that starts that animation.
-     */
-    private void shrinkAnim(final View view, long startOffset) {
-        ViewCompat.animate(view).cancel();
-        view.setVisibility(View.VISIBLE);
-        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.sd_scale_fade_and_translate_out);
-        anim.setStartOffset(startOffset);
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                view.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        view.startAnimation(anim);
-    }
-
-    /**
      * Set menus visibility (visible or invisible).
      */
     private void visibilitySetup(boolean visible, boolean animate, boolean reverseAnimation) {
@@ -831,7 +791,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     private void showWithAnimationFabWithLabelView(FabWithLabelView fabWithLabelView, int delay) {
         ViewCompat.animate(fabWithLabelView).cancel();
-        enlargeAnim(fabWithLabelView.getFab(), delay);
+        UiUtils.enlargeAnim(getContext(), fabWithLabelView.getFab(), delay);
         if (fabWithLabelView.isLabelEnabled()) {
             CardView labelBackground = fabWithLabelView.getLabelBackground();
             ViewCompat.animate(labelBackground).cancel();
@@ -843,7 +803,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     private void hideWithAnimationFabWithLabelView(final FabWithLabelView fabWithLabelView, int delay) {
         ViewCompat.animate(fabWithLabelView).cancel();
-        shrinkAnim(fabWithLabelView.getFab(), delay);
+        UiUtils.shrinkAnim(getContext(), fabWithLabelView.getFab(), delay);
         if (fabWithLabelView.isLabelEnabled()) {
             final CardView labelBackground = fabWithLabelView.getLabelBackground();
             ViewCompat.animate(labelBackground).cancel();
