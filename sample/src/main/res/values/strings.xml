@@ -47,4 +47,5 @@
     <string name="main_fab_color_close">Main FAB color close</string>
     <string name="none">None</string>
     <string name="action_toggle_list">Toggle list</string>
+    <string name="action_toggle_reverse_animation">Toggle reverse close animation</string>
 </resources>

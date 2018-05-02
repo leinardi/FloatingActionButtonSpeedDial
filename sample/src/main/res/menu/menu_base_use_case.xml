@@ -131,6 +131,12 @@
         android:title="@string/action_toggle_list"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_toggle_reverse_animation"
+        android:icon="@drawable/ic_animation_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_reverse_animation"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_add_item"
         android:icon="@drawable/ic_add_white_24dp"
         android:orderInCategory="100"

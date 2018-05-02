@@ -120,7 +120,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         init(context, attrs);
     }
 
-    public boolean getUseReverseAnimationOnClose(boolean useReverseAnimation) {
+    public boolean getUseReverseAnimationOnClose() {
         return mInstanceState.mUseReverseAnimationOnClose;
     }
 
