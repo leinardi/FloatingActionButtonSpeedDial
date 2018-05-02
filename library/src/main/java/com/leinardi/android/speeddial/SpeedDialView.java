@@ -75,6 +75,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static final String STATE_KEY_IS_OPEN = "isOpen";
     private static final String STATE_KEY_EXPANSION_MODE = "expansionMode";
     private static final int DEFAULT_ROTATE_ANGLE = 45;
+    private static final int ACTION_ANIM_DELAY = 50;
     private final InstanceState mInstanceState = new InstanceState();
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     @Nullable
@@ -807,7 +808,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 fabWithLabelView.setAlpha(1);
                 fabWithLabelView.setVisibility(VISIBLE);
                 if (animate) {
-                    showWithAnimationFabWithLabelView(fabWithLabelView, i * 50);
+                    showWithAnimationFabWithLabelView(fabWithLabelView, i * ACTION_ANIM_DELAY);
                 }
             }
         } else {
@@ -816,7 +817,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 FabWithLabelView fabWithLabelView = mFabWithLabelViews.get(index);
                 if (animate) {
                     if (reverseAnimation) {
-                        hideWithAnimationFabWithLabelView(fabWithLabelView, i * 50);
+                        hideWithAnimationFabWithLabelView(fabWithLabelView, i * ACTION_ANIM_DELAY);
                     } else {
                         UiUtils.shrinkAnim(fabWithLabelView, false);
                     }
