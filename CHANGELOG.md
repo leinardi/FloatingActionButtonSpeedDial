@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0-alpha06] - 2018-05-03
+- added `setUseReverseAnimationOnClose()` and `getUseReverseAnimationOnClose()` (thanks to @jahirfiquitiva)
+- updated gradle plugin to 3.1.2 
+
 ## [1.0-alpha05] - 2018-04-15
 - added Menu Resource support (no color customization possible)
 - `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
