@@ -712,9 +712,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void updateMainFabBackgroundColor() {
         int color;
         if (isOpen()) {
-            color = getMainFabCloseBackgroundColor();
-        } else {
             color = getMainFabOpenBackgroundColor();
+        } else {
+            color = getMainFabCloseBackgroundColor();
         }
         if (color != RESOURCE_NOT_SET) {
             mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
