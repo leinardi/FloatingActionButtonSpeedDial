@@ -512,20 +512,22 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         updateMainFabDrawable(false);
     }
 
+    @ColorInt
     public int getMainFabOpenBackgroundColor() {
         return mInstanceState.mMainFabOpenBackgroundColor;
     }
 
-    public void setMainFabOpenBackgroundColor(int mainFabOpenBackgroundColor) {
+    public void setMainFabOpenBackgroundColor(@ColorInt int mainFabOpenBackgroundColor) {
         mInstanceState.mMainFabOpenBackgroundColor = mainFabOpenBackgroundColor;
         updateMainFabBackgroundColor();
     }
 
+    @ColorInt
     public int getMainFabCloseBackgroundColor() {
         return mInstanceState.mMainFabCloseBackgroundColor;
     }
 
-    public void setMainFabCloseBackgroundColor(int mainFabCloseBackgroundColor) {
+    public void setMainFabCloseBackgroundColor(@ColorInt int mainFabCloseBackgroundColor) {
         mInstanceState.mMainFabCloseBackgroundColor = mainFabCloseBackgroundColor;
         updateMainFabBackgroundColor();
     }
