@@ -1,16 +1,30 @@
 # Change Log
 
-## [1.0-alpha06] - 2018-05-03
+## [1.0-alpha06] - 2018-05-11
 - added `setUseReverseAnimationOnClose()` and `getUseReverseAnimationOnClose()` (thanks to @jahirfiquitiva)
-- updated gradle plugin to 3.1.2 
+- updated gradle plugin to 3.1.2
+- several API changes:
+    - renamed `SpeedDialView.getMainFabCloseRotateAngle()` to `SpeedDialView.getMainFabAnimationRotateAngle()`
+    - renamed `SpeedDialView.setMainFabCloseRotateAngle()` to `SpeedDialView.setMainFabAnimationRotateAngle()`
+    - renamed `SpeedDialView.setMainFabOpenDrawable()` to `SpeedDialView.setMainFabClosedDrawable()`
+    - renamed `SpeedDialView.setMainFabCloseDrawable()` to `SpeedDialView.setMainFabOpenedDrawable()`
+    - renamed `SpeedDialView.getMainFabOpenBackgroundColor()` to `SpeedDialView.getMainFabClosedBackgroundColor()`
+    - renamed `SpeedDialView.setMainFabOpenBackgroundColor()` to `SpeedDialView.setMainFabClosedBackgroundColor()`
+    - renamed `SpeedDialView.getMainFabCloseBackgroundColor()` to `SpeedDialView.getMainFabOpenedBackgroundColor()`
+    - renamed `SpeedDialView.setMainFabCloseBackgroundColor()` to `SpeedDialView.setMainFabOpenedBackgroundColor()`
+    - renamed `sdMainFabOpenSrc` to `sdMainFabClosedSrc`
+    - renamed `sdMainFabOpenBackgroundColor` to `sdMainFabClosedBackgroundColor`
+    - renamed `sdMainFabCloseSrc` to `sdMainFabOpenedSrc`
+    - renamed `sdMainFabCloseBackgroundColor` to `sdMainFabOpenedBackgroundColor`
+    - renamed `sdMainFabCloseRotateAngle` to `sdMainFabAnimationRotateAngle`
 
 ## [1.0-alpha05] - 2018-04-15
 - added Menu Resource support (no color customization possible)
 - `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
   for example after an orientation change. If possible always use the `DrawableRes`.
 - fixed Expansion mode and rotate angle not persisted on orientation change
-- fixed inverted behavior for `SpeedDialView.setMainFabOpenBackgroundColor` 
-  and `SpeedDialView.setMainFabCloseBackgroundColor`
+- fixed inverted behavior for `SpeedDialView.setMainFabClosedBackgroundColor` 
+  and `SpeedDialView.setMainFabOpenedBackgroundColor`
 - added `SpeedDialView.getActionItems()`
 - added `SpeedDialView.getMainFab()`
 - `SpeedDialView.OnChangeListener.onMainActionSelected()` now returns true to keep the Speed Dial open, false to close it
@@ -37,15 +51,15 @@
     - renamed `SpeedDialView.openOptionsMenu()` to `SpeedDialView.open()`
     - renamed `SpeedDialView.toggleOptionsMenu()` to `SpeedDialView.toggle()`
     - removed attributes `android:src`
-    - renamed attributes `srcCompat` to `sdMainFabOpenSrc`
-    - renamed attributes `sdFabCloseSrc` to `sdMainFabCloseSrc`
+    - renamed attributes `srcCompat` to `sdMainFabClosedSrc`
+    - renamed attributes `sdFabOpenedSrc` to `sdMainFabOpenedSrc`
     - removed attributes `sdFabRotateOnToggle`
-    - added attributes `sdMainFabCloseRotateAngle`
+    - added attributes `sdMainFabAnimationRotateAngle`
  - minor fixes
 
 ## [1.0-alpha03] - 2018-04-02
 - fixed #4: FAB icons rotate only once
-- renamed attribute close_src to sdFabCloseSrc
+- renamed attribute close_src to sdFabOpenedSrc
 - added attributes `sdFabRotateOnToggle` and `sdExpansionMode`
 - fixed various minor UI issues
 
