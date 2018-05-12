@@ -85,6 +85,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     @Nullable
     private Drawable mMainFabCloseOriginalDrawable;
     private FloatingActionButton mMainFab;
+    @IdRes
+    private int mOverlayLayoutId;
     @Nullable
     private SpeedDialOverlayLayout mOverlayLayout;
     @Nullable
@@ -219,6 +221,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * @param overlayLayout The view to add.
      */
     public void setOverlayLayout(@Nullable SpeedDialOverlayLayout overlayLayout) {
+        if (mOverlayLayout != null) {
+            setOnClickListener(null);
+        }
+        mOverlayLayout = overlayLayout;
         if (overlayLayout != null) {
             overlayLayout.setOnClickListener(new OnClickListener() {
                 @Override
@@ -226,10 +232,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                     close();
                 }
             });
-        } else if (mOverlayLayout != null) {
-            setOnClickListener(null);
+            showHideOverlay(isOpen(), false);
         }
-        mOverlayLayout = overlayLayout;
     }
 
     /**
@@ -532,6 +536,15 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         updateMainFabBackgroundColor();
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mOverlayLayout == null) {
+            SpeedDialOverlayLayout overlayLayout = getRootView().findViewById(mOverlayLayoutId);
+            setOverlayLayout(overlayLayout);
+        }
+    }
+
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
@@ -613,32 +626,36 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setElevation(getResources().getDimension(R.dimen.sd_close_elevation));
         }
-        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
+        TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
-            setUseReverseAnimationOnClose(attr.getBoolean(R.styleable.SpeedDialView_sdUseReverseAnimationOnClose,
+            setUseReverseAnimationOnClose(styledAttrs.getBoolean(R.styleable.SpeedDialView_sdUseReverseAnimationOnClose,
                     getUseReverseAnimationOnClose()));
 
-            setMainFabAnimationRotateAngle(attr.getFloat(R.styleable.SpeedDialView_sdMainFabAnimationRotateAngle,
+            setMainFabAnimationRotateAngle(styledAttrs.getFloat(R.styleable.SpeedDialView_sdMainFabAnimationRotateAngle,
                     getMainFabAnimationRotateAngle()));
-            @DrawableRes int openDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabClosedSrc,
+            @DrawableRes int openDrawableRes = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdMainFabClosedSrc,
                     RESOURCE_NOT_SET);
             if (openDrawableRes != RESOURCE_NOT_SET) {
                 setMainFabClosedDrawable(AppCompatResources.getDrawable(getContext(), openDrawableRes));
             }
-            int closeDrawableRes = attr.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenedSrc, RESOURCE_NOT_SET);
+            int closeDrawableRes = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdMainFabOpenedSrc,
+                    RESOURCE_NOT_SET);
             if (closeDrawableRes != RESOURCE_NOT_SET) {
                 setMainFabOpenedDrawable(AppCompatResources.getDrawable(context, closeDrawableRes));
             }
-            setExpansionMode(attr.getInt(R.styleable.SpeedDialView_sdExpansionMode, getExpansionMode()), true);
+            setExpansionMode(styledAttrs.getInt(R.styleable.SpeedDialView_sdExpansionMode, getExpansionMode()), true);
 
-            setMainFabClosedBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabClosedBackgroundColor,
+            setMainFabClosedBackgroundColor(styledAttrs.getColor(R.styleable
+                            .SpeedDialView_sdMainFabClosedBackgroundColor,
                     getMainFabClosedBackgroundColor()));
-            setMainFabOpenedBackgroundColor(attr.getColor(R.styleable.SpeedDialView_sdMainFabOpenedBackgroundColor,
+            setMainFabOpenedBackgroundColor(styledAttrs.getColor(R.styleable
+                            .SpeedDialView_sdMainFabOpenedBackgroundColor,
                     getMainFabOpenedBackgroundColor()));
+            mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, 0);
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
         } finally {
-            attr.recycle();
+            styledAttrs.recycle();
         }
     }
 

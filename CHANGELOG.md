@@ -4,6 +4,7 @@
 - added `setUseReverseAnimationOnClose()` and `getUseReverseAnimationOnClose()` (thanks to @jahirfiquitiva)
 - updated gradle plugin to 3.1.2
 - several API changes:
+    - added `sdOverlayLayout` attribute
     - renamed `SpeedDialView.getMainFabCloseRotateAngle()` to `SpeedDialView.getMainFabAnimationRotateAngle()`
     - renamed `SpeedDialView.setMainFabCloseRotateAngle()` to `SpeedDialView.setMainFabAnimationRotateAngle()`
     - renamed `SpeedDialView.setMainFabOpenDrawable()` to `SpeedDialView.setMainFabClosedDrawable()`
