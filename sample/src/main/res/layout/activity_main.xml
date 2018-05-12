@@ -47,7 +47,6 @@
         app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
         app:sdExpansionMode="top"
         app:sdMainFabAnimationRotateAngle="90"
-        app:sdMainFabClosedBackgroundColor="@color/material_green_500"
         app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
         app:sdMainFabOpenedSrc="@drawable/ic_pencil_alt_white_24dp" />
 
