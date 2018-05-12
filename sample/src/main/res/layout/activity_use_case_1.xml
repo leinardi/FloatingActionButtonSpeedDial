@@ -44,6 +44,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="2dp"
         app:sdExpansionMode="top"
-        app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
+        app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

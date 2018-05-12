@@ -58,7 +58,7 @@ Add the `SpeedDialView` to your layout:
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
-    app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
+    app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp" />
 ```
 
 #### Action items

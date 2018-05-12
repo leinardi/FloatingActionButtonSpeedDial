@@ -27,18 +27,18 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedDialView">
-        <attr name="sdUseReverseAnimationOnClose" format="boolean" />
-        <attr name="sdMainFabOpenSrc" format="reference" />
-        <attr name="sdMainFabOpenBackgroundColor" format="color" />
-        <attr name="sdMainFabCloseSrc" format="reference" />
-        <attr name="sdMainFabCloseBackgroundColor" format="color" />
-        <attr name="sdMainFabCloseRotateAngle" format="float" />
         <attr name="sdExpansionMode" format="enum">
             <enum name="top" value="0" />
             <enum name="bottom" value="1" />
             <enum name="left" value="2" />
             <enum name="right" value="3" />
         </attr>
+        <attr name="sdMainFabAnimationRotateAngle" format="float" />
+        <attr name="sdMainFabClosedSrc" format="reference" />
+        <attr name="sdMainFabClosedBackgroundColor" format="color" />
+        <attr name="sdMainFabOpenedSrc" format="reference" />
+        <attr name="sdMainFabOpenedBackgroundColor" format="color" />
+        <attr name="sdUseReverseAnimationOnClose" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SpeedDialOverlayLayout">
