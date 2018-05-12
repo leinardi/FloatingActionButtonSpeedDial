@@ -31,12 +31,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class UiUtils {
-    private static final int SHORT_ANIM_TIME = 200;
 
     private UiUtils() {
     }
@@ -88,7 +89,7 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(0F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
@@ -111,9 +112,51 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(1F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_open_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
+    }
+
+    /**
+     * SpeedDial opening animation.
+     *
+     * @param view        view that starts that animation.
+     * @param startOffset a delay in time to start the animation
+     */
+    public static void enlargeAnim(View view, long startOffset) {
+        ViewCompat.animate(view).cancel();
+        view.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_in);
+        anim.setStartOffset(startOffset);
+        view.startAnimation(anim);
+    }
+
+    /**
+     * SpeedDial closing animation.
+     *
+     * @param view        view that starts that animation.
+     * @param startOffset a delay in time to start the animation
+     */
+    public static void shrinkAnim(final View view, long startOffset) {
+        ViewCompat.animate(view).cancel();
+        view.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.sd_scale_fade_and_translate_out);
+        anim.setStartOffset(startOffset);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        view.startAnimation(anim);
     }
 
     /**
@@ -127,7 +170,7 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .alpha(0F)
                 .withLayer()
-                .setDuration(SHORT_ANIM_TIME)
+                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
@@ -156,7 +199,8 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .rotation(angle)
                 .withLayer()
-                .setDuration(animate ? SHORT_ANIM_TIME : 0)
+                .setDuration(animate ?
+                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }
@@ -172,7 +216,8 @@ public class UiUtils {
         ViewCompat.animate(view)
                 .rotation(0.0F)
                 .withLayer()
-                .setDuration(animate ? SHORT_ANIM_TIME : 0)
+                .setDuration(animate ?
+                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
     }

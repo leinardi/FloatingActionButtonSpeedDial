@@ -33,7 +33,7 @@ The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```groovy
-implementation "com.leinardi.android:speed-dial:1.0-alpha05"
+implementation "com.leinardi.android:speed-dial:1.0-alpha06"
 ```
 #### Snapshots (development branch)
 You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
@@ -58,7 +58,7 @@ Add the `SpeedDialView` to your layout:
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
-    app:sdMainFabOpenSrc="@drawable/ic_add_white_24dp" />
+    app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp" />
 ```
 
 #### Action items
@@ -157,6 +157,15 @@ You simply need to add the `SpeedDialOverlayLayout` to your layout:
 ```
 and then provide the instance of that layout to the `SpeedDialView`:
 
+```xml
+<com.leinardi.android.speeddial.SpeedDialView
+    android:id="@+id/speedDial"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
+    app:sdOverlayLayout="@id/overlay" />
+```
+or
 ```java
 SpeedDialOverlayLayout overlayLayout = findViewById(R.id.overlay);
 mSpeedDialView.setSpeedDialOverlayLayout(overlayLayout);

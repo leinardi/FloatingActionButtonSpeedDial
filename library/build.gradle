@@ -52,5 +52,5 @@ dependencies {
     api deps.support.app_compat
     api deps.support.design
     api deps.support.cardview
-    annotationProcessor "com.uber.nullaway:nullaway:0.4.2"
+    annotationProcessor deps.nullaway
 }

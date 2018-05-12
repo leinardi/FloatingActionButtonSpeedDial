@@ -27,7 +27,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.leinardi.android.speeddial.SpeedDialActionItem;
-import com.leinardi.android.speeddial.SpeedDialOverlayLayout;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.leinardi.android.speeddial.sample.usecases.BaseUseCaseActivity;
 import com.leinardi.android.speeddial.sample.usecases.UseCasesActivity;
@@ -87,9 +86,6 @@ public class MainActivity extends BaseUseCaseActivity {
                     .create());
 
         }
-
-        SpeedDialOverlayLayout speedDialOverlayLayout = findViewById(R.id.overlay);
-        mSpeedDialView.setOverlayLayout(speedDialOverlayLayout);
 
         //Set main action clicklistener.
         mSpeedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {

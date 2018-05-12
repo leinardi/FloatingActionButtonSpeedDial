@@ -18,7 +18,7 @@ apply plugin: "se.bjurr.violations.violation-comments-to-github-gradle-plugin"
 
 buildscript {
     repositories {
-        apply from: 'versions.gradle'
+        apply from: 'dependencies.gradle'
         addRepos(repositories)
     }
     dependencies {
