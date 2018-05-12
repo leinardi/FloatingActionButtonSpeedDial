@@ -157,6 +157,15 @@ You simply need to add the `SpeedDialOverlayLayout` to your layout:
 ```
 and then provide the instance of that layout to the `SpeedDialView`:
 
+```xml
+<com.leinardi.android.speeddial.SpeedDialView
+    android:id="@+id/speedDial"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
+    app:sdOverlayLayout="@id/overlay" />
+```
+or
 ```java
 SpeedDialOverlayLayout overlayLayout = findViewById(R.id.overlay);
 mSpeedDialView.setSpeedDialOverlayLayout(overlayLayout);
