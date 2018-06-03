@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.0] - 2018-06-03
+- first stable release (no changes from 1.0-alpha06)
+
 ## [1.0-alpha06] - 2018-05-12
 - updated gradle plugin to 3.1.2
 - several API changes:
