@@ -77,6 +77,7 @@ public class MainActivity extends BaseUseCaseActivity {
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_green_500,
                             getTheme()))
                     .setLabel(getString(R.string.label_add_action))
+                    .setLabelBackgroundColor(Color.TRANSPARENT)
                     .create());
 
             mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable

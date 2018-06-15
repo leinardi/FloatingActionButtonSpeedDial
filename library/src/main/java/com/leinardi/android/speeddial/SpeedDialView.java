@@ -651,7 +651,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             setMainFabOpenedBackgroundColor(styledAttrs.getColor(R.styleable
                             .SpeedDialView_sdMainFabOpenedBackgroundColor,
                     getMainFabOpenedBackgroundColor()));
-            mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, 0);
+            mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, RESOURCE_NOT_SET);
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
         } finally {
@@ -890,9 +890,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static class InstanceState implements Parcelable {
         private boolean mIsOpen = false;
         @ColorInt
-        private int mMainFabClosedBackgroundColor;
+        private int mMainFabClosedBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mMainFabOpenedBackgroundColor;
+        private int mMainFabOpenedBackgroundColor = RESOURCE_NOT_SET;
         @ExpansionMode
         private int mExpansionMode = TOP;
         private float mMainFabAnimationRotateAngle = DEFAULT_ROTATE_ANGLE;
