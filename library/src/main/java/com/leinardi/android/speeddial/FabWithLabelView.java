@@ -180,6 +180,20 @@ public class FabWithLabelView extends LinearLayout {
     public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
         mOnActionSelectedListener = listener;
         if (mOnActionSelectedListener != null) {
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                    if (mOnActionSelectedListener != null
+                            && speedDialActionItem != null) {
+                        if (speedDialActionItem.isLabelClickable()) {
+                            UiUtils.performTap(getLabelBackground());
+                        } else {
+                            UiUtils.performTap(getFab());
+                        }
+                    }
+                }
+            });
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -190,9 +204,10 @@ public class FabWithLabelView extends LinearLayout {
                     }
                 }
             });
+
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
                     if (mOnActionSelectedListener != null
                             && speedDialActionItem != null

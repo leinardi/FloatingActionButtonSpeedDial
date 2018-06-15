@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.1] - 2018-06-15
+- fixed #62: Click between Label and FAB handled as a dismiss action
+
 ## [1.0.0] - 2018-06-03
 - first stable release (no changes from 1.0-alpha06)
 
