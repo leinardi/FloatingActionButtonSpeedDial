@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.2] - 2018-06-17
+- fixed #65: Main FAB not centered when using RTL
+
 ## [1.0.1] - 2018-06-15
 - fixed #62: Click between Label and FAB handled as a dismiss action
 - fixed #60: Label transparent background not being applied
