@@ -76,6 +76,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static final String STATE_KEY_EXPANSION_MODE = "expansionMode";
     private static final int DEFAULT_ROTATE_ANGLE = 45;
     private static final int ACTION_ANIM_DELAY = 25;
+    private static final int MAIN_FAB_HORIZONTAL_MARGIN_IN_DP = 4;
+    private static final int MAIN_FAB_VERTICAL_MARGIN_IN_DP = -2;
     private final InstanceState mInstanceState = new InstanceState();
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     @Nullable
@@ -664,8 +666,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         LayoutParams layoutParams = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.END;
-        int margin = UiUtils.dpToPx(getContext(), 4);
-        layoutParams.setMargins(margin, 0, margin, 0);
+        int marginHorizontal = UiUtils.dpToPx(getContext(), MAIN_FAB_HORIZONTAL_MARGIN_IN_DP);
+        int marginVertical = UiUtils.dpToPx(getContext(), MAIN_FAB_VERTICAL_MARGIN_IN_DP);
+        layoutParams.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
         floatingActionButton.setUseCompatPadding(true);
         floatingActionButton.setLayoutParams(layoutParams);
         floatingActionButton.setClickable(true);
