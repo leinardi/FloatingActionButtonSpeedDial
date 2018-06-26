@@ -17,6 +17,6 @@
 
 <resources>
     <integer name="sd_close_animation_duration">200</integer>
-    <integer name="sd_open_animation_duration">200</integer>
+    <integer name="sd_open_animation_duration">150</integer>
     <integer name="sd_rotate_animation_duration">200</integer>
 </resources>
