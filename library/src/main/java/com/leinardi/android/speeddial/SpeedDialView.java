@@ -75,7 +75,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static final String STATE_KEY_IS_OPEN = "isOpen";
     private static final String STATE_KEY_EXPANSION_MODE = "expansionMode";
     private static final int DEFAULT_ROTATE_ANGLE = 45;
-    private static final int ACTION_ANIM_DELAY = 50;
+    private static final int ACTION_ANIM_DELAY = 25;
     private static final int MAIN_FAB_HORIZONTAL_MARGIN_IN_DP = 4;
     private static final int MAIN_FAB_VERTICAL_MARGIN_IN_DP = -2;
     private final InstanceState mInstanceState = new InstanceState();
