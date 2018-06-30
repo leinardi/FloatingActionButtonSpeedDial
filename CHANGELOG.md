@@ -1,7 +1,9 @@
 # Change Log
 
-## [1.0.2] - 2018-06-17
+## [1.0.2] - 2018-06-30
 - fixed #65: Main FAB not centered when using RTL
+- fixed #71: Animation feels slower than Google Inbox
+- fixed #72: FAB vertical padding should be 16dp instead of 18dp
 
 ## [1.0.1] - 2018-06-15
 - fixed #62: Click between Label and FAB handled as a dismiss action
