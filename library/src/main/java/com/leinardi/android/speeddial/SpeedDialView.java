@@ -75,7 +75,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static final String STATE_KEY_IS_OPEN = "isOpen";
     private static final String STATE_KEY_EXPANSION_MODE = "expansionMode";
     private static final int DEFAULT_ROTATE_ANGLE = 45;
-    private static final int ACTION_ANIM_DELAY = 50;
+    private static final int ACTION_ANIM_DELAY = 25;
+    private static final int MAIN_FAB_HORIZONTAL_MARGIN_IN_DP = 4;
+    private static final int MAIN_FAB_VERTICAL_MARGIN_IN_DP = -2;
     private final InstanceState mInstanceState = new InstanceState();
     private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     @Nullable
@@ -651,7 +653,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             setMainFabOpenedBackgroundColor(styledAttrs.getColor(R.styleable
                             .SpeedDialView_sdMainFabOpenedBackgroundColor,
                     getMainFabOpenedBackgroundColor()));
-            mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, 0);
+            mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, RESOURCE_NOT_SET);
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
         } finally {
@@ -664,8 +666,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         LayoutParams layoutParams = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.END;
-        int margin = UiUtils.dpToPx(getContext(), 4);
-        layoutParams.setMargins(0, 0, margin, 0);
+        int marginHorizontal = UiUtils.dpToPx(getContext(), MAIN_FAB_HORIZONTAL_MARGIN_IN_DP);
+        int marginVertical = UiUtils.dpToPx(getContext(), MAIN_FAB_VERTICAL_MARGIN_IN_DP);
+        layoutParams.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
         floatingActionButton.setUseCompatPadding(true);
         floatingActionButton.setLayoutParams(layoutParams);
         floatingActionButton.setClickable(true);
@@ -890,9 +893,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static class InstanceState implements Parcelable {
         private boolean mIsOpen = false;
         @ColorInt
-        private int mMainFabClosedBackgroundColor;
+        private int mMainFabClosedBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
-        private int mMainFabOpenedBackgroundColor;
+        private int mMainFabOpenedBackgroundColor = RESOURCE_NOT_SET;
         @ExpansionMode
         private int mExpansionMode = TOP;
         private float mMainFabAnimationRotateAngle = DEFAULT_ROTATE_ANGLE;

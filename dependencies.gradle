@@ -200,13 +200,14 @@ deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.violations_plugin = "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
 ext.deps = deps
 
+def commitCount = 'git rev-list --count HEAD'.execute().text.trim()
 def build_versions = [:]
 build_versions.min_sdk = 14
 build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.3"
 build_versions.java_version = JavaVersion.VERSION_1_7
-build_versions.version_code = 'git rev-list --count HEAD'.execute().text.trim() as int
-build_versions.version_name = "1.0-alpha06"
+build_versions.version_code = commitCount.isNumber() ? commitCount as int : 0
+build_versions.version_name = "1.0.2"
 ext.build_versions = build_versions
 
 

@@ -19,7 +19,9 @@ package com.leinardi.android.speeddial;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -60,6 +62,9 @@ public class FabWithLabelView extends LinearLayout {
     private OnActionSelectedListener mOnActionSelectedListener;
     @FloatingActionButton.Size
     private int mCurrentFabSize;
+    private float mLabelCardViewElevation;
+    @Nullable
+    private Drawable mLabelCardViewBackground;
 
     public FabWithLabelView(Context context) {
         super(context);
@@ -180,6 +185,20 @@ public class FabWithLabelView extends LinearLayout {
     public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
         mOnActionSelectedListener = listener;
         if (mOnActionSelectedListener != null) {
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                    if (mOnActionSelectedListener != null
+                            && speedDialActionItem != null) {
+                        if (speedDialActionItem.isLabelClickable()) {
+                            UiUtils.performTap(getLabelBackground());
+                        } else {
+                            UiUtils.performTap(getFab());
+                        }
+                    }
+                }
+            });
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -190,9 +209,10 @@ public class FabWithLabelView extends LinearLayout {
                     }
                 }
             });
+
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
                     if (mOnActionSelectedListener != null
                             && speedDialActionItem != null
@@ -329,7 +349,33 @@ public class FabWithLabelView extends LinearLayout {
     }
 
     private void setLabelBackgroundColor(@ColorInt int color) {
-        mLabelCardView.setCardBackgroundColor(ColorStateList.valueOf(color));
+        if (color == Color.TRANSPARENT) {
+            mLabelCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mLabelCardViewElevation = mLabelCardView.getElevation();
+                mLabelCardView.setElevation(0);
+            } else {
+                mLabelCardView.setBackgroundColor(Color.TRANSPARENT);
+                mLabelCardViewBackground = mLabelCardView.getBackground();
+            }
+        } else {
+            mLabelCardView.setCardBackgroundColor(ColorStateList.valueOf(color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (mLabelCardViewElevation != 0) {
+                    mLabelCardView.setElevation(mLabelCardViewElevation);
+                    mLabelCardViewElevation = 0;
+                }
+            } else {
+                if (mLabelCardViewBackground != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mLabelCardView.setBackground(mLabelCardViewBackground);
+                    } else {
+                        mLabelCardView.setBackgroundDrawable(mLabelCardViewBackground);
+                    }
+                    mLabelCardViewBackground = null;
+                }
+            }
+        }
     }
 }
 

@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.0.2] - 2018-06-30
+- fixed #65: Main FAB not centered when using RTL
+- fixed #71: Animation feels slower than Google Inbox
+- fixed #72: FAB vertical padding should be 16dp instead of 18dp
+
+## [1.0.1] - 2018-06-15
+- fixed #62: Click between Label and FAB handled as a dismiss action
+- fixed #60: Label transparent background not being applied
+
+## [1.0.0] - 2018-06-03
+- first stable release (no changes from 1.0-alpha06)
+
 ## [1.0-alpha06] - 2018-05-12
 - updated gradle plugin to 3.1.2
 - several API changes:

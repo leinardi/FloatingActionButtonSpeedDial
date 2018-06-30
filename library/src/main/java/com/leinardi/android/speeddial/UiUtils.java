@@ -30,6 +30,7 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -279,5 +280,21 @@ public class UiUtils {
         } else {
             return new BitmapDrawable(bitmap);
         }
+    }
+
+    /**
+     * Perform a tap of {@link ViewConfiguration#getTapTimeout()} milliseconds on the view.
+     *
+     * @param view the view you want to tap
+     */
+    public static void performTap(final View view) {
+        view.setPressed(true);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setPressed(false);
+                view.performClick();
+            }
+        }, ViewConfiguration.getTapTimeout());
     }
 }
