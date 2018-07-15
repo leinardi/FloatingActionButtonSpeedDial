@@ -24,6 +24,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.content.res.AppCompatResources;
@@ -37,6 +38,8 @@ public class SpeedDialActionItem implements Parcelable {
     private final int mId;
     @Nullable
     private final String mLabel;
+    @StringRes
+    private final int mLabelRes;
     @DrawableRes
     private final int mFabImageResource;
     @Nullable
@@ -58,6 +61,7 @@ public class SpeedDialActionItem implements Parcelable {
     private SpeedDialActionItem(Builder builder) {
         mId = builder.mId;
         mLabel = builder.mLabel;
+        mLabelRes = builder.mLabelRes;
         mFabImageTintColor = builder.mFabImageTintColor;
         mFabImageResource = builder.mFabImageResource;
         mFabImageDrawable = builder.mFabImageDrawable;
@@ -74,8 +78,14 @@ public class SpeedDialActionItem implements Parcelable {
     }
 
     @Nullable
-    public String getLabel() {
-        return mLabel;
+    public String getLabel(Context context) {
+        if (mLabel != null) {
+            return mLabel;
+        } else if (mLabelRes != RESOURCE_NOT_SET) {
+            return context.getString(mLabelRes);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -140,6 +150,8 @@ public class SpeedDialActionItem implements Parcelable {
         private int mFabImageTintColor = RESOURCE_NOT_SET;
         @Nullable
         private String mLabel;
+        @StringRes
+        private int mLabelRes = RESOURCE_NOT_SET;
         @ColorInt
         private int mFabBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
@@ -182,6 +194,11 @@ public class SpeedDialActionItem implements Parcelable {
 
         public Builder setLabel(@Nullable String label) {
             mLabel = label;
+            return this;
+        }
+
+        public Builder setLabel(@StringRes int labelRes) {
+            mLabelRes = labelRes;
             return this;
         }
 
@@ -236,6 +253,7 @@ public class SpeedDialActionItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.mId);
         dest.writeString(this.mLabel);
+        dest.writeInt(this.mLabelRes);
         dest.writeInt(this.mFabImageResource);
         dest.writeInt(this.mFabImageTintColor);
         dest.writeInt(this.mFabBackgroundColor);
@@ -249,6 +267,7 @@ public class SpeedDialActionItem implements Parcelable {
     protected SpeedDialActionItem(Parcel in) {
         this.mId = in.readInt();
         this.mLabel = in.readString();
+        this.mLabelRes = in.readInt();
         this.mFabImageResource = in.readInt();
         this.mFabImageDrawable = null;
         this.mFabImageTintColor = in.readInt();

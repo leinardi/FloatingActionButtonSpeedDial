@@ -138,7 +138,7 @@ public class FabWithLabelView extends LinearLayout {
     public void setSpeedDialActionItem(SpeedDialActionItem actionItem) {
         mSpeedDialActionItem = actionItem;
         setId(actionItem.getId());
-        setLabel(actionItem.getLabel());
+        setLabel(actionItem.getLabel(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
 
