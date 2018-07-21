@@ -1,0 +1,51 @@
+<!--
+  ~ Copyright 2018 Roberto Leinardi.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">FAB Speed Dial Sample</string>
+    <string name="app_version">v%1$s</string>
+    <string name="use_case_1">Setup minimo</string>
+    <string name="label_custom_color">Colori custom</string>
+    <string name="label_custom_theme">Tema custom</string>
+    <string name="label_add_action">Aggiungi action</string>
+    <string name="label_replace_action">Sostituisci action</string>
+    <string name="label_remove_action">Rimuovi action</string>
+    <string name="action_use_cases">Casi d\'uso</string>
+    <string name="action_show_hide_fab">Mostra/Nascondi FAB</string>
+    <string name="action_show_snackbar">Mostra snackbar</string>
+    <string name="action_add_action_item">Aggiungi action item</string>
+    <string name="action_remove_action_item">Rimuovi action item</string>
+    <string name="expansion_mode">Modalità espansione</string>
+    <string name="top">Alto</string>
+    <string name="left">Sinistra</string>
+    <string name="bottom">Basso</string>
+    <string name="right">Destra</string>
+    <string name="rotation_angle">Angolo rotazione</string>
+    <string name="zero_degrees">0 gradi</string>
+    <string name="forty_five_degrees">45 gradi</string>
+    <string name="ninety_degrees">90 gradi</string>
+    <string name="one_hundred_eighty_degrees">180 gradi</string>
+    <string name="main_fab_color">Colore Main FAB</string>
+    <string name="orange">Arancione</string>
+    <string name="white">Bianco</string>
+    <string name="primary">Primary</string>
+    <string name="purple">Viola</string>
+    <string name="main_fab_color_open">Colore Main FAB aperto</string>
+    <string name="main_fab_color_close">Colore Main FAB chiuso</string>
+    <string name="none">Nessuno</string>
+    <string name="action_toggle_list">Toggle lista</string>
+    <string name="action_toggle_reverse_animation">Toggle reverse animation in chiususa</string>
+</resources>

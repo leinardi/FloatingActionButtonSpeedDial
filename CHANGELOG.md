@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.0.0] - 2018-07-15
+- fixed #79: Does not change label text language when app language is changed dynamically
+- API changes:
+    - added support to String resources for labels
+    - `SpeedDialActionItem.getLabel()` now requires a `Context`
+    
 ## [1.0.2] - 2018-06-30
 - fixed #65: Main FAB not centered when using RTL
 - fixed #71: Animation feels slower than Google Inbox
