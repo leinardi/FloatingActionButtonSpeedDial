@@ -1,10 +1,14 @@
 # Change Log
 
-## [2.0.0] - 2018-07-15
+## [2.0.0] - 2018-07-21
 - fixed #79: Does not change label text language when app language is changed dynamically
 - API changes:
     - added support to String resources for labels
     - `SpeedDialActionItem.getLabel()` now requires a `Context`
+    - added `SpeedDialActionItem.Builder()` constructor that accepts a `SpeedDialActionItem` to be used for default values (useful to modify an existing Action Item without replacing it completely)
+    - added `SpeedDialActionItem.createFabWithLabelView()`
+    - all the `SpeedDialView` add and replace methods now return an instance of the `FabWithLabelView` they create  (useful to modify an existing Action Item without replacing it completely)
+    - added `FabWithLabelView.getSpeedDialActionItemBuilder()`  (useful to modify an existing Action Item without replacing it completely)
     
 ## [1.0.2] - 2018-06-30
 - fixed #65: Main FAB not centered when using RTL

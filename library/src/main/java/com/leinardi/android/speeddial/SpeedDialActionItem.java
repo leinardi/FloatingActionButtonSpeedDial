@@ -28,6 +28,7 @@ import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.content.res.AppCompatResources;
+import android.view.ContextThemeWrapper;
 
 import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
 
@@ -133,6 +134,18 @@ public class SpeedDialActionItem implements Parcelable {
         return mTheme;
     }
 
+    public FabWithLabelView createFabWithLabelView(Context context) {
+        FabWithLabelView fabWithLabelView;
+        int theme = getTheme();
+        if (theme == RESOURCE_NOT_SET) {
+            fabWithLabelView = new FabWithLabelView(context);
+        } else {
+            fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme);
+        }
+        fabWithLabelView.setSpeedDialActionItem(this);
+        return fabWithLabelView;
+    }
+
     // Disabled due to https://issuetracker.google.com/issues/77303906
     @FloatingActionButton.Size
     /* public */ int getFabSize() {
@@ -165,7 +178,7 @@ public class SpeedDialActionItem implements Parcelable {
         private int mTheme = RESOURCE_NOT_SET;
 
         /**
-         * Creates a builder for a speed dial action item that uses the a {@link DrawableRes} as icon.
+         * Creates a builder for a speed dial action item that uses a {@link DrawableRes} as icon.
          *
          * @param id               the identifier for this action item. The identifier must be unique to the instance
          *                         of {@link SpeedDialView}. The identifier should be a positive number.
@@ -178,7 +191,7 @@ public class SpeedDialActionItem implements Parcelable {
         }
 
         /**
-         * Creates a builder for a speed dial action item that uses the a {@link Drawable} as icon.
+         * Creates a builder for a speed dial action item that uses a {@link Drawable} as icon.
          * <p class="note">{@link Drawable} are not parcelables so is not possible to restore them when the view is
          * recreated for example after an orientation change. If possible always use the {@link #Builder(int, int)}</p>
          *
@@ -190,6 +203,27 @@ public class SpeedDialActionItem implements Parcelable {
             mId = id;
             mFabImageDrawable = drawable;
             mFabImageResource = RESOURCE_NOT_SET;
+        }
+
+        /**
+         * Creates a builder for a speed dial action item that uses a {@link SpeedDialActionItem} instance to
+         * initialize the default values.
+         *
+         * @param speedDialActionItem it will be used for the default values of the builder.
+         */
+        public Builder(SpeedDialActionItem speedDialActionItem) {
+            mId = speedDialActionItem.mId;
+            mLabel = speedDialActionItem.mLabel;
+            mLabelRes = speedDialActionItem.mLabelRes;
+            mFabImageResource = speedDialActionItem.mFabImageResource;
+            mFabImageDrawable = speedDialActionItem.mFabImageDrawable;
+            mFabImageTintColor = speedDialActionItem.mFabImageTintColor;
+            mFabBackgroundColor = speedDialActionItem.mFabBackgroundColor;
+            mLabelColor = speedDialActionItem.mLabelColor;
+            mLabelBackgroundColor = speedDialActionItem.mLabelBackgroundColor;
+            mLabelClickable = speedDialActionItem.mLabelClickable;
+            mFabSize = speedDialActionItem.mFabSize;
+            mTheme = speedDialActionItem.mTheme;
         }
 
         public Builder setLabel(@Nullable String label) {
