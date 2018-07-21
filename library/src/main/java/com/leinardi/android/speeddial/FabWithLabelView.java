@@ -117,22 +117,32 @@ public class FabWithLabelView extends LinearLayout {
     }
 
     /**
-     * Return This method returns fab labels background card.
+     * Returns FAB labels background card.
      */
     public CardView getLabelBackground() {
         return mLabelCardView;
     }
 
     /**
-     * Return This method returns fab in action menu.
+     * Returns the {@link FloatingActionButton}.
      */
     public FloatingActionButton getFab() {
         return mFab;
     }
 
-    @Nullable
     public SpeedDialActionItem getSpeedDialActionItem() {
+        if (mSpeedDialActionItem == null) {
+            throw new IllegalStateException("SpeedDialActionItem not set yet!");
+        }
         return mSpeedDialActionItem;
+    }
+
+    /**
+     * Returns an instance of the {@link SpeedDialActionItem.Builder} initialized with the current instance of the
+     * {@link SpeedDialActionItem} to make it easier to modify the current Action Item settings.
+     */
+    public SpeedDialActionItem.Builder getSpeedDialActionItemBuilder() {
+        return new SpeedDialActionItem.Builder(getSpeedDialActionItem());
     }
 
     public void setSpeedDialActionItem(SpeedDialActionItem actionItem) {

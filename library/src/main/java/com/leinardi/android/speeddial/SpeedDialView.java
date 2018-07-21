@@ -45,7 +45,6 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -265,20 +264,25 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * collection's Iterator.
      *
      * @param actionItemCollection collection containing {@link SpeedDialActionItem} to be added to this list
+     * @return a collection containing the instances of {@link FabWithLabelView} added.
      */
-    public void addAllActionItems(Collection<SpeedDialActionItem> actionItemCollection) {
+    public Collection<FabWithLabelView> addAllActionItems(Collection<SpeedDialActionItem> actionItemCollection) {
+        ArrayList<FabWithLabelView> fabWithLabelViews = new ArrayList<>();
         for (SpeedDialActionItem speedDialActionItem : actionItemCollection) {
-            addActionItem(speedDialActionItem);
+            fabWithLabelViews.add(addActionItem(speedDialActionItem));
         }
+        return fabWithLabelViews;
     }
 
     /**
      * Appends the specified {@link SpeedDialActionItem} to the end of this list.
      *
      * @param speedDialActionItem {@link SpeedDialActionItem} to be appended to this list
+     * @return the instance of the {@link FabWithLabelView} if the add was successful, null otherwise.
      */
-    public void addActionItem(SpeedDialActionItem speedDialActionItem) {
-        addActionItem(speedDialActionItem, mFabWithLabelViews.size());
+    @Nullable
+    public FabWithLabelView addActionItem(SpeedDialActionItem speedDialActionItem) {
+        return addActionItem(speedDialActionItem, mFabWithLabelViews.size());
     }
 
     /**
@@ -287,9 +291,11 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      *
      * @param actionItem {@link SpeedDialActionItem} to be appended to this list
      * @param position   index at which the specified element is to be inserted
+     * @return the instance of the {@link FabWithLabelView} if the add was successful, null otherwise.
      */
-    public void addActionItem(SpeedDialActionItem actionItem, int position) {
-        addActionItem(actionItem, position, true);
+    @Nullable
+    public FabWithLabelView addActionItem(SpeedDialActionItem actionItem, int position) {
+        return addActionItem(actionItem, position, true);
     }
 
     /**
@@ -299,13 +305,17 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      * @param actionItem {@link SpeedDialActionItem} to be appended to this list
      * @param position   index at which the specified element is to be inserted
      * @param animate    true to animate the insertion, false to insert instantly
+     * @return the instance of the {@link FabWithLabelView} if the add was successful, null otherwise.
      */
-    public void addActionItem(SpeedDialActionItem actionItem, int position, boolean animate) {
+    @Nullable
+    public FabWithLabelView addActionItem(SpeedDialActionItem actionItem, int position, boolean animate) {
         FabWithLabelView oldView = findFabWithLabelViewById(actionItem.getId());
         if (oldView != null) {
-            replaceActionItem(oldView.getSpeedDialActionItem(), actionItem);
+            return replaceActionItem(oldView.getSpeedDialActionItem(), actionItem);
         } else {
-            FabWithLabelView newView = createNewFabWithLabelView(actionItem);
+            FabWithLabelView newView = actionItem.createFabWithLabelView(getContext());
+            newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
+            newView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
             int layoutPosition = getLayoutPosition(position);
             addView(newView, layoutPosition);
             mFabWithLabelViews.add(position, newView);
@@ -316,6 +326,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             } else {
                 newView.setVisibility(GONE);
             }
+            return newView;
         }
     }
 
@@ -365,11 +376,11 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      *
      * @param newActionItem {@link SpeedDialActionItem} to use for the replacement
      * @param position      the index of the {@link SpeedDialActionItem} to be replaced
-     * @return true if this list contained the specified element
+     * @return the instance of the new {@link FabWithLabelView} if the replace was successful, null otherwise.
      */
-    public boolean replaceActionItem(SpeedDialActionItem newActionItem, int position) {
-        return replaceActionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(),
-                newActionItem);
+    @Nullable
+    public FabWithLabelView replaceActionItem(SpeedDialActionItem newActionItem, int position) {
+        return replaceActionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(), newActionItem);
     }
 
     /**
@@ -377,25 +388,25 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
      *
      * @param oldSpeedDialActionItem the old {@link SpeedDialActionItem} to remove
      * @param newSpeedDialActionItem the new {@link SpeedDialActionItem} to add
-     * @return true if this list contained the specified element
+     * @return the instance of the new {@link FabWithLabelView} if the replace was successful, null otherwise.
      */
-    public boolean replaceActionItem(@Nullable SpeedDialActionItem oldSpeedDialActionItem,
-                                     SpeedDialActionItem newSpeedDialActionItem) {
+    @Nullable
+    public FabWithLabelView replaceActionItem(@Nullable SpeedDialActionItem oldSpeedDialActionItem,
+                                              SpeedDialActionItem newSpeedDialActionItem) {
         if (oldSpeedDialActionItem == null) {
-            return false;
+            return null;
         } else {
             FabWithLabelView oldView = findFabWithLabelViewById(oldSpeedDialActionItem.getId());
             if (oldView != null) {
                 int index = mFabWithLabelViews.indexOf(oldView);
                 if (index < 0) {
-                    return false;
+                    return null;
                 }
                 removeActionItem(findFabWithLabelViewById(newSpeedDialActionItem.getId()), null, false);
                 removeActionItem(findFabWithLabelViewById(oldSpeedDialActionItem.getId()), null, false);
-                addActionItem(newSpeedDialActionItem, index, false);
-                return true;
+                return addActionItem(newSpeedDialActionItem, index, false);
             } else {
-                return false;
+                return null;
             }
         }
     }
@@ -687,20 +698,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             }
         });
         return floatingActionButton;
-    }
-
-    private FabWithLabelView createNewFabWithLabelView(SpeedDialActionItem speedDialActionItem) {
-        FabWithLabelView newView;
-        int theme = speedDialActionItem.getTheme();
-        if (theme == RESOURCE_NOT_SET) {
-            newView = new FabWithLabelView(getContext());
-        } else {
-            newView = new FabWithLabelView(new ContextThemeWrapper(getContext(), theme), null, theme);
-        }
-        newView.setSpeedDialActionItem(speedDialActionItem);
-        newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
-        newView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
-        return newView;
     }
 
     private void toggle(boolean show, boolean animate) {
