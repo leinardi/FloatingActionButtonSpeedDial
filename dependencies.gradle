@@ -21,7 +21,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.android_checkstyle_plugin = "1.0.0"
-versions.android_gradle_plugin = "3.2.0-beta04"
+versions.android_gradle_plugin = "3.2.0-rc03"
 versions.android_maven_gradle_plugin = "2.1"
 versions.androidthings = "0.7-devpreview"
 versions.apache_commons = "2.5"
