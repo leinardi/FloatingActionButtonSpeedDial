@@ -688,12 +688,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         floatingActionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if (!isOpen() && !mFabWithLabelViews.isEmpty()) {
-                    open();
-                } else {
+                if (isOpen()) {
                     if (mOnChangeListener == null || !mOnChangeListener.onMainActionSelected()) {
                         close();
                     }
+                } else {
+                    open();
                 }
             }
         });
@@ -701,6 +701,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     private void toggle(boolean show, boolean animate) {
+        if (show && mFabWithLabelViews.isEmpty()) {
+            show = false;
+            if (mOnChangeListener != null) {
+                mOnChangeListener.onMainActionSelected();
+            }
+        }
         if (isOpen() == show) {
             return;
         }

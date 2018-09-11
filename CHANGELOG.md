@@ -1,7 +1,8 @@
 # Change Log
 
-## [2.0.0] - 2018-07-21
+## [2.0.0] - 2018-09-11
 - fixed #79: Does not change label text language when app language is changed dynamically
+- fixed #88: Speed Dial should not open if empty
 - API changes:
     - added support to String resources for labels
     - `SpeedDialActionItem.getLabel()` now requires a `Context`
