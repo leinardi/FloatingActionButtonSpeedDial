@@ -33,7 +33,7 @@ The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```groovy
-implementation "com.leinardi.android:speed-dial:1.0.2"
+implementation "com.leinardi.android:speed-dial:2.0.0"
 ```
 #### Snapshots (development branch)
 You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
