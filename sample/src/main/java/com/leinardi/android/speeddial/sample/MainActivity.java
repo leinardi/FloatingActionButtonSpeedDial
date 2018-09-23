@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.leinardi.android.speeddial.FabWithLabelView;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.leinardi.android.speeddial.sample.usecases.BaseUseCaseActivity;
@@ -56,15 +57,20 @@ public class MainActivity extends BaseUseCaseActivity {
                     .create());
 
             Drawable drawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_custom_color);
-            mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_custom_color, drawable)
-                    .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000,
-                            getTheme()))
+            FabWithLabelView fabWithLabelView = mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id
+                    .fab_custom_color, drawable)
                     .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
-                    .setLabel(getString(R.string.label_custom_color))
+                    .setLabel(R.string.label_custom_color)
                     .setLabelColor(Color.WHITE)
                     .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary,
                             getTheme()))
                     .create());
+            if (fabWithLabelView != null) {
+                fabWithLabelView.setSpeedDialActionItem(fabWithLabelView.getSpeedDialActionItemBuilder()
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000,
+                                getTheme()))
+                        .create());
+            }
 
             mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
                     .ic_lorem_ipsum)
@@ -76,7 +82,7 @@ public class MainActivity extends BaseUseCaseActivity {
             mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_add_action, drawable)
                     .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_green_500,
                             getTheme()))
-                    .setLabel(getString(R.string.label_add_action))
+                    .setLabel(R.string.label_add_action)
                     .setLabelBackgroundColor(Color.TRANSPARENT)
                     .create());
 
@@ -112,13 +118,13 @@ public class MainActivity extends BaseUseCaseActivity {
                         mSpeedDialView.close(); // To close the Speed Dial with animation
                         return true; // false will close it without animation
                     case R.id.fab_long_label:
-                        showSnackbar(actionItem.getLabel() + " clicked!");
+                        showSnackbar(actionItem.getLabel(MainActivity.this) + " clicked!");
                         break;
                     case R.id.fab_custom_color:
-                        showToast(actionItem.getLabel() + " clicked!\nClosing without animation.");
+                        showToast(actionItem.getLabel(MainActivity.this) + " clicked!\nClosing without animation.");
                         return false; // closes without animation (same as mSpeedDialView.close(false); return false;)
                     case R.id.fab_custom_theme:
-                        showToast(actionItem.getLabel() + " clicked!");
+                        showToast(actionItem.getLabel(MainActivity.this) + " clicked!");
                         break;
                     case R.id.fab_add_action:
                         mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_replace_action,

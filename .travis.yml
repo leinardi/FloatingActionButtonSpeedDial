@@ -28,7 +28,7 @@ before_script:
   - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROID_HOME/licenses/android-sdk-license
   - mkdir -p $HOME/.android # silence sdkmanager warning
   - echo 'count=0' > $HOME/.android/repositories.cfg # silence sdkmanager warning
-  - echo y | $ANDROID_HOME/tools/bin/sdkmanager 'tools' 'platform-tools' 'build-tools;27.0.3' > /dev/null
+  - echo y | $ANDROID_HOME/tools/bin/sdkmanager 'tools' 'platform-tools' 'build-tools;28.0.2' > /dev/null
   - echo y | $ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-27' > /dev/null
 
 script:
