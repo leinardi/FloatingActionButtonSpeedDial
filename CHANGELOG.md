@@ -1,6 +1,7 @@
 # Change Log
 
-## [2.0.0] - 2018-09-11
+## [2.0.0] - 2018-09-23
+- workaround for https://issuetracker.google.com/issues/111316656 **PLEASE STAR THIS ISSUE**
 - fixed #79: Does not change label text language when app language is changed dynamically
 - fixed #88: Speed Dial should not open if empty
 - API changes:

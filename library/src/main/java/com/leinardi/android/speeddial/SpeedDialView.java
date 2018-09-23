@@ -55,6 +55,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import java.lang.annotation.Retention;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -178,7 +181,47 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     public void show(@Nullable final OnVisibilityChangedListener listener) {
         setVisibility(VISIBLE);
-        mMainFab.show(listener);
+        showFabWithWorkaround(mMainFab, listener);
+    }
+
+    /*
+     * WORKAROUND: Remove if Google will finally fix this: https://issuetracker.google.com/issues/111316656
+     */
+    private void showFabWithWorkaround(FloatingActionButton fab, @Nullable final OnVisibilityChangedListener listener) {
+        fab.show(new OnVisibilityChangedListener() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onShown(FloatingActionButton fab) {
+                try {
+                    Field declaredField = fab.getClass().getDeclaredField("impl");
+                    declaredField.setAccessible(true);
+                    Object impl = declaredField.get(fab);
+                    Class implClass = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                            ? impl.getClass().getSuperclass() : impl.getClass();
+                    Method scale = implClass.getDeclaredMethod("setImageMatrixScale", Float.TYPE);
+                    scale.setAccessible(true);
+                    scale.invoke(impl, 1.0F);
+                } catch (NoSuchMethodException e) {
+                    Log.e(TAG, "Method setImageMatrixScale not found", e);
+                } catch (IllegalAccessException e) {
+                    Log.e(TAG, "IllegalAccessException", e);
+                } catch (InvocationTargetException e) {
+                    Log.e(TAG, "InvocationTargetException", e);
+                } catch (NoSuchFieldException e) {
+                    Log.e(TAG, "Field impl not found", e);
+                }
+                if (listener != null) {
+                    listener.onShown(fab);
+                }
+            }
+
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                if (listener != null) {
+                    listener.onHidden(fab);
+                }
+            }
+        });
     }
 
     public void hide() {
