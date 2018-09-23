@@ -190,6 +190,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void showFabWithWorkaround(FloatingActionButton fab, @Nullable final OnVisibilityChangedListener listener) {
         fab.show(new OnVisibilityChangedListener() {
             @SuppressWarnings("unchecked")
+            @Override
             public void onShown(FloatingActionButton fab) {
                 try {
                     Field declaredField = fab.getClass().getDeclaredField("impl");
