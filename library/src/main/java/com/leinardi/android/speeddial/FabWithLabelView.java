@@ -16,6 +16,7 @@
 
 package com.leinardi.android.speeddial;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -81,6 +82,7 @@ public class FabWithLabelView extends LinearLayout {
         init(context, attrs);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
