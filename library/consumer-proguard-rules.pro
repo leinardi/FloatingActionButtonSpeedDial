@@ -23,3 +23,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepclassmembernames class android.support.design.widget.FloatingActionButton {
+android.support.design.widget.FloatingActionButtonImpl impl;
+}
+-keepclassmembernames class android.support.design.widget.FloatingActionButtonImpl { void setImageMatrixScale(float); }
