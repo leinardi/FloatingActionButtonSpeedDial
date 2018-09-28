@@ -206,7 +206,7 @@ build_versions.min_sdk = 14
 build_versions.target_sdk = 28
 build_versions.java_version = JavaVersion.VERSION_1_7
 build_versions.version_code = commitCount.isNumber() ? commitCount as int : 0
-build_versions.version_name = "2.0.0"
+build_versions.version_name = "2.0.1"
 ext.build_versions = build_versions
 
 
