@@ -1,6 +1,10 @@
 # Change Log
 
+## [2.0.1] - 2018-09-28
+- fixed #95: support 28 workaround does not work on minified release apk
+
 ## [2.0.0] - 2018-09-23
+- updated support library to v28.0.0
 - workaround for https://issuetracker.google.com/issues/111316656 <- **PLEASE STAR THIS ISSUE**
 - fixed #79: Does not change label text language when app language is changed dynamically
 - fixed #88: Speed Dial should not open if empty
