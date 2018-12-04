@@ -20,17 +20,17 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.annotation.StyleRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.content.res.AppCompatResources;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.content.res.AppCompatResources;
 import android.view.ContextThemeWrapper;
 
-import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_AUTO;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {

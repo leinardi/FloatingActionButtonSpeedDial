@@ -25,24 +25,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.MenuRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.FloatingActionButton.OnVisibilityChangedListener;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton.OnVisibilityChangedListener;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -992,7 +994,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     /**
      * Behavior designed for use with {@link View} instances. Its main function
-     * is to move {@link View} views so that any displayed {@link android.support.design.widget.Snackbar}s do
+     * is to move {@link View} views so that any displayed {@link Snackbar}s do
      * not cover them.
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
@@ -1013,9 +1015,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         public SnackbarBehavior(Context context, AttributeSet attrs) {
             super(context, attrs);
             TypedArray a = context.obtainStyledAttributes(attrs,
-                    android.support.design.R.styleable.FloatingActionButton_Behavior_Layout);
+                    com.google.android.material.R.styleable.FloatingActionButton_Behavior_Layout);
             mAutoHideEnabled = a.getBoolean(
-                    android.support.design.R.styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide,
+                    com.google.android.material.R.styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide,
                     AUTO_HIDE_DEFAULT);
             a.recycle();
         }
@@ -1196,7 +1198,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     /**
      * Behavior designed for use with {@link View} instances. Its main function
-     * is to move {@link View} views so that any displayed {@link android.support.design.widget.Snackbar}s do
+     * is to move {@link View} views so that any displayed {@link Snackbar}s do
      * not cover them.
      */
     @SuppressWarnings({"unused", "WeakerAccess"})

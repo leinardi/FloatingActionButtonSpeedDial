@@ -23,13 +23,13 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.CardView;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -41,9 +41,9 @@ import android.widget.TextView;
 
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
-import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
-import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
-import static android.support.design.widget.FloatingActionButton.SIZE_NORMAL;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_AUTO;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_NORMAL;
 import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 
 /**
