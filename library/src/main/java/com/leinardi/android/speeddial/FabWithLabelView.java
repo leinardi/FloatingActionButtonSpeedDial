@@ -249,9 +249,9 @@ public class FabWithLabelView extends LinearLayout {
     private void init(Context context, @Nullable AttributeSet attrs) {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
 
-        mFab = rootView.findViewById(R.id.fab);
-        mLabelTextView = rootView.findViewById(R.id.label);
-        mLabelCardView = rootView.findViewById(R.id.label_container);
+        mFab = rootView.findViewById(R.id.sd_fab);
+        mLabelTextView = rootView.findViewById(R.id.sd_label);
+        mLabelCardView = rootView.findViewById(R.id.sd_label_container);
 
         setFabSize(SIZE_MINI);
         setOrientation(LinearLayout.HORIZONTAL);
