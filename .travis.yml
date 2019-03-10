@@ -40,4 +40,4 @@ script:
       ./gradlew violationCommentsToGitHub -DGITHUB_PULLREQUESTID=$TRAVIS_PULL_REQUEST -DGITHUB_OAUTH2TOKEN=$GITHUB_OAUTH2TOKEN --info
     fi
   - pandoc `ls -1rt build/reports/profile/profile-*.html | tail -n1` -t plain
-  - ./gradlew dependencyUpdate # I must run this separately due to issues with the support library resolutionStrategy
+  - ./gradlew dependencyUpdate # Must run separately due to issues with the support library resolutionStrategy
