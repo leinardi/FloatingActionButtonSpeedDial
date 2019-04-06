@@ -23,182 +23,23 @@ def versions = [:]
 versions.android_checkstyle_plugin = "1.1.0"
 versions.android_gradle_plugin = "3.3.2"
 versions.android_maven_gradle_plugin = "2.1"
-versions.androidthings = "0.7-devpreview"
-versions.apache_commons = "2.5"
-versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.1.0"
-versions.atsl_rules = "1.0.1"
-versions.atsl_runner = "1.0.1"
-versions.commons_io = "2.6"
-versions.commons_lang3 = "3.7"
+versions.android_material = "1.0.0"
+versions.androidx_appcompat = "1.0.2"
+versions.androidx_cardview = "1.0.0"
+versions.androidx_constraintlayout = "1.1.3"
+versions.androidx_recyclerview = "1.0.0"
 versions.constraint_layout = "1.1.3"
-versions.dagger = "2.14.1"
-versions.dexmaker = "2.2.0"
-versions.driver_bmx280 = "0.4"
-versions.driver_ds3231 = "0.1"
-versions.driver_epaperdriverhat = "0.1"
-versions.driver_hcsr04 = "0.1"
-versions.driver_hd44780 = "0.2"
-versions.driver_lsm9ds1 = "0.3"
-versions.driver_sh1106 = "0.2"
-versions.driver_tsl256x = "0.1"
 versions.errorprone_plugin = "0.0.15"
 versions.espresso = "3.0.1"
-versions.glide = "3.8.0"
 versions.gradle_bintray_plugin = "1.8.4"
 versions.gradle_versions_plugin = "0.21.0"
-versions.hamcrest = "1.3"
-versions.joystick = "1.1.0"
 versions.junit = "4.12"
 versions.kotlin = "1.2"
 versions.mockito = "2.13.3"
 versions.mockito_all = "1.10.19"
-versions.mockwebserver = "3.9.1"
 versions.nullaway = "0.6.6"
-versions.okhttp3 = "3.9.1"
-versions.paging = "1.0.0-alpha3"
-versions.pio_softpwm = "0.1"
-versions.powermock = "1.6.6"
-versions.play_services = "11.6.2"
-versions.retrofit = "2.3.0"
-versions.rx_android = "2.0.1"
-versions.rxjava2 = "2.1.9"
-versions.support = "28.0.0"
-versions.timber = "4.6.0"
 versions.violations_plugin = "1.52"
 ext.versions = versions
-
-def deps = [:]
-
-def support = [:]
-support.annotations = "com.android.support:support-annotations:$versions.support"
-support.app_compat = "com.android.support:appcompat-v7:$versions.support"
-support.cardview = "com.android.support:cardview-v7:$versions.support"
-support.core_utils = "com.android.support:support-core-utils:$versions.support"
-support.design = "com.android.support:design:$versions.support"
-support.fragment = "com.android.support:support-fragment:$versions.support"
-support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
-support.v4 = "com.android.support:support-v4:$versions.support"
-deps.support = support
-
-def room = [:]
-room.compiler = "android.arch.persistence.room:compiler:$versions.arch"
-room.runtime = "android.arch.persistence.room:runtime:$versions.arch"
-room.rxjava2 = "android.arch.persistence.room:rxjava2:$versions.arch"
-room.testing = "android.arch.persistence.room:testing:$versions.arch"
-deps.room = room
-
-def lifecycle = [:]
-lifecycle.compiler = "android.arch.lifecycle:compiler:$versions.arch"
-lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.arch"
-lifecycle.java8 = "android.arch.lifecycle:common-java8:$versions.arch"
-lifecycle.runtime = "android.arch.lifecycle:runtime:$versions.arch"
-deps.lifecycle = lifecycle
-
-def arch_core = [:]
-arch_core.testing = "android.arch.core:core-testing:$versions.arch"
-deps.arch_core = arch_core
-
-def play_services = [:]
-play_services.googl_plus = "com.google.android.gms:play-services-plus:$versions.play_services"
-play_services.account_login = "com.google.android.gms:play-services-auth:$versions.play_services"
-play_services.actions_base_client_library = "com.google.android.gms:play-services-base:$versions.play_services"
-play_services.sign_in = "com.google.android.gms:play-services-identity:$versions.play_services"
-play_services.analytics = "com.google.android.gms:play-services-analytics:$versions.play_services"
-play_services.awareness = "com.google.android.gms:play-services-awareness:$versions.play_services"
-play_services.cast = "com.google.android.gms:play-services-cast:$versions.play_services"
-play_services.cloud_messaging = "com.google.android.gms:play-services-gcm:$versions.play_services"
-play_services.drive = "com.google.android.gms:play-services-drive:$versions.play_services"
-play_services.fit = "com.google.android.gms:play-services-fitness:$versions.play_services"
-play_services.location_and_activity_recognition = "com.google.android.gms:play-services-location:$versions.play_services"
-play_services.maps = "com.google.android.gms:play-services-maps:$versions.play_services"
-play_services.mobile_ads = "com.google.android.gms:play-services-ads:$versions.play_services"
-play_services.places = "com.google.android.gms:play-services-places:$versions.play_services"
-play_services.mobile_vision = "com.google.android.gms:play-services-vision:$versions.play_services"
-play_services.nearby = "com.google.android.gms:play-services-nearby:$versions.play_services"
-play_services.panorama_viewer = "com.google.android.gms:play-services-panorama:$versions.play_services"
-play_services.play_game_services = "com.google.android.gms:play-services-games:$versions.play_services"
-play_services.safety_net = "com.google.android.gms:play-services-safetynet:$versions.play_services"
-play_services.android_pay = "com.google.android.gms:play-services-wallet:$versions.play_services"
-play_services.android_wear = "com.google.android.gms:play-services-wearable:$versions.play_services"
-deps.play_services = play_services
-
-def retrofit = [:]
-retrofit.adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
-retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
-retrofit.moshi = "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
-deps.retrofit = retrofit
-
-
-def dagger = [:]
-dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
-dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
-dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
-dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
-dagger.runtime = "com.google.dagger:dagger:$versions.dagger"
-
-deps.dagger = dagger
-
-def espresso = [:]
-espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
-espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
-espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
-deps.espresso = espresso
-
-def atsl = [:]
-atsl.runner = "com.android.support.test:runner:$versions.atsl_runner"
-atsl.rules = "com.android.support.test:rules:$versions.atsl_runner"
-deps.atsl = atsl
-
-def mockito = [:]
-mockito.core = "org.mockito:mockito-core:$versions.mockito"
-mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
-deps.mockito = mockito
-
-def powermock = [:]
-powermock.module_junit4 = "org.powermock:powermock-module-junit4:$versions.powermock"
-powermock.api_mockito = "org.powermock:powermock-api-mockito2:$versions.powermock"
-deps.powermock = powermock
-
-def kotlin = [:]
-kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
-kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
-kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-deps.kotlin = kotlin
-
-deps.android_checkstyle_plugin = "com.leinardi.android:android-checkstyle-plugin:$versions.android_checkstyle_plugin"
-deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
-deps.android_maven_gradle_plugin = "com.github.dcendents:android-maven-gradle-plugin:$versions.android_maven_gradle_plugin"
-deps.androidthings = "com.google.android.things:androidthings:$versions.androidthings"
-deps.commons_io = "commons-io:commons-io:$versions.commons_io"
-deps.commons_lang3 = "org.apache.commons:commons-lang3:$versions.commons_lang3"
-deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
-deps.dexmaker = "com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker"
-deps.driver_bmx280 = "com.google.android.things.contrib:driver-bmx280:$versions.driver_bmx280"
-deps.driver_ds3231_receiver = "com.leinardi.android.things:driver-ds3231-receiver:$versions.driver_ds3231"
-deps.driver_epaperdriverhat = "com.leinardi.android.things:driver-epaperdriverhat:$versions.driver_epaperdriverhat"
-deps.driver_hcsr04 = "com.leinardi.android.things:driver-hcsr04:$versions.driver_hcsr04"
-deps.driver_hd44780 = "com.leinardi.android.things:driver-hd44780:$versions.driver_hd44780"
-deps.driver_lsm9ds1 = "com.leinardi.android.things:driver-lsm9ds1:$versions.driver_lsm9ds1"
-deps.driver_sh1106 = "com.leinardi.android.things:driver-sh1106:$versions.driver_sh1106"
-deps.driver_tsl256x = "com.leinardi.android.things:driver-tsl256x:$versions.driver_tsl256x"
-deps.errorprone_plugin = "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
-deps.glide = "com.github.bumptech.glide:glide:$versions.glide"
-deps.gradle_bintray_plugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradle_bintray_plugin"
-deps.gradle_versions_plugin = "com.github.ben-manes:gradle-versions-plugin:$versions.gradle_versions_plugin"
-deps.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
-deps.joystick = "com.github.erz05:JoyStick:$versions.joystick"
-deps.junit = "junit:junit:$versions.junit"
-deps.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
-deps.nullaway = "com.uber.nullaway:nullaway:$versions.nullaway"
-deps.okhttp3_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3"
-deps.paging = "android.arch.paging:runtime:$versions.paging"
-deps.pio_softpwm = "com.leinardi.android.things:pio-softpwm:$versions.pio_softpwm"
-deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
-deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
-deps.timber = "com.jakewharton.timber:timber:$versions.timber"
-deps.violations_plugin = "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
-ext.deps = deps
 
 def commitCount = 'git rev-list --count HEAD'.execute().text.trim()
 def build_versions = [:]
@@ -206,7 +47,7 @@ build_versions.min_sdk = 14
 build_versions.target_sdk = 28
 build_versions.java_version = JavaVersion.VERSION_1_7
 build_versions.version_code = commitCount.isNumber() ? commitCount as int : 0
-build_versions.version_name = "2.0.0"
+build_versions.version_name = "3.0.0"
 ext.build_versions = build_versions
 
 
