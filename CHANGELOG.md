@@ -2,6 +2,7 @@
 
 ## next release
 - fixed #100: Use unique view IDs
+- fixed #109: Added resource ID for main FAB
 
 ## [2.0.1] - 2018-09-28
 - fixed #95: support 28 workaround does not work on minified release apk

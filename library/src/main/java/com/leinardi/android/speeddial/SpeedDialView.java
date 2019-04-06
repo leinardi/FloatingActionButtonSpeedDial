@@ -723,6 +723,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         int marginHorizontal = UiUtils.dpToPx(getContext(), MAIN_FAB_HORIZONTAL_MARGIN_IN_DP);
         int marginVertical = UiUtils.dpToPx(getContext(), MAIN_FAB_VERTICAL_MARGIN_IN_DP);
         layoutParams.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
+        floatingActionButton.setId(R.id.sd_main_fab);
         floatingActionButton.setUseCompatPadding(true);
         floatingActionButton.setLayoutParams(layoutParams);
         floatingActionButton.setClickable(true);
