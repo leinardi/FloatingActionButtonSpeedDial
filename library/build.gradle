@@ -51,5 +51,6 @@ dependencies {
     api "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     api "com.google.android.material:material:$versions.android_material"
     api "androidx.cardview:cardview:$versions.androidx_cardview"
+    api "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout"
     annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
 }

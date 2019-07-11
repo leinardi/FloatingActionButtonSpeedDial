@@ -33,6 +33,7 @@
     <string name="left">Sinistra</string>
     <string name="bottom">Basso</string>
     <string name="right">Destra</string>
+    <string name="fan">Ventaglio</string>
     <string name="rotation_angle">Angolo rotazione</string>
     <string name="zero_degrees">0 gradi</string>
     <string name="forty_five_degrees">45 gradi</string>

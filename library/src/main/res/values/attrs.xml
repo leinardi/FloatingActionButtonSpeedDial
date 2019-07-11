@@ -32,6 +32,7 @@
             <enum name="bottom" value="1" />
             <enum name="left" value="2" />
             <enum name="right" value="3" />
+            <enum name="fan" value="4" />
         </attr>
         <attr name="sdMainFabAnimationRotateAngle" format="float" />
         <attr name="sdMainFabClosedSrc" format="reference" />

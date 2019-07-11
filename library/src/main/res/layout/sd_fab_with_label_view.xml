@@ -19,11 +19,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sd_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        app:useCompatPadding="true" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/sd_label_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -39,13 +45,5 @@
             android:layout_height="wrap_content"
             tools:text="A label" />
     </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sd_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
-        app:fabSize="mini"
-        app:useCompatPadding="true" />
 
 </merge>

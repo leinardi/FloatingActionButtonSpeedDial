@@ -101,6 +101,8 @@ public abstract class BaseUseCaseActivity extends AppCompatActivity {
                         mSpeedDial.setExpansionMode(SpeedDialView.ExpansionMode.BOTTOM);
                     } else if (id == R.id.action_expansion_mode_right) {
                         mSpeedDial.setExpansionMode(SpeedDialView.ExpansionMode.RIGHT);
+                    } else if (id == R.id.action_expansion_mode_fan) {
+                        mSpeedDial.setExpansionMode(SpeedDialView.ExpansionMode.FAN);
                     } else if (id == R.id.action_rotation_angle_0) {
                         mSpeedDial.setMainFabAnimationRotateAngle(0);
                     } else if (id == R.id.action_rotation_angle_45) {
