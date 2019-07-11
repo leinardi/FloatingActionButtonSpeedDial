@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -47,6 +46,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,13 +67,14 @@ import java.util.List;
 
 import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.BOTTOM;
+import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.FAN;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.LEFT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.RIGHT;
 import static com.leinardi.android.speeddial.SpeedDialView.ExpansionMode.TOP;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
-public class SpeedDialView extends LinearLayout implements CoordinatorLayout.AttachedBehavior {
+public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout.AttachedBehavior {
     private static final String TAG = SpeedDialView.class.getSimpleName();
     private static final String STATE_KEY_SUPER = "superState";
     private static final String STATE_KEY_IS_OPEN = "isOpen";
@@ -83,7 +84,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private static final int MAIN_FAB_HORIZONTAL_MARGIN_IN_DP = 4;
     private static final int MAIN_FAB_VERTICAL_MARGIN_IN_DP = -2;
     private final InstanceState mInstanceState = new InstanceState();
-    private List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
+    private final List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     @Nullable
     private Drawable mMainFabClosedDrawable = null;
     @Nullable
@@ -113,6 +114,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             }
         }
     };
+    private int mCircleRadius = -1;
 
     public SpeedDialView(Context context) {
         super(context);
@@ -152,16 +154,15 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             switch (expansionMode) {
                 case TOP:
                 case BOTTOM:
-                    setOrientation(VERTICAL);
                     for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
-                        fabWithLabelView.setOrientation(HORIZONTAL);
+                        fabWithLabelView.setOrientation(FabWithLabelView.Orientation.HORIZONTAL);
                     }
                     break;
                 case LEFT:
                 case RIGHT:
-                    setOrientation(HORIZONTAL);
+                case FAN:
                     for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
-                        fabWithLabelView.setOrientation(VERTICAL);
+                        fabWithLabelView.setOrientation(FabWithLabelView.Orientation.VERTICAL);
                     }
                     break;
             }
@@ -170,11 +171,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             clearActionItems();
             addAllActionItems(actionItems);
         }
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        super.setOrientation(orientation);
     }
 
     public void show() {
@@ -359,11 +355,16 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             return replaceActionItem(oldView.getSpeedDialActionItem(), actionItem);
         } else {
             FabWithLabelView newView = actionItem.createFabWithLabelView(getContext());
-            newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
+            int expansionMode = mInstanceState.mExpansionMode;
+            newView.setOrientation(expansionMode == TOP || expansionMode == BOTTOM ?
+                    FabWithLabelView.Orientation.HORIZONTAL : FabWithLabelView.Orientation.VERTICAL);
+            newView.setLabelEnabled(expansionMode == TOP || expansionMode == BOTTOM || expansionMode == FAN);
             newView.setOnActionSelectedListener(mOnActionSelectedProxyListener);
-            int layoutPosition = getLayoutPosition(position);
-            addView(newView, layoutPosition);
+
             mFabWithLabelViews.add(position, newView);
+            layoutItemsAccordingToExpansionMode(expansionMode, new ArrayList<>(mFabWithLabelViews));
+            addView(newView);
+
             if (isOpen()) {
                 if (animate) {
                     showWithAnimationFabWithLabelView(newView, 0);
@@ -372,6 +373,150 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 newView.setVisibility(GONE);
             }
             return newView;
+        }
+    }
+
+    private void layoutItemsAccordingToExpansionMode(int expansionMode, List<FabWithLabelView> fabWithLabelViews) {
+        if (expansionMode == FAN) {
+            layoutItemsForFanExpansion(fabWithLabelViews, mMainFab);
+        } else if (expansionMode == TOP) {
+            layoutItemsForTopExpansion(fabWithLabelViews, mMainFab);
+        } else if (expansionMode == BOTTOM) {
+            layoutItemsForBottomExpansion(fabWithLabelViews, mMainFab);
+        } else if (expansionMode == RIGHT) {
+            layoutItemsForRightExpansion(fabWithLabelViews, mMainFab);
+        } else if (expansionMode == LEFT) {
+            layoutItemsForLeftExpansion(fabWithLabelViews, mMainFab);
+        }
+    }
+
+    private void layoutItemsForFanExpansion(List<FabWithLabelView> fabWithLabelViews, View mainFabView) {
+        LayoutParams mainFabParams = createMainFabLayoutParams(getContext());
+        mainFabParams.bottomToBottom = LayoutParams.PARENT_ID;
+        mainFabParams.endToEnd = LayoutParams.PARENT_ID;
+        mainFabParams.startToStart = LayoutParams.PARENT_ID;
+        mainFabView.setLayoutParams(mainFabParams);
+        for (int i = 0; i < fabWithLabelViews.size(); i++) {
+            FabWithLabelView fabWithLabelView = fabWithLabelViews.get(i);
+            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.circleAngle = getLayoutAngle(fabWithLabelViews, i);
+            params.circleRadius = mCircleRadius;
+            params.circleConstraint = mainFabView.getId();
+            fabWithLabelView.setLayoutParams(params);
+        }
+    }
+
+    private static float getLayoutAngle(List<FabWithLabelView> fabWithLabelView, int position) {
+        int numberOfItems = fabWithLabelView.size();
+        if (numberOfItems == 0) {
+            return 0f;
+        } else {
+            float segmentSize = 180f / numberOfItems;
+            return (segmentSize * position + 270 + segmentSize / 2) % 360;
+        }
+    }
+
+    private void layoutItemsForTopExpansion(List<FabWithLabelView> fabWithLabelViews, View mainFabView) {
+        LayoutParams fabParams = createMainFabLayoutParams(getContext());
+        fabParams.bottomToBottom = LayoutParams.PARENT_ID;
+        fabParams.endToEnd = LayoutParams.PARENT_ID;
+        mainFabView.setLayoutParams(fabParams);
+        if (fabWithLabelViews.size() == 1) {
+            //first item, align bottom to top of fab
+            FabWithLabelView fabWithLabelView = fabWithLabelViews.get(0);
+            LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
+            params.bottomToTop = mainFabView.getId();
+            params.endToEnd = mainFabView.getId();
+            fabWithLabelView.setLayoutParams(params);
+        } else if (fabWithLabelViews.size() > 1) {
+            for (int i = 1; i < fabWithLabelViews.size(); i++) {
+                FabWithLabelView previousView = fabWithLabelViews.get(i - 1);
+                FabWithLabelView currentView = fabWithLabelViews.get(i);
+                LayoutParams updated = new LayoutParams(currentView.getLayoutParams());
+                updated.bottomToTop = previousView.getId();
+                updated.endToEnd = mainFabView.getId();
+                currentView.setLayoutParams(updated);
+            }
+        }
+    }
+
+    private void layoutItemsForBottomExpansion(List<FabWithLabelView> fabWithLabelViews, View mainFabView) {
+        LayoutParams mainFabParams = createMainFabLayoutParams(getContext());
+        mainFabParams.endToEnd = LayoutParams.PARENT_ID;
+        mainFabView.setLayoutParams(mainFabParams);
+
+        if (fabWithLabelViews.size() == 1) {
+            //first item, align top to bottom of fab
+            FabWithLabelView fabWithLabelView = fabWithLabelViews.get(0);
+            LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
+            params.topToBottom = mainFabView.getId();
+            params.endToEnd = mainFabView.getId();
+            fabWithLabelView.setLayoutParams(params);
+        } else if (fabWithLabelViews.size() > 1) {
+            for (int i = 1; i < fabWithLabelViews.size(); i++) {
+                FabWithLabelView previousView = fabWithLabelViews.get(i - 1);
+                FabWithLabelView currentView = fabWithLabelViews.get(i);
+                LayoutParams params = new LayoutParams(currentView.getLayoutParams());
+                params.topToBottom = previousView.getId();
+                params.endToEnd = mainFabView.getId();
+                currentView.setLayoutParams(params);
+            }
+        }
+    }
+
+    private void layoutItemsForRightExpansion(List<FabWithLabelView> fabWithLabelViews, View mainFabView) {
+        LayoutParams mainFabParams = createMainFabLayoutParams(getContext());
+        mainFabParams.startToStart = LayoutParams.PARENT_ID;
+        mainFabView.setLayoutParams(mainFabParams);
+
+        if (fabWithLabelViews.size() == 1) {
+            //first item, align top to right of fab
+            FabWithLabelView fabWithLabelView = fabWithLabelViews.get(0);
+            LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
+            params.startToEnd = mainFabView.getId();
+            params.topToTop = mainFabView.getId();
+            params.bottomToBottom = mainFabView.getId();
+            fabWithLabelView.setLayoutParams(params);
+        } else if (fabWithLabelViews.size() > 1) {
+            for (int i = 1; i < fabWithLabelViews.size(); i++) {
+                FabWithLabelView previousView = fabWithLabelViews.get(i - 1);
+                FabWithLabelView currentView = fabWithLabelViews.get(i);
+                LayoutParams params = new LayoutParams(currentView.getLayoutParams());
+                params.startToEnd = previousView.getId();
+                params.topToTop = mainFabView.getId();
+                params.bottomToBottom = mainFabView.getId();
+                currentView.setLayoutParams(params);
+            }
+        }
+    }
+
+    private void layoutItemsForLeftExpansion(List<FabWithLabelView> fabWithLabelViews, View mainFabView) {
+        LayoutParams mainFabParams = createMainFabLayoutParams(getContext());
+        mainFabParams.endToEnd = LayoutParams.PARENT_ID;
+        mainFabView.setLayoutParams(mainFabParams);
+
+        if (fabWithLabelViews.size() == 1) {
+            //first item, align top to left of fab
+            FabWithLabelView fabWithLabelView = fabWithLabelViews.get(0);
+            LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
+            params.endToStart = mainFabView.getId();
+            params.topToTop = mainFabView.getId();
+            params.bottomToBottom = mainFabView.getId();
+            fabWithLabelView.setLayoutParams(params);
+            LayoutParams fabParams = new LayoutParams(mainFabView.getLayoutParams());
+            fabParams.startToEnd = fabWithLabelView.getId();
+            mainFabView.setLayoutParams(fabParams);
+        } else if (fabWithLabelViews.size() > 1) {
+            for (int i = 1; i < fabWithLabelViews.size(); i++) {
+                FabWithLabelView previousView = fabWithLabelViews.get(i - 1);
+                FabWithLabelView currentView = fabWithLabelViews.get(i);
+                LayoutParams params = new LayoutParams(currentView.getLayoutParams());
+                params.endToStart = previousView.getId();
+                params.topToTop = mainFabView.getId();
+                params.bottomToBottom = mainFabView.getId();
+                currentView.setLayoutParams(params);
+            }
         }
     }
 
@@ -634,14 +779,6 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         super.onRestoreInstanceState(state);
     }
 
-    private int getLayoutPosition(int position) {
-        if (getExpansionMode() == TOP || getExpansionMode() == LEFT) {
-            return mFabWithLabelViews.size() - position;
-        } else {
-            return position + 1;
-        }
-    }
-
     @Nullable
     private SpeedDialActionItem removeActionItem(@Nullable FabWithLabelView view,
                                                  @Nullable Iterator<FabWithLabelView> it,
@@ -653,6 +790,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             } else {
                 mFabWithLabelViews.remove(view);
             }
+
+            layoutItemsAccordingToExpansionMode(getExpansionMode(), new ArrayList<>(mFabWithLabelViews));
 
             if (isOpen()) {
                 if (mFabWithLabelViews.isEmpty()) {
@@ -678,7 +817,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
-        mMainFab = createMainFab();
+        mMainFab = createMainFab(attrs);
         addView(mMainFab);
         setClipChildren(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -710,6 +849,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                             .SpeedDialView_sdMainFabOpenedBackgroundColor,
                     getMainFabOpenedBackgroundColor()));
             mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, RESOURCE_NOT_SET);
+            ConstraintLayout.LayoutParams constraintLayoutParams = new LayoutParams(context, attrs);
+            mCircleRadius = constraintLayoutParams.circleRadius;
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
         } finally {
@@ -717,14 +858,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
     }
 
-    private FloatingActionButton createMainFab() {
-        FloatingActionButton floatingActionButton = new FloatingActionButton(getContext());
-        LayoutParams layoutParams = new LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.END;
-        int marginHorizontal = UiUtils.dpToPx(getContext(), MAIN_FAB_HORIZONTAL_MARGIN_IN_DP);
-        int marginVertical = UiUtils.dpToPx(getContext(), MAIN_FAB_VERTICAL_MARGIN_IN_DP);
-        layoutParams.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
+    private FloatingActionButton createMainFab(@Nullable AttributeSet attrs) {
+        FloatingActionButton floatingActionButton = new FloatingActionButton(getContext(), attrs);
+        LayoutParams layoutParams = createMainFabLayoutParams(getContext());
         floatingActionButton.setId(R.id.sd_main_fab);
         floatingActionButton.setUseCompatPadding(true);
         floatingActionButton.setLayoutParams(layoutParams);
@@ -744,6 +880,15 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             }
         });
         return floatingActionButton;
+    }
+
+    private static LayoutParams createMainFabLayoutParams(Context context) {
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        int marginHorizontal = UiUtils.dpToPx(context, MAIN_FAB_HORIZONTAL_MARGIN_IN_DP);
+        int marginVertical = UiUtils.dpToPx(context, MAIN_FAB_VERTICAL_MARGIN_IN_DP);
+        layoutParams.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
+        return layoutParams;
     }
 
     private void toggle(boolean show, boolean animate) {
@@ -931,12 +1076,13 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     @Retention(SOURCE)
-    @IntDef({TOP, BOTTOM, LEFT, RIGHT})
+    @IntDef({TOP, BOTTOM, LEFT, RIGHT, FAN})
     public @interface ExpansionMode {
         int TOP = 0;
         int BOTTOM = 1;
         int LEFT = 2;
         int RIGHT = 3;
+        int FAN = 4;
     }
 
     private static class InstanceState implements Parcelable {

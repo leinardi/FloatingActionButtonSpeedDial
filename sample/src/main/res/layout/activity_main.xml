@@ -49,6 +49,7 @@
         app:sdMainFabAnimationRotateAngle="90"
         app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
         app:sdMainFabOpenedSrc="@drawable/ic_pencil_alt_white_24dp"
+        app:layout_constraintCircleRadius="150dp"
         app:sdOverlayLayout="@id/overlay" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -33,6 +33,7 @@
     <string name="left">Left</string>
     <string name="bottom">Bottom</string>
     <string name="right">Right</string>
+    <string name="fan">Fan</string>
     <string name="rotation_angle">Rotation angle</string>
     <string name="zero_degrees">0 degrees</string>
     <string name="forty_five_degrees">45 degrees</string>
