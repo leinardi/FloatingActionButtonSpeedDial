@@ -22,9 +22,6 @@ Android library providing an implementation of the [Material Design Floating Act
 - [x] Support for VectorDrawable
 - [x] Easy to use
 
-## Development status
-Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) board.
-
 ## How to use
 ### Gradle setup
 #### Official releases
