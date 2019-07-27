@@ -22,13 +22,13 @@ buildscript {
         addRepos(repositories)
     }
     dependencies {
-        classpath deps.android_gradle_plugin
-        classpath deps.android_checkstyle_plugin
-        classpath deps.android_maven_gradle_plugin
-        classpath deps.gradle_bintray_plugin
-        classpath deps.gradle_versions_plugin
-        classpath deps.violations_plugin
-        classpath deps.errorprone_plugin
+        classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+        classpath "com.leinardi.android:android-checkstyle-plugin:$versions.android_checkstyle_plugin"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:$versions.android_maven_gradle_plugin"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradle_bintray_plugin"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$versions.gradle_versions_plugin"
+        classpath "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
+        classpath "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -42,18 +42,6 @@ allprojects {
     }
     repositories {
         addRepos(repositories)
-    }
-}
-
-subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex')
-                    && !gradle.startParameter.taskNames.contains('dependencyUpdates')) {
-                details.useVersion versions.support
-            }
-        }
     }
 }
 

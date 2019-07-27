@@ -1,8 +1,10 @@
 # Change Log
 
-## next release
+## 3.0.0
+- fixed #92: Migrate to AndroidX
 - fixed #100: Use unique view IDs
 - fixed #109: Added resource ID for main FAB
+- updated gradle and Android gradle plugin
 
 ## [2.0.1] - 2018-09-28
 - fixed #95: support 28 workaround does not work on minified release apk
