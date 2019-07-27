@@ -23,3 +23,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepclassmembernames class com.google.android.material.floatingactionbutton.FloatingActionButton {
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl impl;
+}
+-keepclassmembernames class com.google.android.material.floatingactionbutton.FloatingActionButtonImpl { void setImageMatrixScale(float); }

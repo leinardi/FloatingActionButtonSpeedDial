@@ -23,13 +23,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -39,11 +32,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
-import static android.support.design.widget.FloatingActionButton.SIZE_AUTO;
-import static android.support.design.widget.FloatingActionButton.SIZE_MINI;
-import static android.support.design.widget.FloatingActionButton.SIZE_NORMAL;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_AUTO;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI;
+import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_NORMAL;
 import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
 
 /**
@@ -249,9 +249,9 @@ public class FabWithLabelView extends LinearLayout {
     private void init(Context context, @Nullable AttributeSet attrs) {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
 
-        mFab = rootView.findViewById(R.id.fab);
-        mLabelTextView = rootView.findViewById(R.id.label);
-        mLabelCardView = rootView.findViewById(R.id.label_container);
+        mFab = rootView.findViewById(R.id.sd_fab);
+        mLabelTextView = rootView.findViewById(R.id.sd_label);
+        mLabelCardView = rootView.findViewById(R.id.sd_label_container);
 
         setFabSize(SIZE_MINI);
         setOrientation(LinearLayout.HORIZONTAL);
