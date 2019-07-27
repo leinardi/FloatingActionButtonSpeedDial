@@ -21,7 +21,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.android_checkstyle_plugin = "1.1.0"
-versions.android_gradle_plugin = "3.3.2"
+versions.android_gradle_plugin = "3.4.2"
 versions.android_maven_gradle_plugin = "2.1"
 versions.android_material = "1.0.0"
 versions.androidx_appcompat = "1.0.2"
@@ -35,10 +35,11 @@ versions.gradle_bintray_plugin = "1.8.4"
 versions.gradle_versions_plugin = "0.21.0"
 versions.junit = "4.12"
 versions.kotlin = "1.2"
+versions.material = "1.0.0"
 versions.mockito = "2.13.3"
 versions.mockito_all = "1.10.19"
-versions.nullaway = "0.6.6"
-versions.violations_plugin = "1.52"
+versions.nullaway = "0.7.5"
+versions.violations_plugin = "1.56"
 ext.versions = versions
 
 def commitCount = 'git rev-list --count HEAD'.execute().text.trim()
