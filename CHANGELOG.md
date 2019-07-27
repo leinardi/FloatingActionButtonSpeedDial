@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0
+## 3.0.0 - 2019-07-27
 - fixed #92: Migrate to AndroidX
 - fixed #100: Use unique view IDs
 - fixed #109: Added resource ID for main FAB
