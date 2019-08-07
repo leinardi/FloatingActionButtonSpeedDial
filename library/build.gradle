@@ -29,7 +29,7 @@ android {
         versionCode build_versions.version_code
         versionName build_versions.version_name
         consumerProguardFiles 'consumer-proguard-rules.pro'
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -48,8 +48,8 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    api deps.support.app_compat
-    api deps.support.design
-    api deps.support.cardview
-    annotationProcessor deps.nullaway
+    api "androidx.appcompat:appcompat:$versions.androidx_appcompat"
+    api "com.google.android.material:material:$versions.android_material"
+    api "androidx.cardview:cardview:$versions.androidx_cardview"
+    annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
 }

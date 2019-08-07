@@ -4,7 +4,6 @@ Allow for expansion mode to open as a fan.
 [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/leinardi/FloatingActionButtonSpeedDial.svg?columns=all&style=plastic)](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) 
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
 
 
@@ -24,9 +23,6 @@ Android library providing an implementation of the [Material Design Floating Act
 - [x] Support for VectorDrawable
 - [x] Easy to use
 
-## Development status
-Check the [Waffle.io](https://waffle.io/leinardi/FloatingActionButtonSpeedDial) board.
-
 ## How to use
 ### Gradle setup
 #### Official releases
@@ -34,7 +30,7 @@ The library is available on Jcenter so no additonal repository is required.
 
 Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
 ```groovy
-implementation "com.leinardi.android:speed-dial:2.0.1"
+implementation "com.leinardi.android:speed-dial:3.0.0"
 ```
 #### Snapshots (development branch)
 You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
