@@ -428,6 +428,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
             LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
             params.bottomToTop = mainFabView.getId();
             params.endToEnd = mainFabView.getId();
+            params.startToStart = mainFabView.getId();
             fabWithLabelView.setLayoutParams(params);
         } else if (fabWithLabelViews.size() > 1) {
             for (int i = 1; i < fabWithLabelViews.size(); i++) {
@@ -436,6 +437,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
                 LayoutParams updated = new LayoutParams(currentView.getLayoutParams());
                 updated.bottomToTop = previousView.getId();
                 updated.endToEnd = mainFabView.getId();
+                updated.startToStart = mainFabView.getId();
                 currentView.setLayoutParams(updated);
             }
         }
@@ -452,6 +454,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
             LayoutParams params = new LayoutParams(fabWithLabelView.getLayoutParams());
             params.topToBottom = mainFabView.getId();
             params.endToEnd = mainFabView.getId();
+            params.startToStart = mainFabView.getId();
             fabWithLabelView.setLayoutParams(params);
         } else if (fabWithLabelViews.size() > 1) {
             for (int i = 1; i < fabWithLabelViews.size(); i++) {
@@ -460,6 +463,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
                 LayoutParams params = new LayoutParams(currentView.getLayoutParams());
                 params.topToBottom = previousView.getId();
                 params.endToEnd = mainFabView.getId();
+                params.startToStart = mainFabView.getId();
                 currentView.setLayoutParams(params);
             }
         }
