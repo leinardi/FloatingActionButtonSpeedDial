@@ -50,6 +50,9 @@
             <item
                 android:id="@+id/action_expansion_mode_right"
                 android:title="@string/right" />
+            <item
+                android:id="@+id/action_expansion_mode_fan"
+                android:title="@string/fan" />
         </menu>
     </item>
     <item

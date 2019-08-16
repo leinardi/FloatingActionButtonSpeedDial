@@ -26,31 +26,34 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
+import java.lang.annotation.Retention;
+
 import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_AUTO;
 import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI;
 import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_NORMAL;
 import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SET;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
  * View that contains fab button and its label.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class FabWithLabelView extends LinearLayout {
+public class FabWithLabelView extends ConstraintLayout {
     private static final String TAG = FabWithLabelView.class.getSimpleName();
 
     private TextView mLabelTextView;
@@ -66,6 +69,15 @@ public class FabWithLabelView extends LinearLayout {
     private float mLabelCardViewElevation;
     @Nullable
     private Drawable mLabelCardViewBackground;
+    @Orientation
+    private int mOrientation = Orientation.HORIZONTAL;
+
+    @Retention(SOURCE)
+    @IntDef({Orientation.HORIZONTAL, Orientation.VERTICAL})
+    public @interface Orientation {
+        int HORIZONTAL = 0;
+        int VERTICAL = 1;
+    }
 
     public FabWithLabelView(Context context) {
         super(context);
@@ -92,15 +104,10 @@ public class FabWithLabelView extends LinearLayout {
         }
     }
 
-    @Override
-    public void setOrientation(int orientation) {
-        super.setOrientation(orientation);
+    public void setOrientation(@Orientation int orientation) {
+        mOrientation = orientation;
         setFabSize(mCurrentFabSize);
-        if (orientation == VERTICAL) {
-            setLabelEnabled(false);
-        } else {
-            setLabel(mLabelTextView.getText().toString());
-        }
+        setLabel(mLabelTextView.getText().toString());
     }
 
     /**
@@ -113,9 +120,9 @@ public class FabWithLabelView extends LinearLayout {
     /**
      * Enables or disables label of button.
      */
-    private void setLabelEnabled(boolean enabled) {
-        mIsLabelEnabled = enabled;
-        mLabelCardView.setVisibility(enabled ? View.VISIBLE : View.GONE);
+    public void setLabelEnabled(boolean enabled) {
+        mIsLabelEnabled = enabled && !TextUtils.isEmpty(mLabelTextView.getText());
+        mLabelCardView.setVisibility(mIsLabelEnabled ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -123,6 +130,13 @@ public class FabWithLabelView extends LinearLayout {
      */
     public CardView getLabelBackground() {
         return mLabelCardView;
+    }
+
+    /**
+     * Returns FAB label text view.
+     */
+    public TextView getLabelTextView() {
+        return mLabelTextView;
     }
 
     /**
@@ -254,7 +268,6 @@ public class FabWithLabelView extends LinearLayout {
         mLabelCardView = rootView.findViewById(R.id.sd_label_container);
 
         setFabSize(SIZE_MINI);
-        setOrientation(LinearLayout.HORIZONTAL);
         setClipChildren(false);
         setClipToPadding(false);
 
@@ -296,26 +309,57 @@ public class FabWithLabelView extends LinearLayout {
         int fabSizePx = fabSize == SIZE_NORMAL ? normalFabSizePx : miniFabSizePx;
         LayoutParams rootLayoutParams;
         LayoutParams fabLayoutParams = (LayoutParams) mFab.getLayoutParams();
-        if (getOrientation() == HORIZONTAL) {
+        if (mOrientation == Orientation.HORIZONTAL) {
             rootLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, fabSizePx);
-            rootLayoutParams.gravity = Gravity.END;
-
+            LayoutParams cardParams = getHorizontalLabelLayoutParams(mFab);
+            mLabelCardView.setLayoutParams(cardParams);
+            int cardViewId = mLabelCardView.getId();
+            fabLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+            fabLayoutParams.startToEnd = cardViewId;
+            fabLayoutParams.topToTop = LayoutParams.PARENT_ID;
+            fabLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
             if (fabSize == SIZE_NORMAL) {
                 int excessMargin = (normalFabSizePx - miniFabSizePx) / 2;
                 fabLayoutParams.setMargins(fabSideMarginPx - excessMargin, 0, fabSideMarginPx - excessMargin, 0);
             } else {
                 fabLayoutParams.setMargins(fabSideMarginPx, 0, fabSideMarginPx, 0);
-
             }
         } else {
-            rootLayoutParams = new LayoutParams(fabSizePx, ViewGroup.LayoutParams.WRAP_CONTENT);
-            rootLayoutParams.gravity = Gravity.CENTER_VERTICAL;
             fabLayoutParams.setMargins(0, 0, 0, 0);
+            rootLayoutParams = new LayoutParams(fabSizePx, ViewGroup.LayoutParams.WRAP_CONTENT);
+            int cardViewId = mLabelCardView.getId();
+            LayoutParams cardParams = getVerticalLabelLayoutParams(mFab);
+            mLabelCardView.setLayoutParams(cardParams);
+            fabLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+            fabLayoutParams.startToStart = LayoutParams.PARENT_ID;
+            fabLayoutParams.topToTop = LayoutParams.PARENT_ID;
+            fabLayoutParams.bottomToTop = cardViewId;
         }
-
         setLayoutParams(rootLayoutParams);
         mFab.setLayoutParams(fabLayoutParams);
         mCurrentFabSize = fabSize;
+    }
+
+    private static LayoutParams getVerticalLabelLayoutParams(View mainFabView) {
+        int fabId = mainFabView.getId();
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.startToStart = fabId;
+        layoutParams.endToEnd = fabId;
+        layoutParams.topToBottom = fabId;
+        layoutParams.bottomToBottom = LayoutParams.PARENT_ID;
+        return layoutParams;
+    }
+
+    private static LayoutParams getHorizontalLabelLayoutParams(View mainFabView) {
+        int fabId = mainFabView.getId();
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.startToStart = LayoutParams.PARENT_ID;
+        layoutParams.endToStart = fabId;
+        layoutParams.topToTop = LayoutParams.PARENT_ID;
+        layoutParams.bottomToBottom = LayoutParams.PARENT_ID;
+        return layoutParams;
     }
 
     /**
@@ -335,7 +379,7 @@ public class FabWithLabelView extends LinearLayout {
     private void setLabel(@Nullable CharSequence sequence) {
         if (!TextUtils.isEmpty(sequence)) {
             mLabelTextView.setText(sequence);
-            setLabelEnabled(getOrientation() == HORIZONTAL);
+            setLabelEnabled(true);
         } else {
             setLabelEnabled(false);
         }
