@@ -83,6 +83,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
     private static final int ACTION_ANIM_DELAY = 25;
     private static final int MAIN_FAB_HORIZONTAL_MARGIN_IN_DP = 4;
     private static final int MAIN_FAB_VERTICAL_MARGIN_IN_DP = -2;
+    private static final int MAX_EMS_OF_LABEL_FOR_FAN_EXPANSION = 5;
     private final InstanceState mInstanceState = new InstanceState();
     private final List<FabWithLabelView> mFabWithLabelViews = new ArrayList<>();
     @Nullable
@@ -398,6 +399,7 @@ public class SpeedDialView extends ConstraintLayout implements CoordinatorLayout
         mainFabView.setLayoutParams(mainFabParams);
         for (int i = 0; i < fabWithLabelViews.size(); i++) {
             FabWithLabelView fabWithLabelView = fabWithLabelViews.get(i);
+            fabWithLabelView.getLabelTextView().setMaxEms(MAX_EMS_OF_LABEL_FOR_FAN_EXPANSION);
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             params.circleAngle = getLayoutAngle(fabWithLabelViews, i);

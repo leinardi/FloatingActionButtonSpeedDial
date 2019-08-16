@@ -133,6 +133,13 @@ public class FabWithLabelView extends ConstraintLayout {
     }
 
     /**
+     * Returns FAB label text view.
+     */
+    public TextView getLabelTextView() {
+        return mLabelTextView;
+    }
+
+    /**
      * Returns the {@link FloatingActionButton}.
      */
     public FloatingActionButton getFab() {
