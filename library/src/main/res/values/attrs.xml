@@ -35,8 +35,10 @@
         </attr>
         <attr name="sdMainFabAnimationRotateAngle" format="float" />
         <attr name="sdMainFabClosedSrc" format="reference" />
+        <attr name="sdMainFabClosedIconColor" format="color" />
         <attr name="sdMainFabClosedBackgroundColor" format="color" />
         <attr name="sdMainFabOpenedSrc" format="reference" />
+        <attr name="sdMainFabOpenedIconColor" format="color" />
         <attr name="sdMainFabOpenedBackgroundColor" format="color" />
         <attr name="sdOverlayLayout" format="reference" />
         <attr name="sdUseReverseAnimationOnClose" format="boolean" />

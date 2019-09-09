@@ -1,6 +1,8 @@
 # Change Log
 ## [3.0.1] - next release
 - fixed #113: Main FAB opened image is not centered when using Theme.MaterialComponents
+- API changes:
+    - fixed #111: added option to tint Main FAB icon (`setMainFabClosedIconColor()` and `setMainFabOpenedIconColor()`)
 
 ## [3.0.0] - 2019-07-27
 - fixed #92: Migrate to AndroidX
