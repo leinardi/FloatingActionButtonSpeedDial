@@ -1,6 +1,7 @@
 # Change Log
 ## [3.0.1] - next release
 - fixed #113: Main FAB opened image is not centered when using Theme.MaterialComponents
+- fixed #101: Add ability to Disable Main Fab"
 - API changes:
     - fixed #111: added option to tint Main FAB icon (`setMainFabClosedIconColor()` and `setMainFabOpenedIconColor()`)
 

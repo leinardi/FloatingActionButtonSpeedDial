@@ -657,6 +657,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         super.onRestoreInstanceState(state);
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        getMainFab().setEnabled(enabled);
+    }
+
     private int getLayoutPosition(int position) {
         if (getExpansionMode() == TOP || getExpansionMode() == LEFT) {
             return mFabWithLabelViews.size() - position;
@@ -709,6 +715,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
+            setEnabled(styledAttrs.getBoolean(R.styleable.SpeedDialView_android_enabled, isEnabled()));
             setUseReverseAnimationOnClose(styledAttrs.getBoolean(R.styleable.SpeedDialView_sdUseReverseAnimationOnClose,
                     getUseReverseAnimationOnClose()));
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2018 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,6 +26,7 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedDialView">
+        <attr name="android:enabled" />
         <attr name="sdExpansionMode" format="enum">
             <enum name="top" value="0" />
             <enum name="bottom" value="1" />
