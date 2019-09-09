@@ -14,16 +14,13 @@
   ~ limitations under the License.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/coordinatorLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <include layout="@layout/appbarlayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -50,5 +47,7 @@
         app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
         app:sdMainFabOpenedSrc="@drawable/ic_pencil_alt_white_24dp"
         app:sdOverlayLayout="@id/overlay" />
+
+    <include layout="@layout/appbarlayout" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

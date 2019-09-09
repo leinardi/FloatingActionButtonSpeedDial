@@ -23,12 +23,14 @@
         <item name="colorPrimary">@color/inbox_primary</item>
         <item name="colorPrimaryDark">@color/inbox_primary_dark</item>
         <item name="colorAccent">@color/inbox_accent</item>
+        <item name="colorOnSecondary">@color/material_white_1000</item>
     </style>
 
     <style name="AppTheme.Purple" parent="AppTheme">
         <item name="colorPrimary">@color/material_purple_500</item>
         <item name="colorPrimaryDark">@color/material_purple_700</item>
         <item name="colorAccent">@color/material_purple_a700</item>
+        <item name="colorOnSecondary">@color/material_purple_100</item>
         <item name="colorControlHighlight">@color/material_purple_200</item>
     </style>
 

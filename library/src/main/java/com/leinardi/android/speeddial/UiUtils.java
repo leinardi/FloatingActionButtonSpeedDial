@@ -233,7 +233,7 @@ public class UiUtils {
             @Override
             public void draw(final Canvas canvas) {
                 canvas.save();
-                canvas.rotate(angle, drawable.getBounds().width() / 2, drawable.getBounds().height() / 2);
+                canvas.rotate(angle, drawable.getIntrinsicWidth() / 2f, drawable.getIntrinsicHeight() / 2f);
                 super.draw(canvas);
                 canvas.restore();
             }
