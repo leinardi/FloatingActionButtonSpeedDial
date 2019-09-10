@@ -59,79 +59,70 @@ Add the `SpeedDialView` to your layout:
 
 #### Action items
 Add the items to the `SpeedDialView`:
-```java
-SpeedDialView speedDialView = findViewById(R.id.speedDial);
+```kotlin
+val speedDialView = findViewById<SpeedDialView>(R.id.speedDial)
 speedDialView.addActionItem(
-        new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
-                .create()
-);
-
+    SpeedDialActionItem.Builder(R.id.fab_no_label, R.drawable.ic_link_white_24dp)
+        .create())
 ```
 
 If the color customization is not requested, it is also possible to inflate the Action items
 form a Menu Resource:
-```java
-speedDialView.inflate(R.menu.menu_speed_dial);
+```kotlin
+speedDialView.inflate(R.menu.menu_speed_dial)
 ```
 Only the attributes `android:id`, `android:icon` and `android:title` are supported.
 
 #### Click listeners
 Add the click listeners:
-```java
-speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-    @Override
-    public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
-        switch (speedDialActionItem.getId()) {
-            case R.id.fab_link:
-                showToast("Link action clicked!");
-                return false; // true to keep the Speed Dial open
-            default:
-                return false;
+```kotlin
+speedDialView.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+    when (actionItem.id) {
+        R.id.fab_no_label -> {
+            showToast("No label action clicked!\nClosing with animation")
+            speedDialView.close() // To close the Speed Dial with animation
+            return@OnActionSelectedListener true // false will close it without animation
         }
     }
-});
+    false
+})
 ```
 
 ### Optional steps
 #### Add the main action click listener
-```java
-speedDialView.setOnChangeListener(new SpeedDialView.OnChangeListener() {
-    @Override
-    public void onMainActionSelected() {
-        // Call your main action here
-        return false; // true to keep the Speed Dial open
+```kotlin
+speedDialView.setOnChangeListener(object : SpeedDialView.OnChangeListener {
+    override fun onMainActionSelected(): Boolean {
+        showToast("Main action clicked!")
+        return false // True to keep the Speed Dial open
     }
 
-    @Override
-    public void onToggleChanged(boolean isOpen) {
-        Log.d(TAG, "Speed dial toggle state changed. Open = " + isOpen);
+    override fun onToggleChanged(isOpen: Boolean) {
+        Log.d(TAG, "Speed dial toggle state changed. Open = $isOpen")
     }
-});
+})
 ```
 
 #### Customizing the items
 The `SpeedDialActionItem.Builder` provides several setters to customize the aspect of one item:
 
-```java
-mSpeedDialView.addActionItem(
-        new SpeedDialActionItem.Builder(R.id.fab_custom_color, R.drawable.ic_custom_color)
-                .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
-                .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
-                .setLabel(getString(R.string.label_custom_color))
-                .setLabelColor(Color.WHITE)
-                .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
-                .setLabelClickable(false)
-                .create()
-);
+```kotlin
+speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_custom_color, drawable)
+        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.material_white_1000, getTheme()))
+        .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+        .setLabel(getString(R.string.label_custom_color))
+        .setLabelColor(Color.WHITE)
+        .setLabelBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.inbox_primary, getTheme()))
+        .setLabelClickable(false)
+        .create())
 ```
 Is is also possible to specify a theme to easily change the FAB background and ripple effect color:
 
-```java
-mSpeedDialView.addActionItem(
-        new SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
-                .setLabel(getString(R.string.label_custom_theme))
-                .setTheme(R.style.AppTheme_Purple)
-                .create());
+```kotlin
+speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable.ic_theme_white_24dp)
+        .setLabel(getString(R.string.label_custom_theme))
+        .setTheme(R.style.AppTheme_Purple)
+        .create())
 ```
 ```xml
 <style name="AppTheme.Purple" parent="AppTheme">
@@ -162,9 +153,9 @@ and then provide the instance of that layout to the `SpeedDialView`:
     app:sdOverlayLayout="@id/overlay" />
 ```
 or
-```java
-SpeedDialOverlayLayout overlayLayout = findViewById(R.id.overlay);
-mSpeedDialView.setSpeedDialOverlayLayout(overlayLayout);
+```kotlin
+val overlayLayout = findViewById<SpeedDialOverlayLayout>(R.id.overlay)
+speedDialView.setSpeedDialOverlayLayout(overlayLayout)
 ```
 
 #### Hiding the FAB when scrolling a `RecyclerView` or a `NestedScrollView`
@@ -180,20 +171,20 @@ the convenience string resource `@string/speeddial_scrolling_view_snackbar_behav
 ```
 
 Or programmatically:
-```java
-CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
-params.setBehavior(new SpeedDialView.ScrollingViewSnackbarBehavior());
-speedDialView.requestLayout();
+```kotlin
+val params = speedDialView.layoutParams as CoordinatorLayout.LayoutParams
+params.behavior = SpeedDialView.ScrollingViewSnackbarBehavior()
+speedDialView.requestLayout()
 ```
 
 NB: for the behaviors to work, `SpeedDialView` needs to be a direct child of `CoordinatorLayout`
 
 #### Disabling `SnackbarBehavior`
 Since the `SnackbarBehavior` is enabled by default and, afaik, it is not possible to remove a Behavior, simply use apply the `SpeedDialView.NoBehavior` instead:
-```java
-CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) speedDialView.getLayoutParams();
-params.setBehavior(new SpeedDialView.NoBehavior());
-speedDialView.requestLayout();
+```kotlin
+val params = speedDialView.layoutParams as CoordinatorLayout.LayoutParams
+params.behavior = SpeedDialView.NoBehavior()
+speedDialView.requestLayout()
 ```
 
 ### Sample project
@@ -250,7 +241,7 @@ This project is based on [floating-action-menu by ArthurGhazaryan](https://githu
 
 ## Licenses
 ```
-Copyright 2018 Roberto Leinardi.
+Copyright 2019 Roberto Leinardi.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for
