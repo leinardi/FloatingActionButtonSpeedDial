@@ -796,6 +796,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         visibilitySetup(show, animate, mInstanceState.mUseReverseAnimationOnClose);
         updateMainFabDrawable(animate);
         updateMainFabBackgroundColor();
+        updateMainFabIconColor();
         showHideOverlay(show, animate);
         if (mOnChangeListener != null) {
             mOnChangeListener.onToggleChanged(show);
