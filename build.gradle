@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 apply from: rootProject.file('versions-plugin.gradle')
+apply from: rootProject.file('detekt.gradle')
 apply plugin: "se.bjurr.violations.violation-comments-to-github-gradle-plugin"
 
 buildscript {
@@ -22,6 +23,7 @@ buildscript {
         addRepos(repositories)
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
         classpath "com.leinardi.android:android-checkstyle-plugin:$versions.android_checkstyle_plugin"
         classpath "com.github.dcendents:android-maven-gradle-plugin:$versions.android_maven_gradle_plugin"
@@ -29,6 +31,7 @@ buildscript {
         classpath "com.github.ben-manes:gradle-versions-plugin:$versions.gradle_versions_plugin"
         classpath "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
         classpath "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

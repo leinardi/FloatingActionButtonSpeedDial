@@ -15,6 +15,8 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply from: rootProject.file('checkstyle.gradle')
 
 android {
@@ -69,6 +71,7 @@ android {
 dependencies {
     implementation project(':library')
 //    implementation "com.leinardi.android:speed-dial:${build_versions.version_name}"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     implementation "androidx.recyclerview:recyclerview:$versions.androidx_recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout"

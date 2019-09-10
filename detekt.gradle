@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package com.leinardi.android.speeddial.sample.usecases;
+apply plugin: 'io.gitlab.arturbosch.detekt'
 
-import com.leinardi.android.speeddial.sample.R;
+detekt {
+    toolVersion = rootProject.ext.versions.detekt
+    input = files(rootDir)
+    config = rootProject.files('config/detekt/config.yml')
+}
 
-public class UseCase1Activity extends BaseUseCaseActivity {
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_use_case_1;
-    }
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${versions.detekt}"
+}
+
+tasks.getByName('detekt') {
+    exclude("**/build/generated/**")
 }

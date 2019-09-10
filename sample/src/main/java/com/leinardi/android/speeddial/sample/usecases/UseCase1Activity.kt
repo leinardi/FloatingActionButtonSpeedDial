@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.leinardi.android.checkstyle'
+package com.leinardi.android.speeddial.sample.usecases
 
-checkstyle {
-    ignoreFailures = false // Whether this task will ignore failures and continue running the build.
-    configFile rootProject.file('config/checkstyle/checkstyle.xml')
-    // The Checkstyle configuration file to use.
-    toolVersion = '8.23' // The version of Checkstyle you want to be used
+import com.leinardi.android.speeddial.sample.R
+
+class UseCase1Activity : BaseUseCaseActivity() {
+    override val layoutRes = R.layout.activity_use_case_1
 }
