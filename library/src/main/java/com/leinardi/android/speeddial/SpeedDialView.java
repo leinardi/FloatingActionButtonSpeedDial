@@ -19,6 +19,7 @@ package com.leinardi.android.speeddial;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -806,7 +807,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void updateMainFabDrawable(boolean animate) {
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                // This is a workaround. I don't know why if I set directly the rotated Drawable with `setImageDrawable`
+                // it will be transparent/empty on Android API 16 (works on API 27, haven't tested other versions).
+                Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
+                mMainFab.setImageBitmap(bitmap);
             }
             UiUtils.rotateForward(mMainFab, getMainFabAnimationRotateAngle(), animate);
         } else {
