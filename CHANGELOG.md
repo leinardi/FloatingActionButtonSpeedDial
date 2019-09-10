@@ -1,7 +1,7 @@
 # Change Log
 ## [3.1.0] - 2019-09-10
 - fixed #113: Main FAB opened image is not centered when using Theme.MaterialComponents
-- fixed #101: Add ability to Disable Main Fab"
+- fixed #101: Add ability to Disable Main Fab
 - API changes:
     - fixed #111: added option to tint Main FAB icon (`setMainFabClosedIconColor()` and `setMainFabOpenedIconColor()`)
 - migrated Sample project to Kotlin
