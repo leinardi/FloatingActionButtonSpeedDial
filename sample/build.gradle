@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roberto Leinardi.
+ * Copyright 2019 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply from: rootProject.file('checkstyle.gradle')
 
 android {
@@ -69,6 +71,7 @@ android {
 dependencies {
     implementation project(':library')
 //    implementation "com.leinardi.android:speed-dial:${build_versions.version_name}"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     implementation "androidx.recyclerview:recyclerview:$versions.androidx_recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout"

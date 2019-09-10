@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roberto Leinardi.
+ * Copyright 2019 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.leinardi.android.speeddial;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -49,6 +50,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -594,6 +596,26 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         updateMainFabBackgroundColor();
     }
 
+    @ColorInt
+    public int getMainFabClosedIconColor() {
+        return mInstanceState.mMainFabClosedIconColor;
+    }
+
+    public void setMainFabClosedIconColor(@ColorInt int mainFabClosedIconColor) {
+        mInstanceState.mMainFabClosedIconColor = mainFabClosedIconColor;
+        updateMainFabIconColor();
+    }
+
+    @ColorInt
+    public int getMainFabOpenedIconColor() {
+        return mInstanceState.mMainFabOpenedIconColor;
+    }
+
+    public void setMainFabOpenedIconColor(@ColorInt int mainFabOpenedIconColor) {
+        mInstanceState.mMainFabOpenedIconColor = mainFabOpenedIconColor;
+        updateMainFabIconColor();
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -625,6 +647,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 setMainFabAnimationRotateAngle(instanceState.mMainFabAnimationRotateAngle);
                 setMainFabOpenedBackgroundColor(instanceState.mMainFabOpenedBackgroundColor);
                 setMainFabClosedBackgroundColor(instanceState.mMainFabClosedBackgroundColor);
+                setMainFabOpenedIconColor(instanceState.mMainFabOpenedIconColor);
+                setMainFabClosedIconColor(instanceState.mMainFabClosedIconColor);
                 setExpansionMode(instanceState.mExpansionMode, true);
                 addAllActionItems(instanceState.mSpeedDialActionItems);
                 toggle(instanceState.mIsOpen, false);
@@ -632,6 +656,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             state = bundle.getParcelable(STATE_KEY_SUPER);
         }
         super.onRestoreInstanceState(state);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        getMainFab().setEnabled(enabled);
     }
 
     private int getLayoutPosition(int position) {
@@ -686,6 +716,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         }
         TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.SpeedDialView, 0, 0);
         try {
+            setEnabled(styledAttrs.getBoolean(R.styleable.SpeedDialView_android_enabled, isEnabled()));
             setUseReverseAnimationOnClose(styledAttrs.getBoolean(R.styleable.SpeedDialView_sdUseReverseAnimationOnClose,
                     getUseReverseAnimationOnClose()));
 
@@ -709,6 +740,12 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             setMainFabOpenedBackgroundColor(styledAttrs.getColor(R.styleable
                             .SpeedDialView_sdMainFabOpenedBackgroundColor,
                     getMainFabOpenedBackgroundColor()));
+            setMainFabClosedIconColor(styledAttrs.getColor(R.styleable
+                            .SpeedDialView_sdMainFabClosedIconColor,
+                    getMainFabClosedIconColor()));
+            setMainFabOpenedIconColor(styledAttrs.getColor(R.styleable
+                            .SpeedDialView_sdMainFabOpenedIconColor,
+                    getMainFabOpenedIconColor()));
             mOverlayLayoutId = styledAttrs.getResourceId(R.styleable.SpeedDialView_sdOverlayLayout, RESOURCE_NOT_SET);
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
@@ -760,6 +797,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         visibilitySetup(show, animate, mInstanceState.mUseReverseAnimationOnClose);
         updateMainFabDrawable(animate);
         updateMainFabBackgroundColor();
+        updateMainFabIconColor();
         showHideOverlay(show, animate);
         if (mOnChangeListener != null) {
             mOnChangeListener.onToggleChanged(show);
@@ -769,7 +807,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void updateMainFabDrawable(boolean animate) {
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                // This is a workaround. I don't know why if I set directly the rotated Drawable with `setImageDrawable`
+                // it will be transparent/empty on Android API 16 (works on API 27, haven't tested other versions).
+                Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
+                mMainFab.setImageBitmap(bitmap);
             }
             UiUtils.rotateForward(mMainFab, getMainFabAnimationRotateAngle(), animate);
         } else {
@@ -791,6 +832,18 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             mMainFab.setBackgroundTintList(ColorStateList.valueOf(color));
         } else {
             mMainFab.setBackgroundTintList(ColorStateList.valueOf(UiUtils.getAccentColor(getContext())));
+        }
+    }
+
+    private void updateMainFabIconColor() {
+        int color;
+        if (isOpen()) {
+            color = getMainFabOpenedIconColor();
+        } else {
+            color = getMainFabClosedIconColor();
+        }
+        if (color != RESOURCE_NOT_SET) {
+            ImageViewCompat.setImageTintList(mMainFab, ColorStateList.valueOf(color));
         }
     }
 
@@ -945,6 +998,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         private int mMainFabClosedBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
         private int mMainFabOpenedBackgroundColor = RESOURCE_NOT_SET;
+        @ColorInt
+        private int mMainFabClosedIconColor = RESOURCE_NOT_SET;
+        @ColorInt
+        private int mMainFabOpenedIconColor = RESOURCE_NOT_SET;
         @ExpansionMode
         private int mExpansionMode = TOP;
         private float mMainFabAnimationRotateAngle = DEFAULT_ROTATE_ANGLE;
@@ -961,6 +1018,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             dest.writeByte(this.mIsOpen ? (byte) 1 : (byte) 0);
             dest.writeInt(this.mMainFabClosedBackgroundColor);
             dest.writeInt(this.mMainFabOpenedBackgroundColor);
+            dest.writeInt(this.mMainFabClosedIconColor);
+            dest.writeInt(this.mMainFabOpenedIconColor);
             dest.writeInt(this.mExpansionMode);
             dest.writeFloat(this.mMainFabAnimationRotateAngle);
             dest.writeByte(this.mUseReverseAnimationOnClose ? (byte) 1 : (byte) 0);
@@ -974,6 +1033,8 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
             this.mIsOpen = in.readByte() != 0;
             this.mMainFabClosedBackgroundColor = in.readInt();
             this.mMainFabOpenedBackgroundColor = in.readInt();
+            this.mMainFabClosedIconColor = in.readInt();
+            this.mMainFabOpenedIconColor = in.readInt();
             this.mExpansionMode = in.readInt();
             this.mMainFabAnimationRotateAngle = in.readFloat();
             this.mUseReverseAnimationOnClose = in.readByte() != 0;

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright 2018 Roberto Leinardi.
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -41,6 +40,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <androidx.appcompat.widget.ActionMenuView
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
                 android:id="@+id/amvMenu"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />

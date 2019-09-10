@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roberto Leinardi.
+ * Copyright 2019 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -233,7 +233,7 @@ public class UiUtils {
             @Override
             public void draw(final Canvas canvas) {
                 canvas.save();
-                canvas.rotate(angle, drawable.getBounds().width() / 2, drawable.getBounds().height() / 2);
+                canvas.rotate(angle, drawable.getIntrinsicWidth() / 2f, drawable.getIntrinsicHeight() / 2f);
                 super.draw(canvas);
                 canvas.restore();
             }

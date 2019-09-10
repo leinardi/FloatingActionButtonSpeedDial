@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.github.ben-manes.versions'
+package com.leinardi.android.speeddial.sample.usecases
 
-dependencyUpdates.resolutionStrategy = {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-            }
-            if (rejected) {
-                selection.reject('Release candidate')
-            }
-        }
-    }
+import com.leinardi.android.speeddial.sample.R
+
+class UseCase1Activity : BaseUseCaseActivity() {
+    override val layoutRes = R.layout.activity_use_case_1
 }

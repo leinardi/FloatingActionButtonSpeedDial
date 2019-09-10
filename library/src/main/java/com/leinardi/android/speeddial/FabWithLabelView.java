@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roberto Leinardi.
+ * Copyright 2019 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.ImageViewCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
@@ -153,22 +153,16 @@ public class FabWithLabelView extends LinearLayout {
         setLabel(actionItem.getLabel(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
-
-        int iconTintColor = actionItem.getFabImageTintColor();
-
-        Drawable drawable = actionItem.getFabImageDrawable(getContext());
-        if (drawable != null && iconTintColor != RESOURCE_NOT_SET) {
-            drawable = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(drawable.mutate(), iconTintColor);
+        setFabIcon(actionItem.getFabImageDrawable(getContext()));
+        int imageTintColor = actionItem.getFabImageTintColor();
+        if (imageTintColor != RESOURCE_NOT_SET) {
+            setFabImageTintColor(imageTintColor);
         }
-        setFabIcon(drawable);
-
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
         if (fabBackgroundColor == RESOURCE_NOT_SET) {
             fabBackgroundColor = UiUtils.getPrimaryColor(getContext());
         }
         setFabBackgroundColor(fabBackgroundColor);
-
         int labelColor = actionItem.getLabelColor();
         if (labelColor == RESOURCE_NOT_SET) {
             labelColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_text_color,
@@ -345,6 +339,15 @@ public class FabWithLabelView extends LinearLayout {
         getLabelBackground().setClickable(clickable);
         getLabelBackground().setFocusable(clickable);
         getLabelBackground().setEnabled(clickable);
+    }
+
+    /**
+     * Sets fab image tint color in floating action menu.
+     *
+     * @param color color to set.
+     */
+    private void setFabImageTintColor(@ColorInt int color) {
+        ImageViewCompat.setImageTintList(mFab, ColorStateList.valueOf(color));
     }
 
     /**

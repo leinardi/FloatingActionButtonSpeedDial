@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright 2018 Roberto Leinardi.
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -27,6 +26,7 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedDialView">
+        <attr name="android:enabled" />
         <attr name="sdExpansionMode" format="enum">
             <enum name="top" value="0" />
             <enum name="bottom" value="1" />
@@ -35,8 +35,10 @@
         </attr>
         <attr name="sdMainFabAnimationRotateAngle" format="float" />
         <attr name="sdMainFabClosedSrc" format="reference" />
+        <attr name="sdMainFabClosedIconColor" format="color" />
         <attr name="sdMainFabClosedBackgroundColor" format="color" />
         <attr name="sdMainFabOpenedSrc" format="reference" />
+        <attr name="sdMainFabOpenedIconColor" format="color" />
         <attr name="sdMainFabOpenedBackgroundColor" format="color" />
         <attr name="sdOverlayLayout" format="reference" />
         <attr name="sdUseReverseAnimationOnClose" format="boolean" />
