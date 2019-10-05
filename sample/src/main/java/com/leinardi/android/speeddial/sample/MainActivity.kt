@@ -24,6 +24,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import com.leinardi.android.speeddial.sample.usecases.BaseUseCaseActivity
@@ -64,6 +65,7 @@ class MainActivity : BaseUseCaseActivity() {
 
             speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
                     .ic_lorem_ipsum)
+                    .setFabSize(FloatingActionButton.SIZE_NORMAL)
                     .setLabel("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
                             "incididunt ut labore et dolore magna aliqua.")
                     .create())

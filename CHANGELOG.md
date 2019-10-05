@@ -1,4 +1,7 @@
 # Change Log
+## [3.2.0] - 2019-09-10
+- Fix #11: Re-enabling FAB size 
+
 ## [3.1.0] - 2019-09-10
 - fixed #113: Main FAB opened image is not centered when using Theme.MaterialComponents
 - fixed #101: Add ability to Disable Main Fab

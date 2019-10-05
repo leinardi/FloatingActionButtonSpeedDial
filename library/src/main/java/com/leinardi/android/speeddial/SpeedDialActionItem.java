@@ -147,9 +147,8 @@ public class SpeedDialActionItem implements Parcelable {
         return fabWithLabelView;
     }
 
-    // Disabled due to https://issuetracker.google.com/issues/77303906
     @FloatingActionButton.Size
-    /* public */ int getFabSize() {
+    public int getFabSize() {
         return mFabSize;
     }
 
@@ -271,8 +270,7 @@ public class SpeedDialActionItem implements Parcelable {
             return new SpeedDialActionItem(this);
         }
 
-        // Disabled due to https://issuetracker.google.com/issues/77303906
-        /* public */ Builder setFabSize(@FloatingActionButton.Size int fabSize) {
+        public Builder setFabSize(@FloatingActionButton.Size int fabSize) {
             mFabSize = fabSize;
             return this;
         }
