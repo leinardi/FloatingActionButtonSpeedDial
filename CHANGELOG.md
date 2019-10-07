@@ -1,6 +1,7 @@
 # Change Log
-## [3.2.0] - 2019-09-10
-- Fix #11: Re-enabling FAB size 
+## [3.1.1] - 2019-09-10
+- Fix #11: Re-enabling FAB size
+- Revert `com.google.android.material` to `1.0.0` (version `1.1.0-beta01` can still be used, just specify this version explicitly on your build.gradle file).
 
 ## [3.1.0] - 2019-09-10
 - fixed #113: Main FAB opened image is not centered when using Theme.MaterialComponents
