@@ -33,7 +33,7 @@ before_script:
 
 script:
   - set -o pipefail
-  - ./gradlew clean build :library:check --profile --continue 2>&1 | tee build.log
+  - ./gradlew clean assemble :library:check --profile --continue 2>&1 | tee build.log
   - set +o pipefail
   - |
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
