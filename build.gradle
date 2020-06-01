@@ -32,8 +32,6 @@ buildscript {
         classpath "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
         classpath "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 

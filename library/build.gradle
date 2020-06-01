@@ -42,8 +42,10 @@ android {
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
     if (!name.toLowerCase().contains("test")) {
-        // remove "-Xep:NullAway:ERROR" to have NullAway only emit warnings
-        options.compilerArgs += ["-Xep:NullAway:ERROR", "-XepOpt:NullAway:AnnotatedPackages=com.leinardi.android.speeddial"]
+        options.errorprone {
+            check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)
+            option("NullAway:AnnotatedPackages", "com.leinardi.android.speeddial")
+        }
     }
 }
 
@@ -51,5 +53,7 @@ dependencies {
     api "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     api "com.google.android.material:material:$versions.android_material"
     api "androidx.cardview:cardview:$versions.androidx_cardview"
+    errorproneJavac "com.google.errorprone:javac:$versions.errorprone_javac"
+    errorprone "com.google.errorprone:error_prone_core:$versions.errorprone_core"
     annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
 }
