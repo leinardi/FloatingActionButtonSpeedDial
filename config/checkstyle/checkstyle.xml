@@ -58,6 +58,14 @@
         <property name="severity" value="info" />
     </module>
 
+    <module name="LineLength">
+        <!-- what is a good max value? -->
+        <property name="max" value="120" />
+        <!-- ignore lines like "$File: //depot/... $" -->
+        <property name="ignorePattern" value="\$File.*\$" />
+        <property name="severity" value="error" />
+    </module>
+
     <module name="TreeWalker">
 
         <!-- https://source.android.com/source/code-style.html#dont-catch-generic-exception -->
@@ -72,13 +80,6 @@
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod">
-            <property name="scope" value="package" />
-            <property name="allowMissingParamTags" value="true" />
-            <property name="allowMissingThrowsTags" value="true" />
-            <property name="allowMissingReturnTag" value="true" />
-            <property name="allowThrowsTagsForSubclasses" value="true" />
-            <property name="allowUndeclaredRTE" value="true" />
-            <property name="allowMissingPropertyJavadoc" value="true" />
             <property name="severity" value="ignore" />
         </module>
         <module name="JavadocType">
@@ -140,13 +141,6 @@
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <module name="LineLength">
-            <!-- what is a good max value? -->
-            <property name="max" value="120" />
-            <!-- ignore lines like "$File: //depot/... $" -->
-            <property name="ignorePattern" value="\$File.*\$" />
-            <property name="severity" value="error" />
-        </module>
         <module name="MethodLength" />
         <!--<module name="ParameterNumber" />-->
 

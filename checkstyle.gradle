@@ -20,5 +20,5 @@ checkstyle {
     ignoreFailures = false // Whether this task will ignore failures and continue running the build.
     configFile rootProject.file('config/checkstyle/checkstyle.xml')
     // The Checkstyle configuration file to use.
-    toolVersion = '8.23' // The version of Checkstyle you want to be used
+    toolVersion = '8.32' // The version of Checkstyle you want to be used
 }
