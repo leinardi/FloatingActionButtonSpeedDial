@@ -232,6 +232,14 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         hide(null);
     }
 
+    @Override
+    public void setContentDescription(CharSequence contentDescription) {
+        FloatingActionButton mainFab = getMainFab();
+        if (mainFab != null) {
+            setContentDescription(contentDescription);
+        }
+    }
+
     public void hide(@Nullable final OnVisibilityChangedListener listener) {
         if (isOpen()) {
             close();
@@ -768,6 +776,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         floatingActionButton.setClickable(true);
         floatingActionButton.setFocusable(true);
         floatingActionButton.setSize(FloatingActionButton.SIZE_NORMAL);
+        floatingActionButton.setContentDescription(getContentDescription());
         floatingActionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -893,6 +902,14 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 fabWithLabelView.setVisibility(VISIBLE);
                 if (animate) {
                     showWithAnimationFabWithLabelView(fabWithLabelView, i * ACTION_ANIM_DELAY);
+                }
+                if (i == 0) {
+                    fabWithLabelView.getFab().requestFocusFromTouch();
+                }
+                if (i == size - 1) {
+                    fabWithLabelView.getFab().setNextFocusUpId(fabWithLabelView.getFab().getId());
+                    getMainFab().setNextFocusDownId(getMainFab().getId());
+                    getMainFab().setNextFocusForwardId(getMainFab().getId());
                 }
             }
         } else {

@@ -151,6 +151,7 @@ public class FabWithLabelView extends LinearLayout {
         mSpeedDialActionItem = actionItem;
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
+        setFabContentDescription(actionItem.getContentDescription(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
         setFabIcon(actionItem.getFabImageDrawable(getContext()));
@@ -242,6 +243,8 @@ public class FabWithLabelView extends LinearLayout {
      */
     private void init(Context context, @Nullable AttributeSet attrs) {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
+        rootView.setFocusable(false);
+        rootView.setFocusableInTouchMode(false);
 
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);
@@ -339,6 +342,17 @@ public class FabWithLabelView extends LinearLayout {
         getLabelBackground().setClickable(clickable);
         getLabelBackground().setFocusable(clickable);
         getLabelBackground().setEnabled(clickable);
+    }
+
+    /**
+     * Sets fab content description․
+     *
+     * @param sequence content description to set.
+     */
+    private void setFabContentDescription(@Nullable CharSequence sequence) {
+        if (!TextUtils.isEmpty(sequence)) {
+            mFab.setContentDescription(sequence);
+        }
     }
 
     /**
