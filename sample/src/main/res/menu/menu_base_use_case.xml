@@ -74,6 +74,12 @@
         </menu>
     </item>
     <item
+        android:id="@+id/action_toggle_day_night"
+        android:icon="@drawable/ic_day_night_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_day_night"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_main_fab_color"
         android:icon="@drawable/ic_custom_color"
         android:orderInCategory="100"

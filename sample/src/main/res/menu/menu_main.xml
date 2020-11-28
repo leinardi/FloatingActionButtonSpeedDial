@@ -22,5 +22,6 @@
         android:id="@+id/action_use_cases"
         android:orderInCategory="100"
         android:title="@string/action_use_cases"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>
