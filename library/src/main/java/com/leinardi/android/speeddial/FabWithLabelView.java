@@ -171,7 +171,7 @@ public class FabWithLabelView extends LinearLayout {
         setLabelColor(labelColor);
         int labelBackgroundColor = actionItem.getLabelBackgroundColor();
         if (labelBackgroundColor == RESOURCE_NOT_SET) {
-            labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.cardview_light_background,
+            labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_background_color,
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
