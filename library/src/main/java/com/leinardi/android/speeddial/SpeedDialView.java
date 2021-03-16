@@ -54,6 +54,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -810,10 +811,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         boolean updated = false;
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mMainFabOpenedDrawable instanceof AnimatedVectorDrawable) {
+                if (mMainFabOpenedDrawable instanceof AnimatedVectorDrawableCompat) {
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabOpenedDrawable);
-                    ((AnimatedVectorDrawable) mMainFabOpenedDrawable).start();
+                    ((AnimatedVectorDrawableCompat) mMainFabOpenedDrawable).start();
                 } else if (mMainFabOpenedDrawable instanceof AnimationDrawable){
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabOpenedDrawable);
@@ -830,10 +831,10 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         } else {
             UiUtils.rotateBackward(mMainFab, animate);
             if (mMainFabClosedDrawable != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mMainFabClosedDrawable instanceof AnimatedVectorDrawable) {
+                if (mMainFabClosedDrawable instanceof AnimatedVectorDrawableCompat) {
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabClosedDrawable);
-                    ((AnimatedVectorDrawable) mMainFabClosedDrawable).start();
+                    ((AnimatedVectorDrawableCompat) mMainFabClosedDrawable).start();
                 } else if (mMainFabClosedDrawable instanceof AnimationDrawable){
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabClosedDrawable);
