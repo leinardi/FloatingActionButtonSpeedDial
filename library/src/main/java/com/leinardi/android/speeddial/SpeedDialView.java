@@ -811,7 +811,11 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         boolean updated = false;
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
-                if (mMainFabOpenedDrawable instanceof AnimatedVectorDrawableCompat) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mMainFabOpenedDrawable instanceof AnimatedVectorDrawable) {
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimatedVectorDrawable) mMainFabOpenedDrawable).start();
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && mMainFabOpenedDrawable instanceof AnimatedVectorDrawableCompat) {
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabOpenedDrawable);
                     ((AnimatedVectorDrawableCompat) mMainFabOpenedDrawable).start();
@@ -831,7 +835,11 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         } else {
             UiUtils.rotateBackward(mMainFab, animate);
             if (mMainFabClosedDrawable != null) {
-                if (mMainFabClosedDrawable instanceof AnimatedVectorDrawableCompat) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mMainFabClosedDrawable instanceof AnimatedVectorDrawable) {
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabClosedDrawable);
+                    ((AnimatedVectorDrawable) mMainFabClosedDrawable).start();
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && mMainFabClosedDrawable instanceof AnimatedVectorDrawableCompat) {
                     updated = true;
                     mMainFab.setImageDrawable(mMainFabClosedDrawable);
                     ((AnimatedVectorDrawableCompat) mMainFabClosedDrawable).start();
