@@ -21,6 +21,8 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -805,8 +807,20 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     private void updateMainFabDrawable(boolean animate) {
+        boolean updated = false;
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mMainFabOpenedDrawable instanceof AnimatedVectorDrawable) {
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimatedVectorDrawable) mMainFabOpenedDrawable).start();
+                } else if (mMainFabOpenedDrawable instanceof AnimationDrawable){
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimationDrawable) mMainFabOpenedDrawable).start();
+                }
+            }
+            if (mMainFabOpenedDrawable != null && !updated) {
                 // This is a workaround. I don't know why if I set directly the rotated Drawable with `setImageDrawable`
                 // it will be transparent/empty on Android API 16 (works on API 27, haven't tested other versions).
                 Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
@@ -816,7 +830,19 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         } else {
             UiUtils.rotateBackward(mMainFab, animate);
             if (mMainFabClosedDrawable != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mMainFabClosedDrawable instanceof AnimatedVectorDrawable) {
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabClosedDrawable);
+                    ((AnimatedVectorDrawable) mMainFabClosedDrawable).start();
+                } else if (mMainFabClosedDrawable instanceof AnimationDrawable){
+                    updated = true;
+                    mMainFab.setImageDrawable(mMainFabClosedDrawable);
+                    ((AnimationDrawable) mMainFabClosedDrawable).start();
+                }
+            }
+            if (mMainFabClosedDrawable != null && !updated) {
                 mMainFab.setImageDrawable(mMainFabClosedDrawable);
+                updated = true;
             }
         }
     }
