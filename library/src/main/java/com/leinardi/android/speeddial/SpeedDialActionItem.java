@@ -48,6 +48,8 @@ public class SpeedDialActionItem implements Parcelable {
     private final Drawable mFabImageDrawable;
     @ColorInt
     private final int mFabImageTintColor;
+    private final boolean mFabImageTint;
+    private final int mFabType;
     @ColorInt
     private final int mFabBackgroundColor;
     @ColorInt
@@ -65,6 +67,8 @@ public class SpeedDialActionItem implements Parcelable {
         mLabel = builder.mLabel;
         mLabelRes = builder.mLabelRes;
         mFabImageTintColor = builder.mFabImageTintColor;
+        mFabImageTint = builder.mFabImageTint;
+        mFabType = builder.mFabType;
         mFabImageResource = builder.mFabImageResource;
         mFabImageDrawable = builder.mFabImageDrawable;
         mFabBackgroundColor = builder.mFabBackgroundColor;
@@ -112,6 +116,20 @@ public class SpeedDialActionItem implements Parcelable {
         return mFabImageTintColor;
     }
 
+    public boolean getFabImageTint() {
+        return mFabImageTint;
+    }
+
+    int getFabTypeId() {
+        return mFabType;
+    }
+
+    public String getFabType() {
+        String fabType = "nomal";
+        if (mFabType == R.string.sd_fill) fabType = "fill";
+        return fabType;
+    }
+
     @ColorInt
     public int getFabBackgroundColor() {
         return mFabBackgroundColor;
@@ -139,9 +157,9 @@ public class SpeedDialActionItem implements Parcelable {
         FabWithLabelView fabWithLabelView;
         int theme = getTheme();
         if (theme == RESOURCE_NOT_SET) {
-            fabWithLabelView = new FabWithLabelView(context);
+            fabWithLabelView = new FabWithLabelView(context, mFabType, mFabImageTint);
         } else {
-            fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme);
+            fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme, mFabType, mFabImageTint);
         }
         fabWithLabelView.setSpeedDialActionItem(this);
         return fabWithLabelView;
@@ -161,6 +179,9 @@ public class SpeedDialActionItem implements Parcelable {
         private Drawable mFabImageDrawable;
         @ColorInt
         private int mFabImageTintColor = RESOURCE_NOT_SET;
+        private boolean mFabImageTint = true;
+        @StringRes
+        private int mFabType = R.string.sd_normal;
         @Nullable
         private String mLabel;
         @StringRes
@@ -218,6 +239,8 @@ public class SpeedDialActionItem implements Parcelable {
             mFabImageResource = speedDialActionItem.mFabImageResource;
             mFabImageDrawable = speedDialActionItem.mFabImageDrawable;
             mFabImageTintColor = speedDialActionItem.mFabImageTintColor;
+            mFabImageTint = speedDialActionItem.mFabImageTint;
+            mFabType = speedDialActionItem.mFabType;
             mFabBackgroundColor = speedDialActionItem.mFabBackgroundColor;
             mLabelColor = speedDialActionItem.mLabelColor;
             mLabelBackgroundColor = speedDialActionItem.mLabelBackgroundColor;
@@ -237,7 +260,23 @@ public class SpeedDialActionItem implements Parcelable {
         }
 
         public Builder setFabImageTintColor(int fabImageTintColor) {
+            mFabImageTint = true;
             mFabImageTintColor = fabImageTintColor;
+            return this;
+        }
+
+        public Builder setFabImageTintColor(Void fabImageTint) {
+            mFabImageTint = false;
+            return this;
+        }
+
+        /**
+         * set SpeedDialActionItem size.
+         * R.string.sd_normal -> use normal Fab.
+         * R.string.sd_fill -> set Floating Action Button image to fill the button.
+         */
+        public Builder setFabType(@StringRes int fabType) {
+            mFabType = fabType;
             return this;
         }
 
@@ -289,6 +328,8 @@ public class SpeedDialActionItem implements Parcelable {
         dest.writeInt(this.mLabelRes);
         dest.writeInt(this.mFabImageResource);
         dest.writeInt(this.mFabImageTintColor);
+        dest.writeByte(this.mFabImageTint ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.mFabType);
         dest.writeInt(this.mFabBackgroundColor);
         dest.writeInt(this.mLabelColor);
         dest.writeInt(this.mLabelBackgroundColor);
@@ -304,6 +345,8 @@ public class SpeedDialActionItem implements Parcelable {
         this.mFabImageResource = in.readInt();
         this.mFabImageDrawable = null;
         this.mFabImageTintColor = in.readInt();
+        this.mFabImageTint = in.readByte() != 0;
+        this.mFabType = in.readInt();
         this.mFabBackgroundColor = in.readInt();
         this.mLabelColor = in.readInt();
         this.mLabelBackgroundColor = in.readInt();

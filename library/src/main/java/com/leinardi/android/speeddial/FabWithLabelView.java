@@ -67,19 +67,19 @@ public class FabWithLabelView extends LinearLayout {
     @Nullable
     private Drawable mLabelCardViewBackground;
 
-    public FabWithLabelView(Context context) {
+    public FabWithLabelView(Context context, int fabType, boolean tint) {
         super(context);
-        init(context, null);
+        init(context, null, fabType, tint);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int fabType, boolean tint) {
         super(context, attrs);
-        init(context, attrs);
+        init(context, attrs, fabType, tint);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int fabType, boolean tint) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        init(context, attrs, fabType, tint);
     }
 
     @SuppressLint("RestrictedApi")
@@ -153,9 +153,15 @@ public class FabWithLabelView extends LinearLayout {
         setLabel(actionItem.getLabel(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
-        setFabIcon(actionItem.getFabImageDrawable(getContext()));
+        Drawable fabIcon = actionItem.getFabImageDrawable(getContext());
+        int imageCrop = actionItem.getFabTypeId();
+        if (speedDialActionItem != null && speedDialActionItem.getFabTypeId() == R.string.sd_fill) {
+            fabIcon = UiUtils.CropFabImageInCircle(fabIcon);
+        }
+        setFabIcon(fabIcon);
         int imageTintColor = actionItem.getFabImageTintColor();
-        if (imageTintColor != RESOURCE_NOT_SET) {
+        boolean imageTint = actionItem.getFabImageTint();
+        if (imageTintColor != RESOURCE_NOT_SET && imageTint) {
             setFabImageTintColor(imageTintColor);
         }
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
@@ -175,7 +181,7 @@ public class FabWithLabelView extends LinearLayout {
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
-        if (actionItem.getFabSize() == SIZE_AUTO) {
+        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabTypeId() == R.string.sd_fill) {
             getFab().setSize(SIZE_MINI);
         } else {
             getFab().setSize(actionItem.getFabSize());
@@ -240,8 +246,21 @@ public class FabWithLabelView extends LinearLayout {
      * @param context context.
      * @param attrs   attributes.
      */
-    private void init(Context context, @Nullable AttributeSet attrs) {
-        View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
+    private void init(Context context, @Nullable AttributeSet attrs, int fabType, boolean fabTint) {
+        View rootView;
+        if (fabType == R.string.sd_fill) {
+            if (fabTint) {
+                rootView = inflate(context, R.layout.sd_fill_fab_with_label_view, this);
+            } else {
+                rootView = inflate(context, R.layout.sd_fill_fab_with_label_view_no_tint, this);
+            }
+        } else {
+            if (fabTint) {
+                rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
+            } else {
+                rootView = inflate(context, R.layout.sd_fab_with_label_view_no_tint, this);
+            }
+        }
 
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);

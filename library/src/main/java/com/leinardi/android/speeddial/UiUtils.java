@@ -19,7 +19,10 @@ package com.leinardi.android.speeddial;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -297,5 +300,30 @@ public class UiUtils {
                 view.performClick();
             }
         }, ViewConfiguration.getTapTimeout());
+    }
+
+    /**
+     * Crop the image into a circle
+     */
+    public static Drawable CropFabImageInCircle(Drawable fabIcon) {
+        Bitmap bitmap = UiUtils.getBitmapFromDrawable(fabIcon);
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        if (width > height) {
+            bitmap = Bitmap.createBitmap(bitmap, width / 2 - height / 2, 0, height, height);
+        } else {
+            bitmap = Bitmap.createBitmap(bitmap, 0, height / 2 - width / 2, width, width);
+        }
+
+        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+        int circleCenter = width / 2;
+        Canvas canvas = new Canvas(circleBitmap);
+        canvas.drawCircle(circleCenter, circleCenter, circleCenter, paint);
+        return UiUtils.getDrawableFromBitmap(circleBitmap);
     }
 }
