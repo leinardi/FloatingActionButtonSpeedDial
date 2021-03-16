@@ -28,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -39,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
+import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -307,23 +309,32 @@ public class UiUtils {
      */
     public static Drawable CropFabImageInCircle(Drawable fabIcon) {
         Bitmap bitmap = UiUtils.getBitmapFromDrawable(fabIcon);
-
+        if (bitmap == null) {
+            Log.e(TAG, "Couldn't crop the Image");
+            return fabIcon;
+        }
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         if (width > height) {
             bitmap = Bitmap.createBitmap(bitmap, width / 2 - height / 2, 0, height, height);
-        } else {
+        } else if (width < height){
             bitmap = Bitmap.createBitmap(bitmap, 0, height / 2 - width / 2, width, width);
         }
 
         Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        BitmapShader shader;
+        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setShader(shader);
-        int circleCenter = width / 2;
+        int circleCenter = bitmap.getWidth() / 2;
         Canvas canvas = new Canvas(circleBitmap);
         canvas.drawCircle(circleCenter, circleCenter, circleCenter, paint);
-        return UiUtils.getDrawableFromBitmap(circleBitmap);
+        Drawable cropped = UiUtils.getDrawableFromBitmap(circleBitmap);
+        if (cropped == null) {
+            Log.e(TAG, "Couldn't crop the Image");
+            return fabIcon;
+        }
+        return cropped;
     }
 }

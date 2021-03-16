@@ -156,7 +156,11 @@ public class FabWithLabelView extends LinearLayout {
         Drawable fabIcon = actionItem.getFabImageDrawable(getContext());
         int imageCrop = actionItem.getFabTypeId();
         if (speedDialActionItem != null && speedDialActionItem.getFabTypeId() == R.string.sd_fill) {
-            fabIcon = UiUtils.CropFabImageInCircle(fabIcon);
+            if (fabIcon != null) {
+                fabIcon = UiUtils.CropFabImageInCircle(fabIcon);
+            } else {
+                Log.e(TAG, "Couldn't crop the Image");
+            }
         }
         setFabIcon(fabIcon);
         int imageTintColor = actionItem.getFabImageTintColor();

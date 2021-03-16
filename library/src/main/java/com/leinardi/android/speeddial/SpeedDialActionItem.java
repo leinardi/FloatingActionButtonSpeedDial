@@ -265,7 +265,7 @@ public class SpeedDialActionItem implements Parcelable {
             return this;
         }
 
-        public Builder setFabImageTintColor(Void fabImageTint) {
+        public Builder setFabImageTintColor(Void noTint) {
             mFabImageTint = false;
             return this;
         }
