@@ -810,18 +810,16 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void updateMainFabDrawable(boolean animate) {
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
+                mMainFab.setImageDrawable(mMainFabOpenedDrawable);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mMainFabOpenedDrawable instanceof AnimatedVectorDrawable) {
-                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
                     ((AnimatedVectorDrawable) mMainFabOpenedDrawable).start();
                 } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && mMainFabOpenedDrawable instanceof AnimatedVectorDrawableCompat) {
-                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
                     ((AnimatedVectorDrawableCompat) mMainFabOpenedDrawable).start();
-                } else if (mMainFabOpenedDrawable instanceof AnimationDrawable){
-                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                } else if (mMainFabOpenedDrawable instanceof AnimationDrawable) {
                     ((AnimationDrawable) mMainFabOpenedDrawable).start();
-                } else {
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     // This is a workaround. I don't know why if I set directly the rotated Drawable with `setImageDrawable`
-                    // it will be transparent/empty on Android API 16 (works on API 27, haven't tested other versions).
+                    // it will be transparent/empty on Android API 16,19 (works on API 21, 27, haven't tested other versions).
                     Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
                     mMainFab.setImageBitmap(bitmap);
                 }
@@ -835,7 +833,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                     ((AnimatedVectorDrawable) mMainFabClosedDrawable).start();
                 } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && mMainFabClosedDrawable instanceof AnimatedVectorDrawableCompat) {
                     ((AnimatedVectorDrawableCompat) mMainFabClosedDrawable).start();
-                } else if (mMainFabClosedDrawable instanceof AnimationDrawable){
+                } else if (mMainFabClosedDrawable instanceof AnimationDrawable) {
                     ((AnimationDrawable) mMainFabClosedDrawable).start();
                 }
             }
