@@ -36,6 +36,9 @@ import static com.google.android.material.floatingactionbutton.FloatingActionBut
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {
     public static final int RESOURCE_NOT_SET = Integer.MIN_VALUE;
+    public static final String TYPE_NORMAL = "normal";
+    public static final String TYPE_FILL = "fill";
+
     @IdRes
     private final int mId;
     @Nullable
@@ -49,7 +52,7 @@ public class SpeedDialActionItem implements Parcelable {
     @ColorInt
     private final int mFabImageTintColor;
     private final boolean mFabImageTint;
-    private final int mFabType;
+    private final String mFabType;
     @ColorInt
     private final int mFabBackgroundColor;
     @ColorInt
@@ -120,14 +123,8 @@ public class SpeedDialActionItem implements Parcelable {
         return mFabImageTint;
     }
 
-    int getFabTypeId() {
-        return mFabType;
-    }
-
     public String getFabType() {
-        String fabType = "nomal";
-        if (mFabType == R.string.sd_fill) fabType = "fill";
-        return fabType;
+        return mFabType;
     }
 
     @ColorInt
@@ -180,8 +177,8 @@ public class SpeedDialActionItem implements Parcelable {
         @ColorInt
         private int mFabImageTintColor = RESOURCE_NOT_SET;
         private boolean mFabImageTint = true;
-        @StringRes
-        private int mFabType = R.string.sd_normal;
+
+        private String mFabType = TYPE_NORMAL;
         @Nullable
         private String mLabel;
         @StringRes
@@ -275,7 +272,7 @@ public class SpeedDialActionItem implements Parcelable {
          * R.string.sd_normal -> use normal Fab.
          * R.string.sd_fill -> set Floating Action Button image to fill the button.
          */
-        public Builder setFabType(@StringRes int fabType) {
+        public Builder setFabType(String fabType) {
             mFabType = fabType;
             return this;
         }
@@ -329,7 +326,7 @@ public class SpeedDialActionItem implements Parcelable {
         dest.writeInt(this.mFabImageResource);
         dest.writeInt(this.mFabImageTintColor);
         dest.writeByte(this.mFabImageTint ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.mFabType);
+        dest.writeString(this.mFabType);
         dest.writeInt(this.mFabBackgroundColor);
         dest.writeInt(this.mLabelColor);
         dest.writeInt(this.mLabelBackgroundColor);
@@ -346,7 +343,7 @@ public class SpeedDialActionItem implements Parcelable {
         this.mFabImageDrawable = null;
         this.mFabImageTintColor = in.readInt();
         this.mFabImageTint = in.readByte() != 0;
-        this.mFabType = in.readInt();
+        this.mFabType = in.readString();
         this.mFabBackgroundColor = in.readInt();
         this.mLabelColor = in.readInt();
         this.mLabelBackgroundColor = in.readInt();

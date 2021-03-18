@@ -22,6 +22,4 @@
     <string name="speeddial_scrolling_view_snackbar_behavior" tools:ignore="UnusedResources">
         com.leinardi.android.speeddial.SpeedDialView$ScrollingViewSnackbarBehavior
     </string>
-    <string name="sd_normal">normal</string>
-    <string name="sd_fill">fill</string>
 </resources>

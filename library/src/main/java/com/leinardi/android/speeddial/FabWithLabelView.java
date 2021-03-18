@@ -67,17 +67,17 @@ public class FabWithLabelView extends LinearLayout {
     @Nullable
     private Drawable mLabelCardViewBackground;
 
-    public FabWithLabelView(Context context, int fabType, boolean tint) {
+    public FabWithLabelView(Context context, String fabType, boolean tint) {
         super(context);
         init(context, null, fabType, tint);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int fabType, boolean tint) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, String fabType, boolean tint) {
         super(context, attrs);
         init(context, attrs, fabType, tint);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int fabType, boolean tint) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, String fabType, boolean tint) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, fabType, tint);
     }
@@ -154,8 +154,7 @@ public class FabWithLabelView extends LinearLayout {
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
         Drawable fabIcon = actionItem.getFabImageDrawable(getContext());
-        int imageCrop = actionItem.getFabTypeId();
-        if (speedDialActionItem != null && speedDialActionItem.getFabTypeId() == R.string.sd_fill) {
+        if (speedDialActionItem != null && speedDialActionItem.getFabType().equals("fill")) {
             if (fabIcon != null) {
                 fabIcon = UiUtils.CropFabImageInCircle(fabIcon);
             } else {
@@ -185,7 +184,7 @@ public class FabWithLabelView extends LinearLayout {
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
-        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabTypeId() == R.string.sd_fill) {
+        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals("fill")) {
             getFab().setSize(SIZE_MINI);
         } else {
             getFab().setSize(actionItem.getFabSize());
@@ -250,9 +249,9 @@ public class FabWithLabelView extends LinearLayout {
      * @param context context.
      * @param attrs   attributes.
      */
-    private void init(Context context, @Nullable AttributeSet attrs, int fabType, boolean fabTint) {
+    private void init(Context context, @Nullable AttributeSet attrs, String fabType, boolean fabTint) {
         View rootView;
-        if (fabType == R.string.sd_fill) {
+        if (fabType.equals("fill")) {
             if (fabTint) {
                 rootView = inflate(context, R.layout.sd_fill_fab_with_label_view, this);
             } else {
