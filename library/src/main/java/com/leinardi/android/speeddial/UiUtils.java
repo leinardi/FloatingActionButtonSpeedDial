@@ -62,6 +62,19 @@ public class UiUtils {
         return outValue.data;
     }
 
+    public static int getOnSecondaryColor(Context context) {
+        int colorAttr;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            colorAttr = R.attr.colorOnSecondary;
+        } else {
+            //Get colorAccent defined for AppCompat
+            colorAttr = context.getResources().getIdentifier("colorOnSecondary", "attr", context.getPackageName());
+        }
+        TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(colorAttr, outValue, true);
+        return outValue.data;
+    }
+
     public static int getAccentColor(Context context) {
         int colorAttr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -307,7 +320,7 @@ public class UiUtils {
     /**
      * Crop the image into a circle
      */
-    public static Drawable CropFabImageInCircle(Drawable fabIcon) {
+    public static Drawable cropFabImageInCircle(Drawable fabIcon) {
         Bitmap bitmap = UiUtils.getBitmapFromDrawable(fabIcon);
         if (bitmap == null) {
             Log.e(TAG, "Couldn't crop the Image");
@@ -317,7 +330,7 @@ public class UiUtils {
         int height = bitmap.getHeight();
         if (width > height) {
             bitmap = Bitmap.createBitmap(bitmap, width / 2 - height / 2, 0, height, height);
-        } else if (width < height){
+        } else if (width < height) {
             bitmap = Bitmap.createBitmap(bitmap, 0, height / 2 - width / 2, width, width);
         }
 

@@ -26,16 +26,24 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringDef;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.content.res.AppCompatResources;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import static com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_AUTO;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SpeedDialActionItem implements Parcelable {
     public static final int RESOURCE_NOT_SET = Integer.MIN_VALUE;
+
+    @StringDef({TYPE_NORMAL, TYPE_FILL})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface FabType { };
     public static final String TYPE_NORMAL = "normal";
     public static final String TYPE_FILL = "fill";
 
@@ -123,6 +131,7 @@ public class SpeedDialActionItem implements Parcelable {
         return mFabImageTint;
     }
 
+    @FabType
     public String getFabType() {
         return mFabType;
     }
@@ -154,9 +163,9 @@ public class SpeedDialActionItem implements Parcelable {
         FabWithLabelView fabWithLabelView;
         int theme = getTheme();
         if (theme == RESOURCE_NOT_SET) {
-            fabWithLabelView = new FabWithLabelView(context, mFabType, mFabImageTint);
+            fabWithLabelView = new FabWithLabelView(context);
         } else {
-            fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme, mFabType, mFabImageTint);
+            fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme);
         }
         fabWithLabelView.setSpeedDialActionItem(this);
         return fabWithLabelView;
@@ -256,14 +265,13 @@ public class SpeedDialActionItem implements Parcelable {
             return this;
         }
 
-        public Builder setFabImageTintColor(int fabImageTintColor) {
-            mFabImageTint = true;
-            mFabImageTintColor = fabImageTintColor;
-            return this;
-        }
-
-        public Builder setFabImageTintColor(Void noTint) {
-            mFabImageTint = false;
+        public Builder setFabImageTintColor(@Nullable @ColorInt Integer fabImageTintColor) {
+            if (fabImageTintColor == null) {
+                mFabImageTint = false;
+            } else {
+                mFabImageTint = true;
+                mFabImageTintColor = fabImageTintColor;
+            }
             return this;
         }
 
@@ -272,7 +280,7 @@ public class SpeedDialActionItem implements Parcelable {
          * R.string.sd_normal -> use normal Fab.
          * R.string.sd_fill -> set Floating Action Button image to fill the button.
          */
-        public Builder setFabType(String fabType) {
+        public Builder setFabType(@FabType String fabType) {
             mFabType = fabType;
             return this;
         }

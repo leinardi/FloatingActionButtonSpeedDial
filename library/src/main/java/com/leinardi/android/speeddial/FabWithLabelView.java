@@ -67,19 +67,19 @@ public class FabWithLabelView extends LinearLayout {
     @Nullable
     private Drawable mLabelCardViewBackground;
 
-    public FabWithLabelView(Context context, String fabType, boolean tint) {
+    public FabWithLabelView(Context context) {
         super(context);
-        init(context, null, fabType, tint);
+        init(context, null);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, String fabType, boolean tint) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, fabType, tint);
+        init(context, attrs);
     }
 
-    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, String fabType, boolean tint) {
+    public FabWithLabelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, fabType, tint);
+        init(context, attrs);
     }
 
     @SuppressLint("RestrictedApi")
@@ -149,22 +149,23 @@ public class FabWithLabelView extends LinearLayout {
 
     public void setSpeedDialActionItem(SpeedDialActionItem actionItem) {
         mSpeedDialActionItem = actionItem;
+        if (actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
+            this.removeView(mFab);
+            View view = inflate(getContext(), R.layout.sd_fill_fab, this);
+            FloatingActionButton newFab = view.findViewById(R.id.sd_fab_fill);
+            mFab = newFab;
+        }
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
-        Drawable fabIcon = actionItem.getFabImageDrawable(getContext());
-        if (speedDialActionItem != null && speedDialActionItem.getFabType().equals("fill")) {
-            if (fabIcon != null) {
-                fabIcon = UiUtils.CropFabImageInCircle(fabIcon);
-            } else {
-                Log.e(TAG, "Couldn't crop the Image");
-            }
-        }
-        setFabIcon(fabIcon);
+        setFabIcon(actionItem.getFabImageDrawable(getContext()));
         int imageTintColor = actionItem.getFabImageTintColor();
+        if (imageTintColor == RESOURCE_NOT_SET) {
+            imageTintColor = UiUtils.getOnSecondaryColor(getContext());
+        }
         boolean imageTint = actionItem.getFabImageTint();
-        if (imageTintColor != RESOURCE_NOT_SET && imageTint) {
+        if (imageTint) {
             setFabImageTintColor(imageTintColor);
         }
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
@@ -184,7 +185,7 @@ public class FabWithLabelView extends LinearLayout {
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
-        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals("fill")) {
+        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
             getFab().setSize(SIZE_MINI);
         } else {
             getFab().setSize(actionItem.getFabSize());
@@ -249,22 +250,8 @@ public class FabWithLabelView extends LinearLayout {
      * @param context context.
      * @param attrs   attributes.
      */
-    private void init(Context context, @Nullable AttributeSet attrs, String fabType, boolean fabTint) {
-        View rootView;
-        if (fabType.equals("fill")) {
-            if (fabTint) {
-                rootView = inflate(context, R.layout.sd_fill_fab_with_label_view, this);
-            } else {
-                rootView = inflate(context, R.layout.sd_fill_fab_with_label_view_no_tint, this);
-            }
-        } else {
-            if (fabTint) {
-                rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
-            } else {
-                rootView = inflate(context, R.layout.sd_fab_with_label_view_no_tint, this);
-            }
-        }
-
+    private void init(Context context, @Nullable AttributeSet attrs) {
+        View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);
         mLabelCardView = rootView.findViewById(R.id.sd_label_container);
