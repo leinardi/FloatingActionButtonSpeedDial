@@ -16,37 +16,17 @@
   -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/sd_label_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="4dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sd_label"
-            style="@style/SpeedDial.FabLabelStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="A label" />
-    </androidx.cardview.widget.CardView>
-
+<!--    MaxImageSize can't change　programmatically-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sd_fab"
+        android:id="@+id/sd_fab_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
         app:fabSize="mini"
         app:tint="@null"
+        app:maxImageSize="40dp"
         app:useCompatPadding="true" />
 
 </merge>

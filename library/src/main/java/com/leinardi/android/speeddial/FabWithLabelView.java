@@ -149,6 +149,12 @@ public class FabWithLabelView extends LinearLayout {
 
     public void setSpeedDialActionItem(SpeedDialActionItem actionItem) {
         mSpeedDialActionItem = actionItem;
+        if (actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
+            this.removeView(mFab);
+            View view = inflate(getContext(), R.layout.sd_fill_fab, this);
+            FloatingActionButton newFab = view.findViewById(R.id.sd_fab_fill);
+            mFab = newFab;
+        }
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
         setFabContentDescription(actionItem.getContentDescription(getContext()));
@@ -156,7 +162,11 @@ public class FabWithLabelView extends LinearLayout {
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
         setFabIcon(actionItem.getFabImageDrawable(getContext()));
         int imageTintColor = actionItem.getFabImageTintColor();
-        if (imageTintColor != RESOURCE_NOT_SET) {
+        if (imageTintColor == RESOURCE_NOT_SET) {
+            imageTintColor = UiUtils.getOnSecondaryColor(getContext());
+        }
+        boolean imageTint = actionItem.getFabImageTint();
+        if (imageTint) {
             setFabImageTintColor(imageTintColor);
         }
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
@@ -176,7 +186,7 @@ public class FabWithLabelView extends LinearLayout {
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
-        if (actionItem.getFabSize() == SIZE_AUTO) {
+        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
             getFab().setSize(SIZE_MINI);
         } else {
             getFab().setSize(actionItem.getFabSize());
@@ -245,7 +255,7 @@ public class FabWithLabelView extends LinearLayout {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
         rootView.setFocusable(false);
         rootView.setFocusableInTouchMode(false);
-
+      
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);
         mLabelCardView = rootView.findViewById(R.id.sd_label_container);
