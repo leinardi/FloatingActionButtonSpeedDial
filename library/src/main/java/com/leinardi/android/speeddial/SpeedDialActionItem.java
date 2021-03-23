@@ -277,8 +277,8 @@ public class SpeedDialActionItem implements Parcelable {
 
         /**
          * set SpeedDialActionItem size.
-         * R.string.sd_normal -> use normal Fab.
-         * R.string.sd_fill -> set Floating Action Button image to fill the button.
+         * SpeedDialActionItem.TYPE_NORMAL -> use normal Fab.
+         * SpeedDialActionItem.TYPE_FILL -> set Floating Action Button image to fill the button.
          */
         public Builder setFabType(@FabType String fabType) {
             mFabType = fabType;
