@@ -21,6 +21,8 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,6 +54,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -230,6 +233,14 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
 
     public void hide() {
         hide(null);
+    }
+
+    @Override
+    public void setContentDescription(CharSequence contentDescription) {
+        FloatingActionButton mainFab = getMainFab();
+        if (mainFab != null) {
+            setContentDescription(contentDescription);
+        }
     }
 
     public void hide(@Nullable final OnVisibilityChangedListener listener) {
@@ -768,6 +779,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         floatingActionButton.setClickable(true);
         floatingActionButton.setFocusable(true);
         floatingActionButton.setSize(FloatingActionButton.SIZE_NORMAL);
+        floatingActionButton.setContentDescription(getContentDescription());
         floatingActionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -807,16 +819,44 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     private void updateMainFabDrawable(boolean animate) {
         if (isOpen()) {
             if (mMainFabOpenedDrawable != null) {
-                // This is a workaround. I don't know why if I set directly the rotated Drawable with `setImageDrawable`
-                // it will be transparent/empty on Android API 16 (works on API 27, haven't tested other versions).
-                Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
-                mMainFab.setImageBitmap(bitmap);
+                // This is a workaround. I don't know why I can't set the rotated bitmap with `setImageBitmap`
+                // after set directly the rotated Drawable with `setImageDrawable`
+                // on Android API 25 or lower (works on API 26 or higher).
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+                        mMainFabOpenedDrawable instanceof AnimatedVectorDrawable) {
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimatedVectorDrawable) mMainFabOpenedDrawable).start();
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N &&
+                        mMainFabOpenedDrawable instanceof AnimatedVectorDrawableCompat) {
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimatedVectorDrawableCompat) mMainFabOpenedDrawable).start();
+                } else if (mMainFabOpenedDrawable instanceof AnimationDrawable) {
+                    mMainFab.setImageDrawable(mMainFabOpenedDrawable);
+                    ((AnimationDrawable) mMainFabOpenedDrawable).start();
+                } else {
+                    // This is a workaround.
+                    // I don't know why if I set directly the rotated Drawable with `setImageDrawable`
+                    // it will be transparent/empty on Android API 20 or lower (works on API 21 or higher).
+
+                    Bitmap bitmap = UiUtils.getBitmapFromDrawable(mMainFabOpenedDrawable);
+                    mMainFab.setImageBitmap(bitmap);
+                }
             }
             UiUtils.rotateForward(mMainFab, getMainFabAnimationRotateAngle(), animate);
         } else {
             UiUtils.rotateBackward(mMainFab, animate);
+            mMainFab.setImageDrawable(mMainFabClosedDrawable);
             if (mMainFabClosedDrawable != null) {
-                mMainFab.setImageDrawable(mMainFabClosedDrawable);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+                        mMainFabClosedDrawable instanceof AnimatedVectorDrawable) {
+                    ((AnimatedVectorDrawable) mMainFabClosedDrawable).start();
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N &&
+                        mMainFabClosedDrawable instanceof AnimatedVectorDrawableCompat) {
+                    ((AnimatedVectorDrawableCompat) mMainFabClosedDrawable).start();
+                } else if (mMainFabClosedDrawable instanceof AnimationDrawable) {
+                    ((AnimationDrawable) mMainFabClosedDrawable).start();
+                }
             }
         }
     }
@@ -893,6 +933,14 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                 fabWithLabelView.setVisibility(VISIBLE);
                 if (animate) {
                     showWithAnimationFabWithLabelView(fabWithLabelView, i * ACTION_ANIM_DELAY);
+                }
+                if (i == 0) {
+                    fabWithLabelView.getFab().requestFocusFromTouch();
+                }
+                if (i == size - 1) {
+                    fabWithLabelView.getFab().setNextFocusUpId(fabWithLabelView.getFab().getId());
+                    getMainFab().setNextFocusDownId(getMainFab().getId());
+                    getMainFab().setNextFocusForwardId(getMainFab().getId());
                 }
             }
         } else {

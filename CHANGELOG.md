@@ -1,6 +1,13 @@
 # Change Log
+## [next] - 2020-06-27
+- fixed #149: Accessibility issues:
+    - the closest Action Item to the Main FAB is now focused
+    - it is possible to navigate the open menu using `FOCUS_UP` and `FOCUS_DOWN`
+    - it is possible to set content descriptions for all the FABs
+- updated several dependencies
+
 ## [3.1.1] - 2019-09-10
-- Fix #11: Re-enabling FAB size
+- fixed #11: Re-enabling FAB size
 - Revert `com.google.android.material` to `1.0.0` (version `1.1.0-beta01` can still be used, just specify this version explicitly on your build.gradle file).
 
 ## [3.1.0] - 2019-09-10
