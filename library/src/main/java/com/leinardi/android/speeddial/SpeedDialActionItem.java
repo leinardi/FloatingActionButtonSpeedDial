@@ -53,6 +53,10 @@ public class SpeedDialActionItem implements Parcelable {
     private final String mLabel;
     @StringRes
     private final int mLabelRes;
+    @Nullable
+    private final String mContentDescription;
+    @StringRes
+    private final int mContentDescriptionRes;
     @DrawableRes
     private final int mFabImageResource;
     @Nullable
@@ -77,6 +81,8 @@ public class SpeedDialActionItem implements Parcelable {
         mId = builder.mId;
         mLabel = builder.mLabel;
         mLabelRes = builder.mLabelRes;
+        mContentDescription = builder.mContentDescription;
+        mContentDescriptionRes = builder.mContentDescriptionRes;
         mFabImageTintColor = builder.mFabImageTintColor;
         mFabImageTint = builder.mFabImageTint;
         mFabType = builder.mFabType;
@@ -100,6 +106,17 @@ public class SpeedDialActionItem implements Parcelable {
             return mLabel;
         } else if (mLabelRes != RESOURCE_NOT_SET) {
             return context.getString(mLabelRes);
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    public String getContentDescription(Context context) {
+        if (mContentDescription != null) {
+            return mContentDescription;
+        } else if (mContentDescriptionRes != RESOURCE_NOT_SET) {
+            return context.getString(mContentDescriptionRes);
         } else {
             return null;
         }
@@ -192,6 +209,10 @@ public class SpeedDialActionItem implements Parcelable {
         private String mLabel;
         @StringRes
         private int mLabelRes = RESOURCE_NOT_SET;
+        @Nullable
+        private String mContentDescription;
+        @StringRes
+        private int mContentDescriptionRes = RESOURCE_NOT_SET;
         @ColorInt
         private int mFabBackgroundColor = RESOURCE_NOT_SET;
         @ColorInt
@@ -242,6 +263,8 @@ public class SpeedDialActionItem implements Parcelable {
             mId = speedDialActionItem.mId;
             mLabel = speedDialActionItem.mLabel;
             mLabelRes = speedDialActionItem.mLabelRes;
+            mContentDescription = speedDialActionItem.mContentDescription;
+            mContentDescriptionRes = speedDialActionItem.mContentDescriptionRes;
             mFabImageResource = speedDialActionItem.mFabImageResource;
             mFabImageDrawable = speedDialActionItem.mFabImageDrawable;
             mFabImageTintColor = speedDialActionItem.mFabImageTintColor;
@@ -257,11 +280,27 @@ public class SpeedDialActionItem implements Parcelable {
 
         public Builder setLabel(@Nullable String label) {
             mLabel = label;
+            if (mContentDescription == null || mContentDescriptionRes == RESOURCE_NOT_SET) {
+                mContentDescription = label;
+            }
             return this;
         }
 
         public Builder setLabel(@StringRes int labelRes) {
             mLabelRes = labelRes;
+            if (mContentDescription == null || mContentDescriptionRes == RESOURCE_NOT_SET) {
+                mContentDescriptionRes = labelRes;
+            }
+            return this;
+        }
+
+        public Builder setContentDescription(@Nullable String contentDescription) {
+            mContentDescription = contentDescription;
+            return this;
+        }
+
+        public Builder setContentDescription(@StringRes int contentDescriptionRes) {
+            mContentDescriptionRes = contentDescriptionRes;
             return this;
         }
 
@@ -331,6 +370,8 @@ public class SpeedDialActionItem implements Parcelable {
         dest.writeInt(this.mId);
         dest.writeString(this.mLabel);
         dest.writeInt(this.mLabelRes);
+        dest.writeString(this.mContentDescription);
+        dest.writeInt(this.mContentDescriptionRes);
         dest.writeInt(this.mFabImageResource);
         dest.writeInt(this.mFabImageTintColor);
         dest.writeByte(this.mFabImageTint ? (byte) 1 : (byte) 0);
@@ -347,6 +388,8 @@ public class SpeedDialActionItem implements Parcelable {
         this.mId = in.readInt();
         this.mLabel = in.readString();
         this.mLabelRes = in.readInt();
+        this.mContentDescription = in.readString();
+        this.mContentDescriptionRes = in.readInt();
         this.mFabImageResource = in.readInt();
         this.mFabImageDrawable = null;
         this.mFabImageTintColor = in.readInt();
