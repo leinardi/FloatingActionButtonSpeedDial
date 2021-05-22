@@ -1,6 +1,6 @@
 # Floating Action Button Speed Dial
 
-<!--[![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)-->
+![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
@@ -27,7 +27,7 @@ Android library providing an implementation of the [Material Design Floating Act
 #### Official releases
 The library is available on Jcenter so no additional repository is required.
 
-Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
+Dependencies entry (latest version on Maven Central ![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)):
 ```groovy
 implementation "com.leinardi.android:speed-dial:3.2.0"
 ```
