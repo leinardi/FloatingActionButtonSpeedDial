@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,5 +75,5 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     implementation "androidx.recyclerview:recyclerview:$versions.androidx_recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout"
-    implementation "com.google.android.material:material:1.1.0-beta01"
+    implementation "com.google.android.material:material:$versions.android_material"
 }

@@ -1,5 +1,5 @@
-<!--
-  ~ Copyright 2019 Roberto Leinardi.
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2021 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,36 +14,30 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <!--Components-->
 
-    <style name="AppTheme.Inbox" parent="AppTheme">
-        <item name="colorPrimary">@color/inbox_primary</item>
-        <item name="colorPrimaryDark">@color/inbox_primary_dark</item>
-        <item name="colorAccent">@color/inbox_accent</item>
-        <item name="colorOnSecondary">@color/material_white_1000</item>
+    <!--Bottom Sheets-->
+    <style name="ThemeOverlay.MyTheme.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.MyTheme.BottomSheet.Modal</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/Widget.MyTheme.BottomSheet.Modal</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
+            @android:color/transparent
+        </item>
     </style>
 
-    <style name="AppTheme.Purple" parent="AppTheme">
-        <item name="colorPrimary">@color/material_purple_500</item>
-        <item name="colorPrimaryDark">@color/material_purple_700</item>
-        <item name="colorAccent">@color/material_purple_a700</item>
-        <item name="colorOnSecondary">@color/material_purple_100</item>
-        <item name="colorControlHighlight">@color/material_purple_200</item>
+    <style name="Widget.MyTheme.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">?attr/shapeAppearanceLargeComponent</item>
     </style>
 
-    <style name="AppTheme.Test" parent="AppTheme">
-        <item name="colorPrimary">@color/material_red_500</item>
-        <item name="colorPrimaryDark">@color/material_blue_700</item>
-        <item name="colorAccent">@color/material_green_a700</item>
-        <item name="colorControlActivated">@color/material_purple_500</item>
-        <item name="colorControlHighlight">@color/material_lime_500</item>
+    <!--Navigation Drawer-->
+    <style name="Widget.MyTheme.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="itemTextAppearance">?attr/textAppearanceBody2</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
 </resources>

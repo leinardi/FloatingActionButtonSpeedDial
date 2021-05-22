@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ class MainActivity : BaseUseCaseActivity() {
             speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable
                     .ic_theme_white_24dp)
                     .setLabel(getString(R.string.label_custom_theme))
-                    .setTheme(R.style.AppTheme_Purple)
+                    .setTheme(R.style.Theme_MyApp_Purple)
                     .create())
         }
 

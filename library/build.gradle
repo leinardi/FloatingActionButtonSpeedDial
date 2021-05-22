@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('checkstyle.gradle')
 apply plugin: 'net.ltgt.errorprone'
 
+ext {
+    PUBLISH_GROUP_ID = 'com.leinardi.android'
+    PUBLISH_VERSION = build_versions.version_name
+    PUBLISH_ARTIFACT_ID = 'speed-dial'
+}
+
+apply from: 'publish-module.gradle'
+
 android {
     compileSdkVersion build_versions.target_sdk
-
-    apply from: 'mavenConfig.gradle'
 
     defaultConfig {
         minSdkVersion build_versions.min_sdk
@@ -42,8 +48,10 @@ android {
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
     if (!name.toLowerCase().contains("test")) {
-        // remove "-Xep:NullAway:ERROR" to have NullAway only emit warnings
-        options.compilerArgs += ["-Xep:NullAway:ERROR", "-XepOpt:NullAway:AnnotatedPackages=com.leinardi.android.speeddial"]
+        options.errorprone {
+            check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)
+            option("NullAway:AnnotatedPackages", "com.leinardi.android.speeddial")
+        }
     }
 }
 
@@ -51,5 +59,7 @@ dependencies {
     api "androidx.appcompat:appcompat:$versions.androidx_appcompat"
     api "com.google.android.material:material:$versions.android_material"
     api "androidx.cardview:cardview:$versions.androidx_cardview"
+    errorproneJavac "com.google.errorprone:javac:$versions.errorprone_javac"
+    errorprone "com.google.errorprone:error_prone_core:$versions.errorprone_core"
     annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
 }

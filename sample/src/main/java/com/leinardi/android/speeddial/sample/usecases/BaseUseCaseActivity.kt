@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
 
 package com.leinardi.android.speeddial.sample.usecases
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -98,6 +100,15 @@ abstract class BaseUseCaseActivity : AppCompatActivity() {
                     R.id.action_rotation_angle_45 -> speedDialView.mainFabAnimationRotateAngle = 45f
                     R.id.action_rotation_angle_90 -> speedDialView.mainFabAnimationRotateAngle = 90f
                     R.id.action_rotation_angle_180 -> speedDialView.mainFabAnimationRotateAngle = 180f
+                    R.id.action_toggle_day_night -> {
+                        val nightModeFlats = resources.configuration.uiMode and
+                                Configuration.UI_MODE_NIGHT_MASK
+                        if (nightModeFlats == Configuration.UI_MODE_NIGHT_NO) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        }
+                    }
                     R.id.action_main_fab_background_color_closed_primary ->
                         speedDialView.mainFabClosedBackgroundColor = UiUtils.getPrimaryColor(
                                 this@BaseUseCaseActivity)

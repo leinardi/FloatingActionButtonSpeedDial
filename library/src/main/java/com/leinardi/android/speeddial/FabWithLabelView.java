@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,13 +149,24 @@ public class FabWithLabelView extends LinearLayout {
 
     public void setSpeedDialActionItem(SpeedDialActionItem actionItem) {
         mSpeedDialActionItem = actionItem;
+        if (actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
+            this.removeView(mFab);
+            View view = inflate(getContext(), R.layout.sd_fill_fab, this);
+            FloatingActionButton newFab = view.findViewById(R.id.sd_fab_fill);
+            mFab = newFab;
+        }
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
+        setFabContentDescription(actionItem.getContentDescription(getContext()));
         SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
         setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
         setFabIcon(actionItem.getFabImageDrawable(getContext()));
         int imageTintColor = actionItem.getFabImageTintColor();
-        if (imageTintColor != RESOURCE_NOT_SET) {
+        if (imageTintColor == RESOURCE_NOT_SET) {
+            imageTintColor = UiUtils.getOnSecondaryColor(getContext());
+        }
+        boolean imageTint = actionItem.getFabImageTint();
+        if (imageTint) {
             setFabImageTintColor(imageTintColor);
         }
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
@@ -171,11 +182,11 @@ public class FabWithLabelView extends LinearLayout {
         setLabelColor(labelColor);
         int labelBackgroundColor = actionItem.getLabelBackgroundColor();
         if (labelBackgroundColor == RESOURCE_NOT_SET) {
-            labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.cardview_light_background,
+            labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_background_color,
                     getContext().getTheme());
         }
         setLabelBackgroundColor(labelBackgroundColor);
-        if (actionItem.getFabSize() == SIZE_AUTO) {
+        if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
             getFab().setSize(SIZE_MINI);
         } else {
             getFab().setSize(actionItem.getFabSize());
@@ -242,7 +253,9 @@ public class FabWithLabelView extends LinearLayout {
      */
     private void init(Context context, @Nullable AttributeSet attrs) {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
-
+        rootView.setFocusable(false);
+        rootView.setFocusableInTouchMode(false);
+      
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);
         mLabelCardView = rootView.findViewById(R.id.sd_label_container);
@@ -339,6 +352,17 @@ public class FabWithLabelView extends LinearLayout {
         getLabelBackground().setClickable(clickable);
         getLabelBackground().setFocusable(clickable);
         getLabelBackground().setEnabled(clickable);
+    }
+
+    /**
+     * Sets fab content description․
+     *
+     * @param sequence content description to set.
+     */
+    private void setFabContentDescription(@Nullable CharSequence sequence) {
+        if (!TextUtils.isEmpty(sequence)) {
+            mFab.setContentDescription(sequence);
+        }
     }
 
     /**

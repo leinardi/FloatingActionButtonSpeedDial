@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roberto Leinardi.
+ * Copyright 2021 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,16 @@ package com.leinardi.android.speeddial;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -36,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
+import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -51,6 +56,19 @@ public class UiUtils {
         } else {
             //Get colorAccent defined for AppCompat
             colorAttr = context.getResources().getIdentifier("colorPrimary", "attr", context.getPackageName());
+        }
+        TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(colorAttr, outValue, true);
+        return outValue.data;
+    }
+
+    public static int getOnSecondaryColor(Context context) {
+        int colorAttr;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            colorAttr = R.attr.colorOnSecondary;
+        } else {
+            //Get colorAccent defined for AppCompat
+            colorAttr = context.getResources().getIdentifier("colorOnSecondary", "attr", context.getPackageName());
         }
         TypedValue outValue = new TypedValue();
         context.getTheme().resolveAttribute(colorAttr, outValue, true);
@@ -297,5 +315,39 @@ public class UiUtils {
                 view.performClick();
             }
         }, ViewConfiguration.getTapTimeout());
+    }
+
+    /**
+     * Crop the image into a circle
+     */
+    public static Drawable cropFabImageInCircle(Drawable fabIcon) {
+        Bitmap bitmap = UiUtils.getBitmapFromDrawable(fabIcon);
+        if (bitmap == null) {
+            Log.e(TAG, "Couldn't crop the Image");
+            return fabIcon;
+        }
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        if (width > height) {
+            bitmap = Bitmap.createBitmap(bitmap, width / 2 - height / 2, 0, height, height);
+        } else if (width < height) {
+            bitmap = Bitmap.createBitmap(bitmap, 0, height / 2 - width / 2, width, width);
+        }
+
+        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        BitmapShader shader;
+        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+        int circleCenter = bitmap.getWidth() / 2;
+        Canvas canvas = new Canvas(circleBitmap);
+        canvas.drawCircle(circleCenter, circleCenter, circleCenter, paint);
+        Drawable cropped = UiUtils.getDrawableFromBitmap(circleBitmap);
+        if (cropped == null) {
+            Log.e(TAG, "Couldn't crop the Image");
+            return fabIcon;
+        }
+        return cropped;
     }
 }

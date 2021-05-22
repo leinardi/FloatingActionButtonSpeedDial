@@ -1,6 +1,6 @@
 # Floating Action Button Speed Dial
 
-[![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=plastic)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)
+![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
 [![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
@@ -25,11 +25,11 @@ Android library providing an implementation of the [Material Design Floating Act
 ## How to use
 ### Gradle setup
 #### Official releases
-The library is available on Jcenter so no additonal repository is required.
+The library is available on Jcenter so no additional repository is required.
 
-Dependencies entry (latest version on Jcenter [![Maven metadata URI](https://img.shields.io/maven-metadata/v/http/jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml.svg?style=flat)](https://jcenter.bintray.com/com/leinardi/android/speed-dial/maven-metadata.xml)):
+Dependencies entry (latest version on Maven Central ![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)):
 ```groovy
-implementation "com.leinardi.android:speed-dial:3.1.1"
+implementation "com.leinardi.android:speed-dial:3.2.0"
 ```
 #### Snapshots (development branch)
 You can use JitPack to test the latest `master` (remember that `master` is the development branch and can be unstable or completely broken).
@@ -241,7 +241,7 @@ This project is based on [floating-action-menu by ArthurGhazaryan](https://githu
 
 ## Licenses
 ```
-Copyright 2019 Roberto Leinardi.
+Copyright 2021 Roberto Leinardi.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for

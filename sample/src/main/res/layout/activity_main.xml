@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Roberto Leinardi.
+  ~ Copyright 2021 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/close_speed_dial_menu"
         app:clickable_overlay="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

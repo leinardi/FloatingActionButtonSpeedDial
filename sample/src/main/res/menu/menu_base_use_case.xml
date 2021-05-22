@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2019 Roberto Leinardi.
+  ~ Copyright 2021 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -73,6 +73,12 @@
                 android:title="@string/one_hundred_eighty_degrees" />
         </menu>
     </item>
+    <item
+        android:id="@+id/action_toggle_day_night"
+        android:icon="@drawable/ic_day_night_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_day_night"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_main_fab_color"
         android:icon="@drawable/ic_custom_color"
