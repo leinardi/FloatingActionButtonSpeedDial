@@ -18,10 +18,16 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('checkstyle.gradle')
 apply plugin: 'net.ltgt.errorprone'
 
+ext {
+    PUBLISH_GROUP_ID = 'com.leinardi.android'
+    PUBLISH_VERSION = build_versions.version_name
+    PUBLISH_ARTIFACT_ID = 'speed-dial'
+}
+
+apply from: 'publish-module.gradle'
+
 android {
     compileSdkVersion build_versions.target_sdk
-
-    apply from: 'mavenConfig.gradle'
 
     defaultConfig {
         minSdkVersion build_versions.min_sdk

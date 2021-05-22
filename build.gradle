@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+apply plugin: 'org.jetbrains.dokka'
 apply from: rootProject.file('versions-plugin.gradle')
 apply from: rootProject.file('detekt.gradle')
+apply from: rootProject.file('publish-root.gradle')
 apply plugin: "se.bjurr.violations.violation-comments-to-github-gradle-plugin"
 
 buildscript {
@@ -26,8 +28,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
         classpath "com.leinardi.android:android-checkstyle-plugin:$versions.android_checkstyle_plugin"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:$versions.android_maven_gradle_plugin"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradle_bintray_plugin"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$versions.dokka"
+        classpath "io.github.gradle-nexus:publish-plugin:$versions.publish_plugin"
         classpath "com.github.ben-manes:gradle-versions-plugin:$versions.gradle_versions_plugin"
         classpath "se.bjurr.violations:violation-comments-to-github-gradle-plugin:$versions.violations_plugin"
         classpath "net.ltgt.gradle:gradle-errorprone-plugin:$versions.errorprone_plugin"
