@@ -1,5 +1,6 @@
 # Change Log
-## [next] - 2020-06-27
+## [3.2.0] - 2021-05-22
+- fixed #159: Publish latest version to Maven Central, now that JCenter will be sunset
 - fixed #149: Accessibility issues:
     - the closest Action Item to the Main FAB is now focused
     - it is possible to navigate the open menu using `FOCUS_UP` and `FOCUS_DOWN`
