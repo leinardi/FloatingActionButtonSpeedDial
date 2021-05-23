@@ -935,7 +935,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
                     showWithAnimationFabWithLabelView(fabWithLabelView, i * ACTION_ANIM_DELAY);
                 }
                 if (i == 0) {
-                    fabWithLabelView.getFab().requestFocusFromTouch();
+                    fabWithLabelView.getFab().requestFocus();
                 }
                 if (i == size - 1) {
                     fabWithLabelView.getFab().setNextFocusUpId(fabWithLabelView.getFab().getId());
