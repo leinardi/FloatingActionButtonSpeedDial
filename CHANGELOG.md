@@ -1,4 +1,8 @@
 # Change Log
+## [next] - 2021-05-24
+- fixed #168: Stack overflow when setting contentDescription to main FAB
+- preventing user to be forced out of touch mode (thank you @zhanghai for the PR)
+
 ## [3.2.0] - 2021-05-22
 - fixed #159: Publish latest version to Maven Central, now that JCenter will be sunset
 - fixed #149: Accessibility issues:
