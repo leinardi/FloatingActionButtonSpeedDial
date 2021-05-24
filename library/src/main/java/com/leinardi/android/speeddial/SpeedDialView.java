@@ -239,7 +239,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     public void setContentDescription(CharSequence contentDescription) {
         FloatingActionButton mainFab = getMainFab();
         if (mainFab != null) {
-            setContentDescription(contentDescription);
+            mainFab.setContentDescription(contentDescription);
         }
     }
 
