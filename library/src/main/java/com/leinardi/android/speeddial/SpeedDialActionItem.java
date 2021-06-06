@@ -26,10 +26,12 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.Px;
 import androidx.annotation.StringDef;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.content.res.AppCompatResources;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.annotation.Retention;
@@ -67,6 +69,8 @@ public class SpeedDialActionItem implements Parcelable {
     private final String mFabType;
     @ColorInt
     private final int mFabBackgroundColor;
+    @Px
+    private final float mFabElevation;
     @ColorInt
     private final int mLabelColor;
     @ColorInt
@@ -89,6 +93,7 @@ public class SpeedDialActionItem implements Parcelable {
         mFabImageResource = builder.mFabImageResource;
         mFabImageDrawable = builder.mFabImageDrawable;
         mFabBackgroundColor = builder.mFabBackgroundColor;
+        mFabElevation = builder.mFabElevation;
         mLabelColor = builder.mLabelColor;
         mLabelBackgroundColor = builder.mLabelBackgroundColor;
         mLabelClickable = builder.mLabelClickable;
@@ -158,6 +163,11 @@ public class SpeedDialActionItem implements Parcelable {
         return mFabBackgroundColor;
     }
 
+    @Px
+    public float getFabElevation() {
+        return mFabElevation;
+    }
+
     @ColorInt
     public int getLabelColor() {
         return mLabelColor;
@@ -215,6 +225,8 @@ public class SpeedDialActionItem implements Parcelable {
         private int mContentDescriptionRes = RESOURCE_NOT_SET;
         @ColorInt
         private int mFabBackgroundColor = RESOURCE_NOT_SET;
+        @Px
+        private float mFabElevation = 0f;
         @ColorInt
         private int mLabelColor = RESOURCE_NOT_SET;
         @ColorInt
@@ -271,6 +283,7 @@ public class SpeedDialActionItem implements Parcelable {
             mFabImageTint = speedDialActionItem.mFabImageTint;
             mFabType = speedDialActionItem.mFabType;
             mFabBackgroundColor = speedDialActionItem.mFabBackgroundColor;
+            mFabElevation = speedDialActionItem.mFabElevation;
             mLabelColor = speedDialActionItem.mLabelColor;
             mLabelBackgroundColor = speedDialActionItem.mLabelBackgroundColor;
             mLabelClickable = speedDialActionItem.mLabelClickable;
@@ -329,6 +342,11 @@ public class SpeedDialActionItem implements Parcelable {
             return this;
         }
 
+        public Builder setFabElevation(@Px float elevation) {
+            mFabElevation = elevation;
+            return this;
+        }
+
         public Builder setLabelColor(@ColorInt int labelColor) {
             mLabelColor = labelColor;
             return this;
@@ -377,6 +395,7 @@ public class SpeedDialActionItem implements Parcelable {
         dest.writeByte(this.mFabImageTint ? (byte) 1 : (byte) 0);
         dest.writeString(this.mFabType);
         dest.writeInt(this.mFabBackgroundColor);
+        dest.writeFloat(this.mFabElevation);
         dest.writeInt(this.mLabelColor);
         dest.writeInt(this.mLabelBackgroundColor);
         dest.writeByte(this.mLabelClickable ? (byte) 1 : (byte) 0);
@@ -396,6 +415,7 @@ public class SpeedDialActionItem implements Parcelable {
         this.mFabImageTint = in.readByte() != 0;
         this.mFabType = in.readString();
         this.mFabBackgroundColor = in.readInt();
+        this.mFabElevation = in.readFloat();
         this.mLabelColor = in.readInt();
         this.mLabelBackgroundColor = in.readInt();
         this.mLabelClickable = in.readByte() != 0;
