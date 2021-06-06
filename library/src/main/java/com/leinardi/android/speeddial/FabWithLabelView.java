@@ -13,6 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Copyright 2021 Roberto Leinardi.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.leinardi.android.speeddial;
 
@@ -35,9 +50,11 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.Px;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.ImageViewCompat;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
@@ -169,16 +186,21 @@ public class FabWithLabelView extends LinearLayout {
         if (imageTint) {
             setFabImageTintColor(imageTintColor);
         }
+
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
         if (fabBackgroundColor == RESOURCE_NOT_SET) {
             fabBackgroundColor = UiUtils.getPrimaryColor(getContext());
         }
         setFabBackgroundColor(fabBackgroundColor);
+
+        setFabElevation(actionItem.getFabElevation());
+
         int labelColor = actionItem.getLabelColor();
         if (labelColor == RESOURCE_NOT_SET) {
             labelColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_text_color,
                     getContext().getTheme());
         }
+
         setLabelColor(labelColor);
         int labelBackgroundColor = actionItem.getLabelBackgroundColor();
         if (labelBackgroundColor == RESOURCE_NOT_SET) {
@@ -255,7 +277,7 @@ public class FabWithLabelView extends LinearLayout {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
         rootView.setFocusable(false);
         rootView.setFocusableInTouchMode(false);
-      
+
         mFab = rootView.findViewById(R.id.sd_fab);
         mLabelTextView = rootView.findViewById(R.id.sd_label);
         mLabelCardView = rootView.findViewById(R.id.sd_label_container);
@@ -383,6 +405,13 @@ public class FabWithLabelView extends LinearLayout {
         mFab.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
+    private void setFabElevation(@Px float elevation) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            mFab.setElevation(elevation);
+        mLabelCardView.setCardElevation(elevation);
+        setPadding((int) elevation, 0, 0, 0);
+    }
+
     private void setLabelColor(@ColorInt int color) {
         mLabelTextView.setTextColor(color);
     }
@@ -417,4 +446,6 @@ public class FabWithLabelView extends LinearLayout {
         }
     }
 }
+
+
 
