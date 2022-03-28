@@ -19,22 +19,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:background="#000000"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:layout_gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_add_white_24dp"
             app:useCompatPadding="true" />
+
+        <Space
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
