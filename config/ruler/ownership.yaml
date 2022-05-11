@@ -1,0 +1,17 @@
+- identifier: :app
+  owner: app
+
+- identifier: :modules:core*
+  owner: core
+
+- identifier: :modules:feature*
+  owner: feature
+
+- identifier: androidx.*
+  owner: androidx
+
+- identifier: com.google.*
+  owner: google
+
+- identifier: org.jetbrains.kotlin*
+  owner: kotlin

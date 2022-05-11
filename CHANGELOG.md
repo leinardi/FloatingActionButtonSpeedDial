@@ -43,7 +43,7 @@
     - added `SpeedDialActionItem.createFabWithLabelView()`
     - all the `SpeedDialView` add and replace methods now return an instance of the `FabWithLabelView` they create  (useful to modify an existing Action Item without replacing it completely)
     - added `FabWithLabelView.getSpeedDialActionItemBuilder()`  (useful to modify an existing Action Item without replacing it completely)
-    
+
 ## [1.0.2] - 2018-06-30
 - fixed #65: Main FAB not centered when using RTL
 - fixed #71: Animation feels slower than Google Inbox
@@ -77,10 +77,10 @@
 
 ## [1.0-alpha05] - 2018-04-15
 - added Menu Resource support (no color customization possible)
-- `Drawable`s are not parcelables so is not possible to restore them when the view is recreated 
+- `Drawable`s are not parcelables so is not possible to restore them when the view is recreated
   for example after an orientation change. If possible always use the `DrawableRes`.
 - fixed Expansion mode and rotate angle not persisted on orientation change
-- fixed inverted behavior for `SpeedDialView.setMainFabClosedBackgroundColor` 
+- fixed inverted behavior for `SpeedDialView.setMainFabClosedBackgroundColor`
   and `SpeedDialView.setMainFabOpenedBackgroundColor`
 - added `SpeedDialView.getActionItems()`
 - added `SpeedDialView.getMainFab()`

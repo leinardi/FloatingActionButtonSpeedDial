@@ -2,8 +2,8 @@
 
 ![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)
 [![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
-[![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE) 
-[![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers) 
+[![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE)
+[![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers)
 
 
 <img src="/art/demo_1.gif" width="290" align="right" hspace="0" />
@@ -12,7 +12,7 @@ Android library providing an implementation of the [Material Design Floating Act
 
 ## Features
 - [x] MinSdk 14
-- [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support) 
+- [x] Highly customizable (label, icon, ripple, fab and label background colors, themes support)
 - [x] Same animations as in [Inbox by Gmail](https://play.google.com/store/apps/details?id=com.google.android.apps.inbox)
 - [x] Option to have different icons for open/close state
 - [x] Optional overlay/touch guard layout

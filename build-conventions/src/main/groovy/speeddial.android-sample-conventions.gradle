@@ -1,0 +1,64 @@
+/*
+ * Copyright 2022 Roberto Leinardi.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'speeddial.android-conventions'
+    id 'speeddial.detekt-conventions'
+    id 'speeddial.merged-manifests-conventions'
+    id 'speeddial.dependencies-conventions'
+    id 'speeddial.ruler-conventions'
+}
+
+android {
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+    kotlinOptions {
+        freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
+        jvmTarget = config.android.javaVersion
+        useIR = true
+    }
+}
+
+kapt {
+    useBuildCache = true
+    correctErrorTypes true
+    javacOptions {
+        option('-Xmaxerrs', Integer.MAX_VALUE)
+    }
+}
+
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            progressiveMode = true // deprecations and bug fixes for unstable code take effect immediately
+        }
+    }
+}
+
+dependencies {
+    // Android
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+
+    // General
+    implementation libs.timber
+    debugImplementation libs.leakcanary
+}

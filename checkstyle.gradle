@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.leinardi.android.checkstyle'
+apply plugin: 'com.leinardi.android.checkstyle' // TODO
 
 checkstyle {
     ignoreFailures = false // Whether this task will ignore failures and continue running the build.

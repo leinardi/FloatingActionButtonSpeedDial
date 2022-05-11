@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2022 Roberto Leinardi.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
+    <item
+        android:id="@+id/action_show"
+        android:icon="@drawable/ic_show_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_show_hide_fab"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_snack"
+        android:icon="@drawable/ic_snack_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_show_snackbar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_expansion_mode"
+        android:icon="@drawable/ic_expansion_mode_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/expansion_mode"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_expansion_mode_top"
+                android:title="@string/top" />
+            <item
+                android:id="@+id/action_expansion_mode_left"
+                android:title="@string/left" />
+            <item
+                android:id="@+id/action_expansion_mode_bottom"
+                android:title="@string/bottom" />
+            <item
+                android:id="@+id/action_expansion_mode_right"
+                android:title="@string/right" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_rotation_angle"
+        android:icon="@drawable/ic_rotation_angle_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/rotation_angle"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_rotation_angle_0"
+                android:title="@string/zero_degrees" />
+            <item
+                android:id="@+id/action_rotation_angle_45"
+                android:title="@string/forty_five_degrees" />
+            <item
+                android:id="@+id/action_rotation_angle_90"
+                android:title="@string/ninety_degrees" />
+            <item
+                android:id="@+id/action_rotation_angle_180"
+                android:title="@string/one_hundred_eighty_degrees" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_toggle_day_night"
+        android:icon="@drawable/ic_day_night_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_day_night"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_main_fab_color"
+        android:icon="@drawable/ic_custom_color"
+        android:orderInCategory="100"
+        android:title="@string/main_fab_color"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/action_main_fab_background_color_open"
+                android:title="@string/main_fab_color_open">
+                <menu>
+                    <item
+                        android:id="@+id/action_main_fab_background_color_closed_primary"
+                        android:title="@string/primary" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_closed_orange"
+                        android:title="@string/orange" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_closed_purple"
+                        android:title="@string/purple" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_closed_white"
+                        android:title="@string/white" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_closed_none"
+                        android:title="@string/none" />
+                </menu>
+            </item>
+            <item
+                android:id="@+id/action_main_fab_background_color_close"
+                android:title="@string/main_fab_color_close">
+                <menu>
+                    <item
+                        android:id="@+id/action_main_fab_background_color_opened_primary"
+                        android:title="@string/primary" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_opened_orange"
+                        android:title="@string/orange" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_opened_purple"
+                        android:title="@string/purple" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_opened_white"
+                        android:title="@string/white" />
+                    <item
+                        android:id="@+id/action_main_fab_background_color_opened_none"
+                        android:title="@string/none" />
+                </menu>
+            </item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_toggle_list"
+        android:icon="@drawable/ic_list_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_list"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_toggle_reverse_animation"
+        android:icon="@drawable/ic_animation_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_toggle_reverse_animation"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_add_item"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_add_action_item"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_remove_item"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_remove_action_item"
+        app:showAsAction="ifRoom" />
+</menu>
