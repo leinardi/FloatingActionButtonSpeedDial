@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Roberto Leinardi.
+ * Copyright 2022 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
 
-rootProject.name = "FloatingActionButtonSpeedDial"
+package com.leinardi.android.speeddial.sample.compose.theme
 
-includeBuild("build-conventions")
+import androidx.compose.material.Typography
 
-include(
-        // Libs
-        ':library-compose',
-        ':library-view',
-
-        // Apps
-        ':sample',
-        )
+val SampleTypography = Typography()

@@ -542,6 +542,9 @@ naming:
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][_A-Z0-9]*' # Custom
+    excludes: [
+        '**/library-compose/src/main/kotlin/com/leinardi/android/speeddial/compose/**',
+      ] # Custom
   ForbiddenClassName:
     active: false
     forbiddenName: []
@@ -600,8 +603,8 @@ naming:
   TopLevelPropertyNaming:
     active: true
     excludes: [
-        '**/modules/core-ui/src/main/kotlin/com/leinardi/speeddial/core/ui/component/**',
-      ] # Custom TODO
+        '**/library-compose/src/main/kotlin/com/leinardi/android/speeddial/compose/**',
+      ] # Custom
     constantPattern: '[A-Z][_A-Z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
     privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
