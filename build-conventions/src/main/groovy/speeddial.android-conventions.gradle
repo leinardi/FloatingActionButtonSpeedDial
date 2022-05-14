@@ -1,0 +1,89 @@
+/*
+ * Copyright 2022 Roberto Leinardi.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+android {
+    compileSdk config.android.compileSdk
+
+    defaultConfig {
+        versionCode config.android.version_code
+        minSdk config.android.minSdk
+        targetSdk config.android.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility config.android.javaVersion
+        targetCompatibility config.android.javaVersion
+    }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        animationsDisabled = true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+            all {
+                jvmArgs '-noverify'
+            }
+        }
+    }
+    lintOptions {
+        abortOnError true
+        checkAllWarnings false
+        checkDependencies true
+        checkReleaseBuilds false
+        ignoreTestSources true
+        warningsAsErrors false
+        disable 'ResourceType'
+        lintConfig file("${project.rootDir}/config/lint/lint.xml")
+    }
+    packagingOptions {
+        resources {
+            exclude '.readme'
+            exclude 'LICENSE.txt'
+            exclude 'fabric/*.properties'
+            // Exclude the Firebase/Fabric/other random properties files
+            exclude '/*.properties'
+            // Exclude AndroidX version files
+            exclude 'META-INF/*.version'
+            // Exclude consumer proguard files
+            exclude 'META-INF/proguard/*'
+            exclude 'META-INF/*.properties'
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/MANIFEST.MF'
+            exclude 'META-INF/NOTICE.txt'
+            exclude "META-INF/AL2.0"
+            exclude "META-INF/LGPL2.1"
+            exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+            exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
+            exclude 'META-INF/*.kotlin_module'
+            // for byte-buddy
+            exclude "META-INF/licenses/ASM"
+            pickFirst "win32-x86-64/attach_hotspot_windows.dll"
+            pickFirst "win32-x86/attach_hotspot_windows.dll"
+        }
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "skipped", "failed"
+    }
+}
+
+dependencies {
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.runner
+    androidTestUtil libs.androidx.test.orchestrator
+}

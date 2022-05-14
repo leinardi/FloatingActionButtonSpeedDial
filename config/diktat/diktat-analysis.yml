@@ -1,0 +1,530 @@
+# Common configuration
+- name: DIKTAT_COMMON
+  enabled: true
+  configuration:
+    # put your package name here - it will be autofixed and checked
+    domainName: com.leinardi.android.speeddial
+    # testDirs: test
+    # can also use chapter names here (not only numbers)
+    # expected values:  disabledChapters: "Naming, Comments, General, Variables, Functions, Classes"
+    # or: "1, 2, 3, 4, 5, 6"
+    disabledChapters: ''
+    testDirs: test
+    kotlinVersion: 1.6
+    srcDirectories: 'main'
+# Checks that the Class/Enum/Interface name does not match Pascal case
+- name: CLASS_NAME_INCORRECT
+  enabled: true
+# Checks that CONSTANT (treated as const val from companion object or class level) is in non UPPER_SNAKE_CASE
+- name: CONSTANT_UPPERCASE
+  enabled: false # Detekt is already checking it
+# Checks that enum value is in non UPPER_SNAKE_CASE or non PascalCase depending on the config, UPPER_SNAKE_CASE by default
+- name: ENUM_VALUE
+  enabled: false # Custom
+  configuration:
+    # Two options: snakeCase(default), PascalCase
+    enumStyle: snakeCase
+# Checks that class which extends any Exception class has Exception suffix
+- name: EXCEPTION_SUFFIX
+  enabled: true
+# Checks that file name has extension
+- name: FILE_NAME_INCORRECT
+  enabled: true
+# Checks that file name matches class name, if it is only one class in file
+- name: FILE_NAME_MATCH_CLASS
+  enabled: false # Custom - Can't use enum classes in composable files...
+# Checks that functions/methods which return boolean have special prefix like "is/should/e.t.c"
+- name: FUNCTION_BOOLEAN_PREFIX
+  enabled: false # Custom - I really disagree with this rule
+  configuration:
+    allowedPrefixes: '' # A list of functions that return boolean and are allowed to use. Input is in a form "foo, bar".
+# Checks that function/method name is in lowerCamelCase
+- name: FUNCTION_NAME_INCORRECT_CASE
+  enabled: false # Custom - Compose uses PascalCase
+# Checks that typealias name is in PascalCase
+- name: TYPEALIAS_NAME_INCORRECT_CASE
+  enabled: true
+# Checks that generic name doesn't contain more than 1 letter (capital). It can be followed by numbers, example: T12, T
+- name: GENERIC_NAME
+  enabled: false # Custom
+# Identifier length should be in range [2,64] except names that used in industry like {i, j} and 'e' for catching exceptions
+- name: IDENTIFIER_LENGTH
+  enabled: true
+# Checks that the object matches PascalCase
+- name: OBJECT_NAME_INCORRECT
+  enabled: true
+# Checks that package name is in correct (lower) case
+- name: PACKAGE_NAME_INCORRECT_CASE
+  enabled: true
+# Checks that package name starts with the company's domain
+- name: PACKAGE_NAME_INCORRECT_PREFIX
+  enabled: true
+# Checks that package name does not have incorrect symbols like underscore or non-ASCII letters/digits
+- name: PACKAGE_NAME_INCORRECT_SYMBOLS
+  enabled: true
+# Checks that the path for a file matches with a package name
+- name: PACKAGE_NAME_INCORRECT_PATH
+  enabled: true
+# Checks that package name is in the file
+- name: PACKAGE_NAME_MISSING
+  enabled: true
+# Checks that variable does not have prefix (like mVariable or M_VARIABLE)
+- name: VARIABLE_HAS_PREFIX
+  enabled: false # Custom - False positive for zIndex
+# Checks that variable does not contain one single letter, only exceptions are fixed names that used in industry like {i, j}
+- name: VARIABLE_NAME_INCORRECT
+  enabled: false # Custom - Some custom Compose variables are single letter, like Spacer.x1
+# Checks that the name of variable is in lowerCamelCase and contains only ASCII letters
+- name: VARIABLE_NAME_INCORRECT_FORMAT
+  enabled: false # Custom - Can't be disable for Composable and Detekt is already checking it
+# Checks that functions have kdoc
+- name: MISSING_KDOC_ON_FUNCTION
+  enabled: false # Custom
+# Checks that on file level internal or public class or function has missing KDoc
+- name: MISSING_KDOC_TOP_LEVEL
+  enabled: false # Custom
+# Checks that accessible internal elements (protected, public, internal) in a class are documented
+- name: MISSING_KDOC_CLASS_ELEMENTS
+  enabled: false # Custom
+# Checks that accessible method parameters are documented in KDoc
+- name: KDOC_WITHOUT_PARAM_TAG
+  enabled: false # Custom
+# Checks that accessible method explicit return type is documented in KDoc
+- name: KDOC_WITHOUT_RETURN_TAG
+  enabled: true
+# Checks that accessible method throw keyword is documented in KDoc
+- name: KDOC_WITHOUT_THROWS_TAG
+  enabled: true
+# Checks that KDoc is not empty
+- name: KDOC_EMPTY_KDOC
+  enabled: false # Custom
+# Checks that underscore is correctly used to split package naming
+- name: INCORRECT_PACKAGE_SEPARATOR
+  enabled: true
+# Checks that there is no @deprecated tag in kdoc
+- name: KDOC_NO_DEPRECATED_TAG
+  enabled: false # Custom
+# Checks that there is no empty content in kdoc tags
+- name: KDOC_NO_EMPTY_TAGS
+  enabled: false # Custom
+# Checks that there is only one space after kdoc tag
+- name: KDOC_WRONG_SPACES_AFTER_TAG
+  enabled: true
+# Checks tags order in kDoc. `@param`, `@return`, `@throws`
+- name: KDOC_WRONG_TAGS_ORDER
+  enabled: true
+# Checks that there is no newline of empty KDoc line (with leading asterisk) between `@param`, `@return`, `@throws` tags
+- name: KDOC_NO_NEWLINES_BETWEEN_BASIC_TAGS
+  enabled: true
+# Checks that block of tags @param, @return, @throws is separated from previous part of KDoc by exactly one empty line
+- name: KDOC_NEWLINES_BEFORE_BASIC_TAGS
+  enabled: true
+# Checks that special tags `@apiNote`, `@implNote`, `@implSpec` have exactly one empty line after
+- name: KDOC_NO_NEWLINE_AFTER_SPECIAL_TAGS
+  enabled: true
+# Checks that KDoc does not contain single line with words 'return', 'get' or 'set'
+- name: KDOC_TRIVIAL_KDOC_ON_FUNCTION
+  enabled: true
+# Checks that kdoc does not contain @author tag or date
+- name: KDOC_CONTAINS_DATE_OR_AUTHOR
+  enabled: false # Custom
+  configuration:
+    versionRegex: \d+\.\d+\.\d+[-.\w\d]*
+# Checks that there is newline after header KDoc
+- name: HEADER_WRONG_FORMAT
+  enabled: true
+# Checks that file with zero or >1 classes has header KDoc
+- name: HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE
+  enabled: false # Custom
+# Checks that copyright exists on top of file and is properly formatted (as a block comment)
+- name: HEADER_MISSING_OR_WRONG_COPYRIGHT
+  enabled: false # Custom
+  configuration:
+    isCopyrightMandatory: false
+    copyrightText: 'Copyright 2022 Roberto Leinardi'
+# Checks that header kdoc is located before package directive
+- name: HEADER_NOT_BEFORE_PACKAGE
+  enabled: true
+# Checks that file does not contain lines > maxSize
+- name: FILE_IS_TOO_LONG
+  enabled: true
+  configuration:
+    # number of lines
+    maxSize: '2000'
+# Checks that file does not contain commented out code
+- name: COMMENTED_OUT_CODE
+  enabled: true
+# Checks that file does not contain only comments, imports and package directive
+- name: FILE_CONTAINS_ONLY_COMMENTS
+  enabled: true
+# Orders imports alphabetically
+- name: FILE_UNORDERED_IMPORTS
+  enabled: false # Custom
+  configuration:
+    # use logical imports grouping with sorting inside of a group
+    useRecommendedImportsOrder: true
+# Checks that general order of code parts is right
+- name: FILE_INCORRECT_BLOCKS_ORDER
+  enabled: true
+# Checks that there is exactly one line between code blocks
+- name: FILE_NO_BLANK_LINE_BETWEEN_BLOCKS
+  enabled: true
+# Checks that there is no wildcard imports. Exception: allowedWildcards
+- name: FILE_WILDCARD_IMPORTS
+  enabled: true
+  configuration:
+    allowedWildcards: '' # Allowed wildcards for imports (e.g. "import org.cqfn.diktat.*, import org.jetbrains.kotlin.*")
+    useRecommendedImportsOrder: true
+# Checks unused imports
+- name: UNUSED_IMPORT
+  enabled: true
+  configuration:
+    deleteUnusedImport: true
+# Checks that braces are used in if, else, when, for, do, and while statements. Exception: single line if statement
+- name: NO_BRACES_IN_CONDITIONALS_AND_LOOPS
+  enabled: true
+# Checks that the declaration part of a class-like code structures (class/interface/etc.) is in the proper order
+- name: WRONG_ORDER_IN_CLASS_LIKE_STRUCTURES
+  enabled: false # Custom
+# Checks that properties with comments are separated by a blank line
+- name: BLANK_LINE_BETWEEN_PROPERTIES
+  enabled: false # Custom - Not working as intended
+# Checks top level order
+- name: TOP_LEVEL_ORDER
+  enabled: false # Custom
+# Checks that non-empty code blocks with braces follow the K&R style (1TBS or OTBS style)
+- name: BRACES_BLOCK_STRUCTURE_ERROR
+  enabled: false # Custom
+  configuration:
+    openBraceNewline: 'True'
+    closeBraceNewline: 'True'
+# Checks that indentation is correct
+- name: WRONG_INDENTATION
+  enabled: false # Custom
+  configuration:
+    # Is newline at the end of a file needed
+    newlineAtEnd: true
+    # If true: in parameter list when parameters are split by newline they are indented with two indentations instead of one
+    extendedIndentOfParameters: false
+    # If true: if first parameter in parameter list is on the same line as opening parenthesis, then other parameters can be aligned with it
+    alignedParameters: true
+    # If true: if expression is split by newline after operator like +/-/`*`, then the next line is indented with two indentations instead of one
+    extendedIndentAfterOperators: true
+    # If true: when dot qualified expression starts on a new line, this line will be indented with two indentations instead of one
+    extendedIndentBeforeDot: false
+    # The indentation size for each file
+    indentationSize: 4
+# Checks that there is no empty blocks in a file.
+# If allowEmptyBlocks is true, checks that it follows correct style (have a newline)
+- name: EMPTY_BLOCK_STRUCTURE_ERROR
+  enabled: false # Custom
+  configuration:
+    # Whether a newline after `{` is required in an empty block
+    styleEmptyBlockWithNewline: 'True'
+    allowEmptyBlocks: 'False'
+# Checks that there is no more than one statement per line
+- name: MORE_THAN_ONE_STATEMENT_PER_LINE
+  enabled: true
+# Checks that the line length is < lineLength parameter
+- name: LONG_LINE
+  enabled: false # Custom - Detekt is already checking it
+  configuration:
+    lineLength: '180'
+# Checks that semicolons are not used at the end of a line
+- name: REDUNDANT_SEMICOLON
+  enabled: true
+# Checks that line breaks follow code style guide: rule 3.6
+- name: WRONG_NEWLINES
+  enabled: false # Custom
+  configuration:
+    # If the number of parameters on one line is more than this threshold, all parameters will be placed on separate lines.
+    maxParametersInOneLine: 2
+    # 3 by default.
+    maxCallsInOneLine: 3
+# Checks trailing comma
+- name: TRAILING_COMMA
+  enabled: true
+  configuration:
+    # VALUE_ARGUMENT
+    valueArgument: true # Custom
+    # VALUE_PARAMETER
+    valueParameter: true # Custom
+    # REFERENCE_EXPRESSION
+    indices: true # Custom
+    # WHEN_CONDITION_WITH_EXPRESSION
+    whenConditions: false
+    # STRING_TEMPLATE
+    collectionLiteral: true # Custom
+    # TYPE_PROJECTION
+    typeArgument: true # Custom
+    # TYPE_PARAMETER
+    typeParameter: true # Custom
+    # DESTRUCTURING_DECLARATION_ENTRY
+    destructuringDeclaration: true # Custom
+# Inspection that checks if a long dot qualified expression is used in condition or as an argument
+- name: COMPLEX_EXPRESSION
+  enabled: false # Custom
+# Checks that there are not too many consecutive spaces in line
+- name: TOO_MANY_CONSECUTIVE_SPACES
+  enabled: true
+  configuration:
+    # Maximum allowed number of consecutive spaces (not counting indentation)
+    maxSpaces: '1'
+    # Whether formatting for enums should be kept without checking
+    saveInitialFormattingForEnums: false
+# Checks that blank lines are used correctly.
+# For example: triggers when there are too many blank lines between function declaration
+- name: TOO_MANY_BLANK_LINES
+  enabled: true
+# Checks that usage of horizontal spaces doesn't violate code style guide
+- name: WRONG_WHITESPACE
+  enabled: false # Custom
+# Checks that backticks (``) are not used in the identifier name, except the case when it is test method (marked with @Test annotation)
+- name: BACKTICKS_PROHIBITED
+  enabled: true
+# Checks that a single line concatenation of strings is not used
+- name: STRING_CONCATENATION
+  enabled: true
+# Checks that each when statement have else in the end
+- name: WHEN_WITHOUT_ELSE
+  enabled: false # Custom
+# Checks that annotation is on a single line
+- name: ANNOTATION_NEW_LINE
+  enabled: true
+# Checks that enum structure is correct: enum entries should be separated by comma and line break and last entry should have semicolon in the end.
+- name: ENUMS_SEPARATED
+  enabled: false # Custom
+# Checks that value on integer or float constant is not too big
+- name: LONG_NUMERICAL_VALUES_SEPARATED
+  enabled: false # Custom (it fails for compose Colors, e.g.: Color(0xFF006397))
+  configuration:
+    # Maximum number of digits which are not split
+    maxNumberLength: '5'
+    # Maximum number of digits between separators
+    maxBlockLength: '3'
+# Checks magic number
+- name: MAGIC_NUMBER
+  enabled: false # Custom - Can't be disable for Composable and Detekt is already checking it
+  configuration:
+    # Ignore numbers from test
+    ignoreTest: 'true'
+    # Ignore numbers
+    ignoreNumbers: '-1, 1, 0, 2'
+    # Is ignore override hashCode function
+    ignoreHashCodeFunction: 'true'
+    # Is ignore property
+    ignorePropertyDeclaration: 'false'
+    # Is ignore local variable
+    ignoreLocalVariableDeclaration: 'false'
+    # Is ignore value parameter
+    ignoreValueParameter: 'true'
+    # Is ignore constant
+    ignoreConstantDeclaration: 'true'
+    # Is ignore property in companion object
+    ignoreCompanionObjectPropertyDeclaration: 'true'
+    # Is ignore numbers in enum
+    ignoreEnums: 'false'
+    # Is ignore number in ranges
+    ignoreRanges: 'false'
+    # Is ignore number in extension function
+    ignoreExtensionFunctions: 'false'
+# Checks that order of enum values or constant property inside companion is correct
+- name: WRONG_DECLARATIONS_ORDER
+  enabled: true
+  configuration:
+    # Whether enum members should be sorted alphabetically
+    sortEnum: true
+    # Whether class properties should be sorted alphabetically
+    sortProperty: true
+# Checks that multiple modifiers sequence is in the correct order
+- name: WRONG_MULTIPLE_MODIFIERS_ORDER
+  enabled: true
+# Checks that identifier has appropriate name (See table of rule 1.2 part 6)
+- name: CONFUSING_IDENTIFIER_NAMING
+  enabled: true
+# Checks year in the copyright
+- name: WRONG_COPYRIGHT_YEAR
+  enabled: false # Custom
+# Inspection that checks if local variables are declared close to the first usage site
+- name: LOCAL_VARIABLE_EARLY_DECLARATION
+  enabled: false # Custom
+# Try to avoid initialize val by null (e.g. val a: Int? = null -> val a: Int = 0)
+- name: NULLABLE_PROPERTY_TYPE
+  enabled: false # Custom
+# Inspection that checks if there is a blank line before kDoc and none after
+- name: WRONG_NEWLINES_AROUND_KDOC
+  enabled: false # Custom
+# Inspection that checks if there is no blank lines before first comment
+- name: FIRST_COMMENT_NO_BLANK_LINE
+  enabled: true
+# Inspection that checks if there are blank lines between code and comment and between code start token and comment's text
+- name: COMMENT_WHITE_SPACE
+  enabled: true
+  configuration:
+    maxSpacesBeforeComment: 2
+    maxSpacesInComment: 1
+# Inspection that checks if all comment's are inside if-else code blocks. Exception is general if comment
+- name: IF_ELSE_COMMENTS
+  enabled: true
+# Type aliases provide alternative names for existing types when type's reference text is longer 25 chars
+- name: TYPE_ALIAS
+  enabled: false # Custom
+  configuration:
+    typeReferenceLength: '25' # max length of type reference
+# Checks if casting can be omitted
+- name: SMART_CAST_NEEDED
+  enabled: true
+# Checks that variables of generic types have explicit type declaration
+- name: GENERIC_VARIABLE_WRONG_DECLARATION
+  enabled: false # Custom - It seems to be bugged
+# Inspection that checks if string template has redundant curly braces
+- name: STRING_TEMPLATE_CURLY_BRACES
+  enabled: true
+# Variables with `val` modifier - are immutable (read-only). Usage of such variables instead of `var` variables increases
+# robustness and readability of code, because `var` variables can be reassigned several times in the business logic.
+# This rule prohibits usage of `var`s as local variables - the only exception is accumulators and counters
+- name: SAY_NO_TO_VAR
+  enabled: false # Custom
+# Inspection that checks if string template has redundant quotes
+- name: STRING_TEMPLATE_QUOTES
+  enabled: true
+# Check if there are redundant nested if-statements, which could be collapsed into a single one by concatenating their conditions
+- name: COLLAPSE_IF_STATEMENTS
+  enabled: true
+  configuration:
+    startCollapseFromNestedLevel: 2
+# Checks that floating-point values are not used in arithmetic expressions
+- name: FLOAT_IN_ACCURATE_CALCULATIONS
+  enabled: true
+# Checks that function length isn't too long
+- name: TOO_LONG_FUNCTION
+  enabled: false # Custom - Detekt is already checking it
+  configuration:
+    maxFunctionLength: 35 # max length of function
+    isIncludeHeader: false # count function's header
+# Warns if there are nested functions
+- name: AVOID_NESTED_FUNCTIONS
+  enabled: true
+# Checks that lambda inside function parameters is in the end
+- name: LAMBDA_IS_NOT_LAST_PARAMETER
+  enabled: false # Custom - It does not check that the last parameter is a labmba but that all the lambas are at the end...
+# Checks that function doesn't contains too many parameters
+- name: TOO_MANY_PARAMETERS
+  enabled: false # Custom - Detekt is already checking it
+  configuration:
+    maxParameterListSize: '5' # max parameters size
+# Checks that function doesn't have too many nested blocks
+- name: NESTED_BLOCK
+  enabled: false # Custom - Detekt is already checking it
+  configuration:
+    maxNestedBlockQuantity: '4'
+# Checks that function use default values, instead overloading
+- name: WRONG_OVERLOADING_FUNCTION_ARGUMENTS
+  enabled: false # Custom
+# Checks that using runBlocking inside async block code
+- name: RUN_BLOCKING_INSIDE_ASYNC
+  enabled: true
+# Checks that the long lambda has parameters
+- name: TOO_MANY_LINES_IN_LAMBDA
+  enabled: true
+  configuration:
+    maxLambdaLength: 15 # max length of lambda without parameters # Custom
+# Checks that using unnecessary, custom label
+- name: CUSTOM_LABEL
+  enabled: true
+# Checks that outer lambda has explicit parameter name
+- name: PARAMETER_NAME_IN_OUTER_LAMBDA
+  enabled: false
+# Checks that property in constructor doesn't contain comment
+- name: KDOC_NO_CONSTRUCTOR_PROPERTY
+  enabled: false # Custom
+# Checks that property in KDoc present in class
+- name: KDOC_EXTRA_PROPERTY
+  enabled: false # Custom
+# Checks that KDoc in constructor has property tag but with comment inside constructor
+- name: KDOC_NO_CONSTRUCTOR_PROPERTY_WITH_COMMENT
+  enabled: false # Custom
+# if a class has single constructor, it should be converted to a primary constructor
+- name: SINGLE_CONSTRUCTOR_SHOULD_BE_PRIMARY
+  enabled: true
+# Checks if class can be made as data class
+- name: USE_DATA_CLASS
+  enabled: true
+# Checks that never use the name of a variable in the custom getter or setter
+- name: WRONG_NAME_OF_VARIABLE_INSIDE_ACCESSOR
+  enabled: true
+# Checks that classes have only one init block
+- name: MULTIPLE_INIT_BLOCKS
+  enabled: true
+# Checks that there are abstract functions in abstract class
+- name: CLASS_SHOULD_NOT_BE_ABSTRACT
+  enabled: true
+# Checks if there are any trivial getters or setters
+- name: TRIVIAL_ACCESSORS_ARE_NOT_RECOMMENDED
+  enabled: true
+# Checks that no custom getters and setters are used for properties. It is a more wide rule than TRIVIAL_ACCESSORS_ARE_NOT_RECOMMENDED
+# Kotlin compiler automatically generates `get` and `set` methods for properties and also lets the possibility to override it.
+# But in all cases it is very confusing when `get` and `set` are overridden for a developer who uses this particular class.
+# Developer expects to get the value of the property, but receives some unknown value and some extra side effect hidden by the custom getter/setter.
+# Use extra functions for it instead.
+- name: CUSTOM_GETTERS_SETTERS
+  enabled: false # Custom - Sometimes I need custom `get` and `set`
+# Checks if null-check was used explicitly (for example: if (a == null))
+# Try to avoid explicit null checks (explicit comparison with `null`)
+# Kotlin is declared as [Null-safe](https://kotlinlang.org/docs/reference/null-safety.html) language.
+# But Kotlin architects wanted Kotlin to be fully compatible with Java, that's why `null` keyword was also introduced in Kotlin.
+# There are several code-structures that can be used in Kotlin to avoid null-checks. For example: `?:`,  `.let {}`, `.also {}`, e.t.c
+- name: AVOID_NULL_CHECKS
+  enabled: false # Custom
+# Checks if class instantiation can be wrapped in `apply` for better readability
+- name: COMPACT_OBJECT_INITIALIZATION
+  enabled: true
+# Checks explicit supertype qualification
+- name: USELESS_SUPERTYPE
+  enabled: true
+# Checks if extension function with the same signature don't have related classes
+- name: EXTENSION_FUNCTION_SAME_SIGNATURE
+  enabled: true
+# Checks if there is empty primary constructor
+- name: EMPTY_PRIMARY_CONSTRUCTOR
+  enabled: true
+# In case of not using field keyword in property accessors,
+# there should be explicit backing property with the name of real property
+# Example: val table get() {if (_table == null) ...} -> table should have _table
+- name: NO_CORRESPONDING_PROPERTY
+  enabled: true
+# Checks if there is class/object that can be replace with extension function
+- name: AVOID_USING_UTILITY_CLASS
+  enabled: true
+# If there is stateless class it is preferred to use object
+- name: OBJECT_IS_PREFERRED
+  enabled: true
+# If there exists negated version of function you should prefer it instead of !functionCall
+- name: INVERSE_FUNCTION_PREFERRED
+  enabled: true
+# Checks if class can be converted to inline class
+- name: INLINE_CLASS_CAN_BE_USED
+  enabled: true
+# If file contains class, then it can't contain extension functions for the same class
+- name: EXTENSION_FUNCTION_WITH_CLASS
+  enabled: true
+# Check if kts script contains other functions except run code
+- name: RUN_IN_SCRIPT
+  enabled: true
+# Check if boolean expression can be simplified
+- name: COMPLEX_BOOLEAN_EXPRESSION
+  enabled: true
+# Check if range can replace with until or `rangeTo` function with range
+- name: CONVENTIONAL_RANGE
+  enabled: true
+  configuration:
+    isRangeToIgnore: false
+# Check that typealias name is in PascalCase
+- name: TYPEALIAS_NAME_INCORRECT_CASE
+  enabled: true
+# Should change property length - 1 to property lastIndex
+- name: USE_LAST_INDEX
+  enabled: true
+# Only properties from the primary constructor should be documented in a @property tag in class KDoc
+- name: KDOC_NO_CLASS_BODY_PROPERTIES_IN_HEADER
+  enabled: true

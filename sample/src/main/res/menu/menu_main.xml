@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2021 Roberto Leinardi.
+  ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.leinardi.android.speeddial.sample.MainActivity">
+    tools:context="com.leinardi.android.speeddial.sample.compose.ComposeActivity">
     <item
         android:id="@+id/action_use_cases"
         android:orderInCategory="100"
