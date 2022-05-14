@@ -180,6 +180,7 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 +--- androidx.recyclerview:recyclerview:1.2.1 (*)
 +--- project :library-compose
 |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21 (*)
+|    +--- androidx.appcompat:appcompat:1.4.1 (*)
 |    +--- androidx.compose.material:material:1.2.0-beta01
 |    |    +--- androidx.compose.animation:animation:1.0.0 -> 1.1.1
 |    |    |    +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
@@ -353,7 +354,9 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 +--- androidx.compose.material:material:1.2.0-beta01 (*)
 +--- androidx.compose.runtime:runtime:1.2.0-beta01 (*)
 +--- androidx.compose.ui:ui-tooling:1.2.0-beta01 (*)
-\--- androidx.compose.ui:ui:1.2.0-beta01 (*)
++--- androidx.compose.ui:ui:1.2.0-beta01 (*)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1 (*)
+\--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1 (*)
 
 (c) - dependency constraint
 (*) - dependencies omitted (listed previously)

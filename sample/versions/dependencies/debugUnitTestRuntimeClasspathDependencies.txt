@@ -113,9 +113,10 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 |    |    +--- androidx.viewpager:viewpager:1.0.0
 |    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.3.0
 |    |    |    +--- androidx.core:core:1.0.0 -> 1.8.0-alpha06 (*)
-|    |    |    \--- androidx.customview:customview:1.0.0
-|    |    |         +--- androidx.annotation:annotation:1.0.0 -> 1.3.0
-|    |    |         \--- androidx.core:core:1.0.0 -> 1.8.0-alpha06 (*)
+|    |    |    \--- androidx.customview:customview:1.0.0 -> 1.2.0-alpha01
+|    |    |         +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
+|    |    |         +--- androidx.core:core:1.3.0-beta01 -> 1.8.0-alpha06 (*)
+|    |    |         \--- androidx.collection:collection:1.1.0 (*)
 |    |    +--- androidx.loader:loader:1.0.0
 |    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.3.0
 |    |    |    +--- androidx.core:core:1.0.0 -> 1.8.0-alpha06 (*)
@@ -146,7 +147,7 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 |    +--- androidx.drawerlayout:drawerlayout:1.0.0
 |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.3.0
 |    |    +--- androidx.core:core:1.0.0 -> 1.8.0-alpha06 (*)
-|    |    \--- androidx.customview:customview:1.0.0 (*)
+|    |    \--- androidx.customview:customview:1.0.0 -> 1.2.0-alpha01 (*)
 |    +--- androidx.savedstate:savedstate:1.1.0 -> 1.2.0-rc01 (*)
 |    +--- androidx.emoji2:emoji2:1.0.0
 |    |    +--- androidx.collection:collection:1.1.0 (*)
@@ -181,7 +182,7 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 |         +--- androidx.coordinatorlayout:coordinatorlayout:1.1.0
 |         |    +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
 |         |    +--- androidx.core:core:1.1.0 -> 1.8.0-alpha06 (*)
-|         |    +--- androidx.customview:customview:1.0.0 (*)
+|         |    +--- androidx.customview:customview:1.0.0 -> 1.2.0-alpha01 (*)
 |         |    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
 |         +--- androidx.constraintlayout:constraintlayout:2.0.1 -> 2.1.3
 |         |    +--- androidx.appcompat:appcompat:1.2.0 -> 1.4.1 (*)
@@ -207,7 +208,7 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 |         +--- androidx.recyclerview:recyclerview:1.0.0 -> 1.2.1
 |         |    +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
 |         |    +--- androidx.core:core:1.3.2 -> 1.8.0-alpha06 (*)
-|         |    +--- androidx.customview:customview:1.0.0 (*)
+|         |    +--- androidx.customview:customview:1.0.0 -> 1.2.0-alpha01 (*)
 |         |    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
 |         +--- androidx.transition:transition:1.2.0
 |         |    +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
@@ -224,6 +225,11 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 +--- androidx.recyclerview:recyclerview:1.2.1 (*)
 +--- project :library-compose
 |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21 (*)
+|    +--- androidx.customview:customview:1.2.0-alpha01 (*)
+|    +--- androidx.customview:customview-poolingcontainer:1.0.0-beta01
+|    |    +--- androidx.core:core-ktx:1.5.0 -> 1.8.0-alpha06 (*)
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.6.21 (*)
+|    +--- androidx.appcompat:appcompat:1.4.1 (*)
 |    +--- androidx.compose.material:material:1.2.0-beta01
 |    |    +--- androidx.compose.animation:animation:1.0.0 -> 1.1.1
 |    |    |    +--- androidx.annotation:annotation:1.1.0 -> 1.3.0
@@ -286,9 +292,7 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 |    |    |    |    |    +--- androidx.compose.ui:ui-unit:1.2.0-beta01 (*)
 |    |    |    |    |    +--- androidx.compose.ui:ui-util:1.2.0-beta01 (*)
 |    |    |    |    |    +--- androidx.core:core:1.5.0 -> 1.8.0-alpha06 (*)
-|    |    |    |    |    +--- androidx.customview:customview-poolingcontainer:1.0.0-beta01
-|    |    |    |    |    |    +--- androidx.core:core-ktx:1.5.0 -> 1.8.0-alpha06 (*)
-|    |    |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.6.21 (*)
+|    |    |    |    |    +--- androidx.customview:customview-poolingcontainer:1.0.0-beta01 (*)
 |    |    |    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.3.0 -> 2.4.0
 |    |    |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.4.0 (*)
 |    |    |    |    |    |    \--- androidx.annotation:annotation:1.1.0 -> 1.3.0
@@ -397,7 +401,9 @@ debugUnitTestRuntimeClasspath - Runtime classpath of compilation 'debugUnitTest'
 +--- androidx.compose.material:material:1.2.0-beta01 (*)
 +--- androidx.compose.runtime:runtime:1.2.0-beta01 (*)
 +--- androidx.compose.ui:ui-tooling:1.2.0-beta01 (*)
-\--- androidx.compose.ui:ui:1.2.0-beta01 (*)
++--- androidx.compose.ui:ui:1.2.0-beta01 (*)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1 (*)
+\--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1 (*)
 
 (c) - dependency constraint
 (*) - dependencies omitted (listed previously)

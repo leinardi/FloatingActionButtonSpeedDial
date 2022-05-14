@@ -44,49 +44,71 @@ class ViewActivity : BaseUseCaseActivity() {
 
     private fun initSpeedDial(addActionItems: Boolean) {
         if (addActionItems) {
-            speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_no_label, R.drawable
-                    .ic_link_white_24dp)
-                    .create())
+            speedDialView.addActionItem(
+                SpeedDialActionItem.Builder(
+                    R.id.fab_no_label, R.drawable
+                        .ic_link_white_24dp,
+                )
+                    .create(),
+            )
 
             var drawable = AppCompatResources.getDrawable(this@ViewActivity, R.drawable.ic_custom_color)
-            val fabWithLabelView = speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id
-                    .fab_custom_color, drawable)
+            val fabWithLabelView = speedDialView.addActionItem(
+                SpeedDialActionItem.Builder(
+                    R.id
+                        .fab_custom_color, drawable,
+                )
                     .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.inbox_primary, theme))
                     .setLabel(R.string.label_custom_color)
                     .setLabelColor(Color.WHITE)
-                    .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.inbox_primary,
-                            theme))
-                    .create())
+                    .setLabelBackgroundColor(
+                        ResourcesCompat.getColor(
+                            resources, R.color.inbox_primary,
+                            theme,
+                        ),
+                    )
+                    .create(),
+            )
             fabWithLabelView?.apply {
                 speedDialActionItem = speedDialActionItemBuilder
-                        .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.material_white_1000, theme))
-                        .create()
+                    .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.material_white_1000, theme))
+                    .create()
             }
 
-            speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_long_label, R.drawable
-                    .ic_lorem_ipsum)
+            speedDialView.addActionItem(
+                SpeedDialActionItem.Builder(
+                    R.id.fab_long_label, R.drawable
+                        .ic_lorem_ipsum,
+                )
                     .setFabSize(FloatingActionButton.SIZE_NORMAL)
                     .setLabel(getString(R.string.lorem_ipsum))
-                    .create())
+                    .create(),
+            )
 
             drawable = AppCompatResources.getDrawable(this@ViewActivity, R.drawable.ic_add_white_24dp)
-            speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_add_action, drawable)
+            speedDialView.addActionItem(
+                SpeedDialActionItem.Builder(R.id.fab_add_action, drawable)
                     .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.material_green_500, theme))
                     .setLabel(R.string.label_add_action)
                     .setLabelBackgroundColor(Color.TRANSPARENT)
-                    .create())
+                    .create(),
+            )
 
-            speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_custom_theme, R.drawable
-                    .ic_theme_white_24dp)
+            speedDialView.addActionItem(
+                SpeedDialActionItem.Builder(
+                    R.id.fab_custom_theme, R.drawable
+                        .ic_theme_white_24dp,
+                )
                     .setLabel(getString(R.string.label_custom_theme))
                     .setTheme(R.style.Theme_MyApp_Purple)
-                    .create())
+                    .create(),
+            )
         }
 
         // Set main action clicklistener.
         speedDialView.setOnChangeListener(object : SpeedDialView.OnChangeListener {
             override fun onMainActionSelected(): Boolean {
-                showToast("Main action clicked!")
+                showToast(getString(R.string.main_action_clicked))
                 return false  // True to keep the Speed Dial open
             }
 
@@ -99,7 +121,7 @@ class ViewActivity : BaseUseCaseActivity() {
         speedDialView.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.fab_no_label -> {
-                    showToast("No label action clicked!\nClosing with animation")
+                    showToast(getString(R.string.no_action_clicked))
                     speedDialView.close()  // To close the Speed Dial with animation
                     return@OnActionSelectedListener true  // false will close it without animation
                 }
@@ -110,20 +132,36 @@ class ViewActivity : BaseUseCaseActivity() {
                     return@OnActionSelectedListener false
                 }
                 R.id.fab_custom_theme -> showToast(actionItem.getLabel(this@ViewActivity) + " clicked!")
-                R.id.fab_add_action -> speedDialView.addActionItem(SpeedDialActionItem.Builder(R.id.fab_replace_action,
-                        R.drawable.ic_replace_white_24dp)
-                        .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color
-                                .material_orange_500,
-                                theme))
+                R.id.fab_add_action -> speedDialView.addActionItem(
+                    SpeedDialActionItem.Builder(
+                        R.id.fab_replace_action,
+                        R.drawable.ic_replace_white_24dp,
+                    )
+                        .setFabBackgroundColor(
+                            ResourcesCompat.getColor(
+                                resources, R.color
+                                    .material_orange_500,
+                                theme,
+                            ),
+                        )
                         .setLabel(getString(R.string.label_replace_action))
-                        .create(), ADD_ACTION_POSITION)
-                R.id.fab_replace_action -> speedDialView.replaceActionItem(SpeedDialActionItem.Builder(R.id
-                        .fab_remove_action,
-                        R.drawable.ic_delete_white_24dp)
+                        .create(), ADD_ACTION_POSITION,
+                )
+                R.id.fab_replace_action -> speedDialView.replaceActionItem(
+                    SpeedDialActionItem.Builder(
+                        R.id
+                            .fab_remove_action,
+                        R.drawable.ic_delete_white_24dp,
+                    )
                         .setLabel(getString(R.string.label_remove_action))
-                        .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.inbox_accent,
-                                theme))
-                        .create(), ADD_ACTION_POSITION)
+                        .setFabBackgroundColor(
+                            ResourcesCompat.getColor(
+                                resources, R.color.inbox_accent,
+                                theme,
+                            ),
+                        )
+                        .create(), ADD_ACTION_POSITION,
+                )
                 R.id.fab_remove_action -> speedDialView.removeActionItemById(R.id.fab_remove_action)
             }
             true  // To keep the Speed Dial open

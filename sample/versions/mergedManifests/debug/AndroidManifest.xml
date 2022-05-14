@@ -13,9 +13,11 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
--->
+  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.leinardi.android.speeddial.sample.debug" >
+    package="com.leinardi.android.speeddial.sample.debug"
+    
+     >
 
     <uses-sdk
         android:minSdkVersion="21"

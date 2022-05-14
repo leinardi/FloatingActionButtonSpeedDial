@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Roberto Leinardi.
+ * Copyright 2022 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,6 @@ ext {
 
 android {
     defaultConfig {
-        versionCode config.android.version_code
-        versionName config.android.version_name
         minSdk config.android.minSdkCompose
         consumerProguardFiles 'consumer-proguard-rules.pro'
     }
@@ -71,9 +69,12 @@ kotlin {
     }
 }
 dependencies {
+    implementation libs.androidx.appcompat
     implementation libs.androidx.compose.material
     implementation libs.androidx.compose.runtime
     implementation libs.androidx.compose.tooling
     implementation libs.androidx.compose.ui
     implementation libs.androidx.core.ktx
+    debugApi libs.androidx.customview  // Workaround for https://issuetracker.google.com/issues/227767363
+    debugApi libs.androidx.customview.poolingcontainer  // Workaround for https://issuetracker.google.com/issues/227767363
 }

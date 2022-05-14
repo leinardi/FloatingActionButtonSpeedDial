@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    versionCatalogs {
-        libs {
-            from(files("../gradle/libs.versions.toml"))
+package com.leinardi.android.speeddial.sample.interactor
+
+import android.content.Context
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatDelegate
+
+class ToggleNightModeInteractor {
+    operator fun invoke(context: Context) {
+        val nightModeFlats = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (nightModeFlats == Configuration.UI_MODE_NIGHT_NO) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 }

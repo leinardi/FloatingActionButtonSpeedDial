@@ -13,23 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
+
+package com.leinardi.android.speeddial.sample.interactor
+
+import android.content.Context
+
+class GetVersionInteractor {
+    operator fun invoke(context: Context): String {
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+        return packageInfo?.versionName ?: "Undefined"
     }
 }
-
-rootProject.name = "FloatingActionButtonSpeedDial"
-
-includeBuild("build-conventions")
-
-include(
-        // Libs
-        ':library-compose',
-        ':library-view',
-
-        // Apps
-        ':sample',
-        )

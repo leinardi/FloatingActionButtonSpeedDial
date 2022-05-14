@@ -36,10 +36,12 @@
     <string name="label_remove_action">Rimuovi action</string>
     <string name="label_replace_action">Sostituisci action</string>
     <string name="left">Sinistra</string>
+    <string name="main_action_clicked">Main action cliccato!</string>
     <string name="main_fab_color">Colore Main FAB</string>
     <string name="main_fab_color_close">Colore Main FAB chiuso</string>
     <string name="main_fab_color_open">Colore Main FAB aperto</string>
     <string name="ninety_degrees">90 gradi</string>
+    <string name="no_action_clicked">No label action cliccliccatoked!</string>
     <string name="none">Nessuno</string>
     <string name="one_hundred_eighty_degrees">180 gradi</string>
     <string name="orange">Arancione</string>
@@ -47,6 +49,7 @@
     <string name="purple">Viola</string>
     <string name="right">Destra</string>
     <string name="rotation_angle">Angolo rotazione</string>
+    <string name="test_snackbar">Test Snackbar</string>
     <string name="top">Alto</string>
     <string name="use_case_1">Setup minimo</string>
     <string name="white">Bianco</string>

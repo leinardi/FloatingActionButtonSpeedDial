@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Roberto Leinardi.
+ * Copyright 2022 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,4 +75,6 @@ dependencies {
     implementation libs.androidx.compose.runtime
     implementation libs.androidx.compose.tooling
     implementation libs.androidx.compose.ui
+    implementation libs.coroutines.core
+    implementation libs.coroutines.android
 }

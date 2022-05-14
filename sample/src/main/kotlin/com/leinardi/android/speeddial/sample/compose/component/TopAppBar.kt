@@ -84,6 +84,7 @@ fun TopAppBar(
                 }
             },
             actions = actions,
+            backgroundColor = MaterialTheme.colors.primary,
             elevation = elevation,
         )
         if (titleCentered) {

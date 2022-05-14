@@ -347,7 +347,7 @@
   enabled: false # Custom
 # Inspection that checks if local variables are declared close to the first usage site
 - name: LOCAL_VARIABLE_EARLY_DECLARATION
-  enabled: true
+  enabled: false # Custom
 # Try to avoid initialize val by null (e.g. val a: Int? = null -> val a: Int = 0)
 - name: NULLABLE_PROPERTY_TYPE
   enabled: false # Custom
