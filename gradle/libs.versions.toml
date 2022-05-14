@@ -147,6 +147,7 @@ plugin-google-services = { module = "com.google.gms:google-services", version = 
 plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 plugin-jdkdesugar = { module = "com.android.tools:desugar_jdk_libs", version = "1.1.5" }
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-publish = { module = "io.github.gradle-nexus:publish-plugin", version = "1.1.0" }
 plugin-ruler = { module = "com.spotify.ruler:ruler-gradle-plugin", version = "1.2.0" }
 plugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version = "5.15.0" }
 plugin-versionsgradle = { module = "com.github.ben-manes:gradle-versions-plugin", version = "0.39.0" }

@@ -80,7 +80,7 @@ fun SpeedDial(
     val itemScope = SpeedDialItemScope()
     val transition: Transition<SpeedDialState> = updateTransition(targetState = state, label = "SpeedDialStateTransition")
     val rotation: Float by transition.animateFloat(label = "SpeedDialStateRotation") { speedDialState ->
-        if (speedDialState == SpeedDialState.Expanded) fabAnimationRotateAngle else 0f
+        if (speedDialState.isExpanded()) fabAnimationRotateAngle else 0f
     }
 
     Column(
@@ -97,7 +97,7 @@ fun SpeedDial(
             val animationOutSpecFloat: FiniteAnimationSpec<Float> = tween(delayMillis = contentAnimationDelayInMillis * index)
 
             AnimatedVisibility(
-                visible = state == SpeedDialState.Expanded,
+                visible = state.isExpanded(),
                 enter = fadeIn(animationInSpecFloat) + slideInVertically(animationInSpecIntOffset) { it / 2 },
                 exit = if (reverseAnimationOnClose) {
                     fadeOut(animationOutSpecFloat) + slideOutVertically(animationOutSpecIntOffset) { it / 2 }

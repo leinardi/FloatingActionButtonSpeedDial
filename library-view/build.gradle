@@ -16,18 +16,20 @@
 
 plugins {
     id 'speeddial.android-library-conventions'
+    id 'speeddial.artifact-publish-library-conventions'
     alias(libs.plugins.errorprone)
     //    alias(libs.plugins.checkstyle) // TODO
 }
 
 ext {
     PUBLISH_GROUP_ID = 'com.leinardi.android'
-    PUBLISH_VERSION = config.android.version_name
+    PUBLISH_VERSION = config.android.version_name_view
     PUBLISH_ARTIFACT_ID = 'speed-dial'
 }
 
 android {
     defaultConfig {
+        versionName config.android.version_name_view
         consumerProguardFiles 'consumer-proguard-rules.pro'
     }
 }

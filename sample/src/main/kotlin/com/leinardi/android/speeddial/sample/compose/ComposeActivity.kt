@@ -74,6 +74,7 @@ import com.leinardi.android.speeddial.sample.interactor.GetVersionInteractor
 import com.leinardi.android.speeddial.sample.interactor.ToggleNightModeInteractor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Sample compose project
@@ -92,9 +93,9 @@ class ComposeActivity : AppCompatActivity() {  // AppCompatActivity is needed to
 @Composable
 fun MainContent() {
     var speedDialState by rememberSaveable { mutableStateOf(SpeedDialState.Collapsed) }
-    var speedDialVisibile by rememberSaveable { mutableStateOf(true) }
+    var speedDialVisible by rememberSaveable { mutableStateOf(true) }
     var reverseAnimationOnClose by rememberSaveable { mutableStateOf(false) }
-    var overlayVisibile: Boolean by rememberSaveable { mutableStateOf(speedDialState == SpeedDialState.Expanded) }
+    var overlayVisible: Boolean by rememberSaveable { mutableStateOf(speedDialState.isExpanded()) }
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -112,7 +113,7 @@ fun MainContent() {
                     elevation = AppBarDefaults.TopAppBarElevation,
                 ) {
                     IconButton(
-                        onClick = { speedDialVisibile = !speedDialVisibile },
+                        onClick = { speedDialVisible = !speedDialVisible },
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_show_white_24dp),
@@ -151,17 +152,17 @@ fun MainContent() {
             }
         },
         floatingActionButton = {
-            var replaceActionVisibile by rememberSaveable { mutableStateOf(false) }
+            var replaceActionVisible by rememberSaveable { mutableStateOf(false) }
             var deleteActionVisibility by rememberSaveable { mutableStateOf(false) }
             AnimatedVisibility(
-                visible = speedDialVisibile,
+                visible = speedDialVisible,
                 enter = scaleIn(),
                 exit = scaleOut(),
             ) {
                 SpeedDial(
                     state = speedDialState,
                     onFabClick = { expanded ->
-                        overlayVisibile = !expanded
+                        overlayVisible = !expanded
                         speedDialState = SpeedDialState(!expanded)
                         if (expanded) {
                             showToast(context, context.getString(R.string.main_action_clicked))
@@ -227,7 +228,7 @@ fun MainContent() {
                     }
                     item {
                         FabWithLabel(
-                            onClick = { replaceActionVisibile = true },
+                            onClick = { replaceActionVisible = true },
                             labelContent = { Text(stringResource(R.string.label_add_action)) },
                             labelBackgroundColor = Color.Transparent,
                             labelContainerElevation = 0.dp,
@@ -240,11 +241,11 @@ fun MainContent() {
                             )
                         }
                     }
-                    if (replaceActionVisibile) {
+                    if (replaceActionVisible) {
                         item {
                             FabWithLabel(
                                 onClick = {
-                                    replaceActionVisibile = false
+                                    replaceActionVisible = false
                                     deleteActionVisibility = true
                                 },
                                 labelContent = { Text(stringResource(R.string.label_replace_action)) },
@@ -301,7 +302,9 @@ fun MainContent() {
                 repeat(60) { index ->
                     item {
                         Surface(
-                            modifier = Modifier.clickable { },
+                            modifier = Modifier.clickable {
+                                Timber.d("Element $index  clicked.")
+                            },
                         ) {
                             Text(
                                 text = "This is element #$index",
@@ -314,9 +317,9 @@ fun MainContent() {
                 }
             }
             SpeedDialOverlay(
-                visible = overlayVisibile,
+                visible = overlayVisible,
                 onClick = {
-                    overlayVisibile = false
+                    overlayVisible = false
                     speedDialState = speedDialState.toggle()
                 },
             )

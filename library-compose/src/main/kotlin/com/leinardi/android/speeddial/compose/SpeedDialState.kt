@@ -32,6 +32,7 @@ enum class SpeedDialState {
     Expanded;
 
     fun toggle(): SpeedDialState = if (this == Expanded) Collapsed else Expanded
+    fun isExpanded() = this == Expanded
 }
 
 /**

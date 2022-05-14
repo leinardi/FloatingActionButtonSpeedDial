@@ -19,16 +19,18 @@ plugins {
     id 'kotlin-kapt'
     id 'speeddial.android-library-conventions'
     id 'speeddial.detekt-conventions'
+    id 'speeddial.artifact-publish-library-conventions'
 }
 
 ext {
     PUBLISH_GROUP_ID = 'com.leinardi.android'
-    PUBLISH_VERSION = config.android.version_name
+    PUBLISH_VERSION = config.android.version_name_compose
     PUBLISH_ARTIFACT_ID = 'speed-dial.compose'
 }
 
 android {
     defaultConfig {
+        versionName config.android.version_name_compose
         minSdk config.android.minSdkCompose
         consumerProguardFiles 'consumer-proguard-rules.pro'
     }

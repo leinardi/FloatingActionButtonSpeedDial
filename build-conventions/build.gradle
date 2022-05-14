@@ -34,6 +34,7 @@ dependencies {
     implementation libs.plugin.google.services
     implementation libs.plugin.hilt
     implementation libs.plugin.kotlin
+    implementation libs.plugin.publish
     implementation libs.plugin.ruler
     implementation libs.plugin.spotless
     implementation libs.plugin.versionsgradle

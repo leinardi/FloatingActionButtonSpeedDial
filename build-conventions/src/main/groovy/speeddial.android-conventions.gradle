@@ -19,7 +19,6 @@ android {
 
     defaultConfig {
         versionCode config.android.version_code
-        versionName config.android.version_name
         minSdk config.android.minSdk
         targetSdk config.android.targetSdk
     }

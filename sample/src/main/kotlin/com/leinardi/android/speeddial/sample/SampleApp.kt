@@ -14,26 +14,16 @@
  * limitations under the License.
  */
 
-// https://docs.gradle.org/7.0/userguide/declaring_dependencies.html#sec:type-safe-project-accessors
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+package com.leinardi.android.speeddial.sample
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
+import android.app.Application
+import timber.log.Timber
+
+class SampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
-
-rootProject.name = "FloatingActionButtonSpeedDial"
-
-includeBuild("build-conventions")
-
-include(
-        // Libs
-        ':library-compose',
-        ':library-view',
-
-        // Apps
-        ':sample',
-        )

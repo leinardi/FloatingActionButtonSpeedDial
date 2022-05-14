@@ -32,6 +32,7 @@ plugins {
     id 'speeddial.versions-conventions'
     id 'speeddial.dependency-graph-conventions'
     id 'speeddial.violation-comments-to-github-conventions'
+    id 'speeddial.artifact-publish-root-conventions'
     alias(libs.plugins.gradledoctor)
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)

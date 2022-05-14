@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-apply plugin: 'io.github.gradle-nexus.publish-plugin'
+
+plugins {
+    id 'io.github.gradle-nexus.publish-plugin'
+}
 
 // Create variables with empty default values
-if (!project.hasProperty("ossrhUsername")){
+if (!project.hasProperty("ossrhUsername")) {
     ext["ossrhUsername"] = ''
 }
-if (!project.hasProperty("ossrhPassword")){
+if (!project.hasProperty("ossrhPassword")) {
     ext["ossrhPassword"] = ''
 }
-if (!project.hasProperty("sonatypeStagingProfileId")){
+if (!project.hasProperty("sonatypeStagingProfileId")) {
     ext["sonatypeStagingProfileId"] = ''
 }
-if (!project.hasProperty("signing.keyId")){
+if (!project.hasProperty("signing.keyId")) {
     ext["signing.keyId"] = ''
 }
-if (!project.hasProperty("signing.password")){
+if (!project.hasProperty("signing.password")) {
     ext["signing.password"] = ''
 }
-if (!project.hasProperty("signing.secretKeyRingFile")){
+if (!project.hasProperty("signing.secretKeyRingFile")) {
     ext["signing.secretKeyRingFile"] = ''
 }
 
@@ -64,3 +67,4 @@ nexusPublishing {
         }
     }
 }
+
