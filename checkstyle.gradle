@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Roberto Leinardi.
+ * Copyright 2022 Roberto Leinardi.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.leinardi.android.checkstyle'
+apply plugin: 'com.leinardi.android.checkstyle' // TODO
 
 checkstyle {
     ignoreFailures = false // Whether this task will ignore failures and continue running the build.

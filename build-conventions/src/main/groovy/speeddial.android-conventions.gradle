@@ -1,0 +1,69 @@
+/*
+ * Copyright 2022 Roberto Leinardi.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+android {
+    compileSdk config.android.compileSdk
+
+    defaultConfig {
+        versionCode config.android.version_code
+        minSdk config.android.minSdk
+        targetSdk config.android.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility config.android.javaVersion
+        targetCompatibility config.android.javaVersion
+    }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        animationsDisabled = true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+            all {
+                jvmArgs '-noverify'
+            }
+        }
+    }
+    lintOptions {
+        abortOnError true
+        checkAllWarnings false
+        checkDependencies true
+        checkReleaseBuilds false
+        ignoreTestSources true
+        warningsAsErrors false
+        disable 'ResourceType'
+        lintConfig file("${project.rootDir}/config/lint/lint.xml")
+    }
+    packagingOptions {
+        resources {
+            // Use this block to exclude conflicting files that breaks your APK assemble task
+            // exclude "META-INF/AL2.0"
+        }
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "skipped", "failed"
+    }
+}
+
+dependencies {
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.runner
+    androidTestUtil libs.androidx.test.orchestrator
+}

@@ -21,19 +21,19 @@ Put an x inside the [] like this: [x] to mark the checkbox.
   2. _____
   3. _____
 
-<!-- 
+<!--
 What happened?  This could be a description, log output, etc.
 -->
 #### Observed Results:
 
-  * 
-  
-<!-- 
+  *
+
+<!--
 What did you expect to happen?
 -->
 #### Expected Results:
 
-  * 
+  *
 
 #### Relevant Code:
 <!--

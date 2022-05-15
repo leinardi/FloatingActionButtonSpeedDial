@@ -1,0 +1,5 @@
+# Configuration File for Prettier formatter used when running Spotless.
+# More information about config file: https://prettier.io/docs/en/configuration.html
+# List of rules which can be configured here: https://prettier.io/docs/en/options.html
+tabWidth: 2
+singleQuote: true

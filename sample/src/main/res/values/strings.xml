@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2021 Roberto Leinardi.
+  ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
     <string name="action_toggle_reverse_animation">Toggle reverse animation on close</string>
     <string name="action_use_cases">Use cases</string>
     <string name="app_name">FAB Speed Dial Sample</string>
+    <string name="app_name_compose">FAB Speed Dial Sample Compose</string>
     <string name="app_version">v%1$s</string>
     <string name="bottom">Bottom</string>
     <string name="close_speed_dial_menu">Close Speed Dial menu</string>
@@ -35,10 +36,13 @@
     <string name="label_remove_action">Remove action</string>
     <string name="label_replace_action">Replace action</string>
     <string name="left">Left</string>
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="main_action_clicked">Main action clicked!</string>
     <string name="main_fab_color">Main FAB color</string>
     <string name="main_fab_color_close">Main FAB color close</string>
     <string name="main_fab_color_open">Main FAB color open</string>
     <string name="ninety_degrees">90 degrees</string>
+    <string name="no_action_clicked">No label action clicked!\nClosing with animation!</string>
     <string name="none">None</string>
     <string name="one_hundred_eighty_degrees">180 degrees</string>
     <string name="orange">Orange</string>
@@ -46,6 +50,7 @@
     <string name="purple">Purple</string>
     <string name="right">Right</string>
     <string name="rotation_angle">Rotation angle</string>
+    <string name="test_snackbar">Test snackbar</string>
     <string name="top">Top</string>
     <string name="use_case_1">Minimal setup</string>
     <string name="white">White</string>
