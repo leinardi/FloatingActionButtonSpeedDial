@@ -1,8 +1,8 @@
 # Floating Action Button Speed Dial
-
-![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)
-[![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg?style=plastic)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
-[![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg?style=plastic)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE)
+![Maven Central Compose](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial.compose?label=Compose)
+![Maven Central View](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial?label=View)
+[![Travis](https://img.shields.io/travis/leinardi/FloatingActionButtonSpeedDial/master.svg)](https://travis-ci.org/leinardi/FloatingActionButtonSpeedDial)
+[![GitHub license](https://img.shields.io/github/license/leinardi/FloatingActionButtonSpeedDial.svg)](https://github.com/leinardi/FloatingActionButtonSpeedDial/blob/master/LICENSE)
 [![Stars](https://img.shields.io/github/stars/leinardi/FloatingActionButtonSpeedDial.svg?style=social&label=Stars)](https://github.com/leinardi/FloatingActionButtonSpeedDial/stargazers)
 
 
@@ -34,14 +34,14 @@ for both classic View and Compose.
 
 The library is available on Jcenter so no additional repository is required.
 
-Dependencies entry (latest version on Maven Central ![Maven Central](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial)):
+Dependencies entry (latest version on Maven Central ![Maven Central Compose](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial.compose?label=Compose) ![Maven Central View](https://img.shields.io/maven-central/v/com.leinardi.android/speed-dial?label=View)):
 
 ```groovy
-// Classic View only
-implementation "com.leinardi.android:speed-dial:3.3.0"
-
 // Compose only
 implementation "com.leinardi.android:speed-dial.compose:1.0.0-alpha01"
+
+// Classic View only
+implementation "com.leinardi.android:speed-dial:3.3.0"
 ```
 
 #### Snapshots (development branch)
