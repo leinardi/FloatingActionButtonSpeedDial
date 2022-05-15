@@ -123,7 +123,10 @@ fun SpeedDial(
                 contentColor = fabOpenedContentColor,
                 elevation = fabElevation,
                 content = {
-                    Box(modifier = Modifier.rotate(-fabAnimationRotateAngle)) {
+                    Box(
+                        modifier = Modifier.rotate(-fabAnimationRotateAngle),
+                        propagateMinConstraints = true,
+                    ) {
                         fabOpenedContent()
                     }
                 },

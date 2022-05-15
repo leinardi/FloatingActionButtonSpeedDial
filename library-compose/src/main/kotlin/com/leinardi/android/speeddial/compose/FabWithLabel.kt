@@ -73,8 +73,8 @@ fun FabWithLabel(
                 elevation = labelContainerElevation,
             ) {
                 Box(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                    propagateMinConstraints = true,
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.subtitle2) {
                         CompositionLocalProvider(
