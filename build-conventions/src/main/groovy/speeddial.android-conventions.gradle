@@ -49,28 +49,8 @@ android {
     }
     packagingOptions {
         resources {
-            exclude '.readme'
-            exclude 'LICENSE.txt'
-            exclude 'fabric/*.properties'
-            // Exclude the Firebase/Fabric/other random properties files
-            exclude '/*.properties'
-            // Exclude AndroidX version files
-            exclude 'META-INF/*.version'
-            // Exclude consumer proguard files
-            exclude 'META-INF/proguard/*'
-            exclude 'META-INF/*.properties'
-            exclude 'META-INF/LICENSE.txt'
-            exclude 'META-INF/MANIFEST.MF'
-            exclude 'META-INF/NOTICE.txt'
-            exclude "META-INF/AL2.0"
-            exclude "META-INF/LGPL2.1"
-            exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
-            exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
-            exclude 'META-INF/*.kotlin_module'
-            // for byte-buddy
-            exclude "META-INF/licenses/ASM"
-            pickFirst "win32-x86-64/attach_hotspot_windows.dll"
-            pickFirst "win32-x86/attach_hotspot_windows.dll"
+            // Use this block to exclude conflicting files that breaks your APK assemble task
+            // exclude "META-INF/AL2.0"
         }
     }
 }
