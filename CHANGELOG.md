@@ -1,5 +1,8 @@
 # Change Log
 
+## Compose [1.0.0-alpha02] - 2022-05-15
+- Fixed access to top-members of the AAR (more info here: https://stackoverflow.com/q/72244263/293878)
+
 ## Compose [1.0.0-alpha01] - 2022-05-14
 - First release of SpeedDial for Compose
 

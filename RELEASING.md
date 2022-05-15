@@ -3,7 +3,7 @@
 1. Bump the `build_versions.version_name_*` property in `speeddial.config-conventions.gradle` based on Major.Minor.Patch naming scheme
 2. Update `CHANGELOG.md` for the impending release.
 3. Update the `README.md` with the new version.
-4. `git commit -am "Prepare for release X.Y.Z"` (where X.Y.Z is the version you set in step 1)
+4. `git commit -am "Prepare for release View|Compose X.Y.Z"` (where X.Y.Z is the version you set in step 1)
 5. `git push`
 6. `./gradlew clean assembleRelease`
 7. `./gradlew :library-view:publishReleasePublicationToSonatypeRepository`
