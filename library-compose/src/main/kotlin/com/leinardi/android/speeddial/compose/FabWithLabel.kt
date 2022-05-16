@@ -53,16 +53,16 @@ fun FabWithLabel(
     labelContainerElevation: Dp = 2.dp,
     fabShape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
     fabElevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
-    fabSize: Dp = 40.dp,
+    fabSize: Dp = SpeedDialMiniFabSize,
     fabBackgroundColor: Color = MaterialTheme.colors.primary,
     fabContentColor: Color = contentColorFor(fabBackgroundColor),
     fabContent: @Composable () -> Unit,
 ) {
     Row(
         modifier = Modifier
-            .padding(end = (56.dp - fabSize) / 2)
+            .padding(end = (SpeedDialFabSize - fabSize) / 2)
             .then(modifier),
-        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy((SpeedDialFabSize - fabSize) / 2 + 16.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (labelContent != null) {

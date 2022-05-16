@@ -171,6 +171,7 @@ fun MainContent() {
                     fabOpenedContent = { Icon(Icons.Default.Edit, null) },
                     fabClosedContent = { Icon(Icons.Default.Add, null) },
                     fabAnimationRotateAngle = 90f,
+                    labelContent = { Text("Close") },
                     reverseAnimationOnClose = reverseAnimationOnClose,
                 ) {
                     item {
@@ -221,7 +222,7 @@ fun MainContent() {
                             fabSize = 56.dp,
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.ic_custom_color),
+                                painter = painterResource(R.drawable.ic_lorem_ipsum),
                                 contentDescription = null,
                             )
                         }
