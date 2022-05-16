@@ -1,5 +1,8 @@
 # Change Log
 
+## Compose [1.0.0-alpha03] - 2022-05-16
+- Added optional label to main FAB
+
 ## Compose [1.0.0-alpha02] - 2022-05-15
 - Fixed access to top-members of the AAR (more info here: https://stackoverflow.com/q/72244263/293878)
 
