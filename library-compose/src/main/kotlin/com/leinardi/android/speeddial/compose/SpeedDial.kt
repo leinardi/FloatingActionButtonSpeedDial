@@ -30,14 +30,20 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.Card
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.FloatingActionButtonElevation
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
@@ -46,6 +52,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,9 +60,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun SpeedDial(
@@ -72,6 +81,10 @@ fun SpeedDial(
     fabOpenedContent: @Composable () -> Unit = { Icon(Icons.Default.Close, null) },
     fabOpenedBackgroundColor: Color = MaterialTheme.colors.secondary,
     fabOpenedContentColor: Color = contentColorFor(fabOpenedBackgroundColor),
+    labelContent: @Composable (() -> Unit)? = null,
+    labelBackgroundColor: Color = MaterialTheme.colors.surface,
+    labelMaxWidth: Dp = 160.dp,
+    labelContainerElevation: Dp = 2.dp,
     reverseAnimationOnClose: Boolean = false,
     contentAnimationDelayInMillis: Int = 20,
     content: SpeedDialScope.() -> Unit = {},
@@ -109,41 +122,75 @@ fun SpeedDial(
             }
         }
 
-        // Main FAB
-        val fabModifier = Modifier
-            .padding(top = 8.dp)
-            .rotate(rotation)
-
-        when (state) {
-            SpeedDialState.Expanded -> FloatingActionButton(
-                onClick = { onFabClick(true) },
-                modifier = fabModifier,
-                shape = fabShape,
-                backgroundColor = fabOpenedBackgroundColor,
-                contentColor = fabOpenedContentColor,
-                elevation = fabElevation,
-                content = {
+        Row(
+            modifier = Modifier.padding(top = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AnimatedVisibility(
+                visible = labelContent != null && state.isExpanded(),
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Card(
+                    modifier = Modifier.widthIn(max = labelMaxWidth),
+                    onClick = { onFabClick(state.isExpanded()) },
+                    backgroundColor = labelBackgroundColor,
+                    elevation = labelContainerElevation,
+                ) {
                     Box(
-                        modifier = Modifier.rotate(-fabAnimationRotateAngle),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         propagateMinConstraints = true,
                     ) {
-                        fabOpenedContent()
+                        ProvideTextStyle(value = MaterialTheme.typography.subtitle2) {
+                            CompositionLocalProvider(
+                                LocalContentAlpha provides ContentAlpha.high,
+                                content = checkNotNull(labelContent),
+                            )
+                        }
                     }
-                },
-            )
-            SpeedDialState.Collapsed -> FloatingActionButton(
-                onClick = { onFabClick(false) },
-                modifier = fabModifier,
-                shape = fabShape,
-                backgroundColor = fabClosedBackgroundColor,
-                contentColor = fabClosedContentColor,
-                elevation = fabElevation,
-                content = fabClosedContent,
-            )
+                }
+            }
+
+            when (state) {
+                SpeedDialState.Expanded -> FloatingActionButton(
+                    onClick = { onFabClick(true) },
+                    shape = fabShape,
+                    backgroundColor = fabOpenedBackgroundColor,
+                    contentColor = fabOpenedContentColor,
+                    elevation = fabElevation,
+                    content = {
+                        Box(
+                            modifier = Modifier
+                                .rotate(-fabAnimationRotateAngle)
+                                .rotate(rotation),
+                            propagateMinConstraints = true,
+                        ) {
+                            fabOpenedContent()
+                        }
+                    },
+                )
+                SpeedDialState.Collapsed -> FloatingActionButton(
+                    onClick = { onFabClick(false) },
+                    shape = fabShape,
+                    backgroundColor = fabClosedBackgroundColor,
+                    contentColor = fabClosedContentColor,
+                    elevation = fabElevation,
+                    content = {
+                        Box(
+                            modifier = Modifier.rotate(rotation),
+                            propagateMinConstraints = true,
+                        ) {
+                            fabClosedContent()
+                        }
+                    },
+                )
+            }
         }
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -156,6 +203,7 @@ fun PreviewSpeedDialCollapsed() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -177,6 +225,7 @@ fun PreviewSpeedDialExpandedWithActions() {
         SpeedDial(
             state = SpeedDialState.Expanded,
             onFabClick = {},
+            labelContent = { Text("Close") },
         ) {
             item {
                 FabWithLabel(
@@ -196,3 +245,6 @@ fun PreviewSpeedDialExpandedWithActions() {
         }
     }
 }
+
+val SpeedDialFabSize = 56.dp
+val SpeedDialMiniFabSize = 40.dp

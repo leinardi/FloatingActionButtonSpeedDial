@@ -38,7 +38,7 @@ Dependencies entry (latest version on Maven Central ![Maven Central Compose](htt
 
 ```groovy
 // Compose only
-implementation "com.leinardi.android:speed-dial.compose:1.0.0-alpha02"
+implementation "com.leinardi.android:speed-dial.compose:1.0.0-alpha03"
 
 // Classic View only
 implementation "com.leinardi.android:speed-dial:3.3.0"

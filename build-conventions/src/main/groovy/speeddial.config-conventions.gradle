@@ -24,8 +24,8 @@ ext.config = [
         'targetSdk'    : 31,
         'version_code' : commitCount.isNumber() ? commitCount as int : 0,
         'version_name_view' : '3.3.0',
-        'version_name_compose' : '1.0.0-alpha01',
-        'version_name_sample' : '4.0.0',
+        'version_name_compose' : '1.0.0-alpha03',
+        'version_name_sample' : '4.1.0',
     ],
 
     params : [

@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -55,6 +56,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -171,6 +173,7 @@ fun MainContent() {
                     fabOpenedContent = { Icon(Icons.Default.Edit, null) },
                     fabClosedContent = { Icon(Icons.Default.Add, null) },
                     fabAnimationRotateAngle = 90f,
+                    labelContent = { Text("Close") },
                     reverseAnimationOnClose = reverseAnimationOnClose,
                 ) {
                     item {
@@ -221,7 +224,7 @@ fun MainContent() {
                             fabSize = 56.dp,
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.ic_custom_color),
+                                painter = painterResource(R.drawable.ic_lorem_ipsum),
                                 contentDescription = null,
                             )
                         }
@@ -308,7 +311,9 @@ fun MainContent() {
                         ) {
                             Text(
                                 text = "This is element #$index",
+                                style = MaterialTheme.typography.body1,
                                 modifier = Modifier
+                                    .alpha(ContentAlpha.medium)
                                     .fillMaxWidth()
                                     .padding(16.dp),
                             )
