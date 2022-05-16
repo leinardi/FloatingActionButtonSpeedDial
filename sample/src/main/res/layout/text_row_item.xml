@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textAppearance="?android:textAppearanceMedium"
+        android:alpha="0.74"
+        android:textSize="16.sp"
         tools:text="An element" />
 </FrameLayout>
