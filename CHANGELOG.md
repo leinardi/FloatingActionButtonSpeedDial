@@ -1,6 +1,6 @@
 # Change Log
 
--Added some ProvidableCompositionLocals and improved Compose sample
+- Added some ProvidableCompositionLocals and improved Compose sample
 
 ## Compose [1.0.0-alpha04] - 2022-05-17
 
