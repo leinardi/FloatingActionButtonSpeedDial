@@ -16,6 +16,10 @@
 
 package com.leinardi.android.speeddial.compose
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
+
 /**
  * Enum that represents possible SpeedDial states.
  */
@@ -41,4 +45,4 @@ enum class SpeedDialState {
  * @param value whether the SpeedDialState is Expanded or Collapsed
  */
 
-fun SpeedDialState(value: Boolean): SpeedDialState = if (value) SpeedDialState.Expanded else SpeedDialState.Collapsed
+val LocalSpeedDialState: ProvidableCompositionLocal<MutableState<SpeedDialState>> = compositionLocalOf { error("No SpeedDialState provided") }

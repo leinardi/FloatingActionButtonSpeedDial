@@ -53,6 +53,9 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -189,6 +192,8 @@ fun SpeedDial(
         }
     }
 }
+
+val LocalSpeedDialTag: ProvidableCompositionLocal<MutableState<Any>> = compositionLocalOf { error("No SpeedDialTag provided") }
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
