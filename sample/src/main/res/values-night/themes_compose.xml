@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +14,7 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_use_case_1"
-        android:icon="@drawable/ic_use_case_white_24dp"
-        android:title="@string/use_case_1" />
-</menu>
+<resources>
+    <!-- Allows us to override platform level specific attributes in their respective values-vXX folder. -->
+    <style name="Theme.Platform.MyAppCompose" parent="Theme.Material3.DayNight.NoActionBar" />
+</resources>

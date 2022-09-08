@@ -14,19 +14,17 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <style name="Theme.Platform.MyAppCompose" parent="Theme.AppCompat.DayNight.NoActionBar" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Allows us to override platform level specific attributes in their respective values-vXX folder. -->
+    <style name="Theme.Platform.MyAppCompose" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <style name="Theme.Base.MyAppCompose" parent="Theme.Platform.MyAppCompose">
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="M">?attr/isLightTheme</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">?attr/isLightTheme</item>
     </style>
 
     <style name="Theme.MyAppCompose" parent="Theme.Base.MyAppCompose" />
-
-    <style name="Theme.MyAppCompose.NoActionBar">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
 </resources>

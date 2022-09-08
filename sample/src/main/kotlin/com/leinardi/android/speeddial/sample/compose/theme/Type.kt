@@ -16,6 +16,6 @@
 
 package com.leinardi.android.speeddial.sample.compose.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 
 val SampleTypography = Typography()

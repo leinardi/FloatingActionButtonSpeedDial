@@ -15,77 +15,77 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--Top level DayNight theme to be used in AndroidManifest.xml-->
-    <style name="Theme.MyApp" parent="Base.Theme.MyApp" />
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp">
+        <!--Material 3 color attributes (light theme) -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+    </style>
     <!--Base custom theme which will be shared between both light and dark theme variants-->
     <style name="Base.Theme.MyApp" parent="Base.Theme.MaterialThemeBuilder">
-        <!--Material color attributes (light theme) -->
-        <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
-        <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
-        <!--selection controls.-->
-        <item name="colorPrimary">@color/inbox_primary</item>
-        <item name="colorPrimaryVariant">@color/inbox_primary_dark</item>
-        <item name="colorSecondary">@color/inbox_accent</item>
-        <item name="colorSecondaryVariant">@color/material_red_800</item>
-        <!--colorBackground appears behind scrollable content and is used for the default window-->
-        <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
-        <!--and menus. colorError is used to indicate an error state for components such as-->
-        <!--text fields.-->
-        <item name="android:colorBackground">@color/material_white_1000</item>
-        <item name="colorSurface">@color/material_white_1000</item>
-        <item name="colorError">@color/material_red_600</item>
-        <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
-        <!--on which they appear.-->
-        <item name="colorOnPrimary">@color/material_white_1000</item>
-        <item name="colorOnSecondary">@color/material_white_1000</item>
-        <item name="colorOnBackground">@color/material_gray_900</item>
-        <item name="colorOnSurface">@color/material_gray_900</item>
-        <item name="colorOnError">@color/material_white_1000</item>
-        <!--Material type attributes-->
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
-        <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
-        <!--Material shape attributes-->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
-        </item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent
-        </item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent
-        </item>
-        <!--Component styles-->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
-        </item>
+        <!--Material 3 type attributes-->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.MyTheme.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.MyTheme.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.MyTheme.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.MyTheme.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.MyTheme.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.MyTheme.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.MyTheme.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.MyTheme.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.MyTheme.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.MyTheme.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.MyTheme.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.MyTheme.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.MyTheme.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.MyTheme.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.MyTheme.LabelSmall</item>
+        <!--Material 3 shape attributes-->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent</item>
+        <!--Component 3 styles-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.Dialog.Alert</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
         <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
+        <item name="toolbarStyle">@style/Widget.Material3.Toolbar</item>
     </style>
 
-    <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorPrimaryVariant</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
-        <item name="android:navigationBarColor" tools:ignore="NewApi">
-            ?attr/colorPrimaryVariant
-        </item>
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
-        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
-            ?attr/colorControlHighlight
-        </item>
+    <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="M">?attr/isLightTheme</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">?attr/isLightTheme</item>
     </style>
 
     <style name="Theme.MyApp.Purple" parent="Theme.MyApp">
-        <item name="colorPrimary">@color/material_purple_500</item>
-        <item name="colorPrimaryVariant">@color/material_purple_700</item>
-        <item name="colorSecondary">@color/material_purple_a700</item>
-        <item name="colorOnSecondary">@color/material_purple_100</item>
-        <item name="colorControlHighlight">@color/material_purple_200</item>
+        <item name="colorPrimary">#964900</item>
+        <item name="colorPrimaryContainer">#FFDCC6</item>
+        <item name="colorOnPrimaryContainer">#311300</item>
+        <item name="colorSurface">#FFFBFF</item>
+        <item name="colorOnSurface">#201A17</item>
     </style>
 </resources>

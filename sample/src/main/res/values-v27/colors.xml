@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,6 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.leinardi.android.speeddial.sample.compose.ComposeActivity">
-    <item
-        android:id="@+id/action_use_cases"
-        android:orderInCategory="100"
-        android:title="@string/action_use_cases"
-        android:visible="false"
-        app:showAsAction="never" />
-</menu>
+<resources>
+    <color name="navigationBarColor">@android:color/transparent</color>
+</resources>

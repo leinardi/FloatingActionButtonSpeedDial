@@ -18,43 +18,54 @@ package com.leinardi.android.speeddial.sample.compose.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.AppBarDefaults
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.leinardi.android.speeddial.sample.compose.theme.SampleTheme
 
+@ExperimentalMaterial3Api
 @Composable
 fun TopAppBar(
     title: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     onNavigateUp: (() -> Unit)? = null,
-    elevation: Dp = AppBarDefaults.TopAppBarElevation,
     actions: @Composable RowScope.() -> Unit = {},
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
+    colors: TopAppBarColors = TopAppBarDefaults.smallTopAppBarColors(),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(MaterialTheme.colors.primaryVariant)
-    androidx.compose.material.TopAppBar(
+    SmallTopAppBar(
         title = {
             Column {
-                Text(text = title)
+                Text(
+                    text = title,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                )
                 if (!subtitle.isNullOrEmpty()) {
                     Text(
                         text = subtitle,
-                        style = MaterialTheme.typography.subtitle1,
                         modifier = Modifier.alpha(ContentAlpha.medium),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                 }
             }
@@ -71,36 +82,40 @@ fun TopAppBar(
                     )
                 }
             }
-        },
+        } ?: {},
         actions = actions,
-        backgroundColor = MaterialTheme.colors.primary,
-        elevation = elevation,
+        windowInsets = windowInsets,
+        colors = colors,
+        scrollBehavior = scrollBehavior,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
 private fun PreviewTopAppBarWithNavigationIcon() {
     SampleTheme {
         TopAppBar(
             title = "Page title",
-        ) { }
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
 private fun PreviewTopAppBarWithSubtitle() {
     SampleTheme {
         TopAppBar(
             title = "Page title",
             subtitle = "Page subtitle",
-        ) { }
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
 private fun PreviewTopAppBarWithAction() {
     SampleTheme {
         TopAppBar(
@@ -114,8 +129,9 @@ private fun PreviewTopAppBarWithAction() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
 private fun PreviewTopAppBarWithNavigationIconAndAction() {
     SampleTheme {
         TopAppBar(

@@ -19,7 +19,7 @@ ext.config = [
         'applicationId': 'com.leinardi.android.speeddial.sample',
         'compileSdk'   : 34,
         'javaVersion'  : JavaVersion.VERSION_17,
-        'minSdk'       : 14,
+        'minSdk'       : 21,
         'minSdkCompose': 21,
         'targetSdk'    : 34,
         'version_code' : commitCount.isNumber() ? commitCount as int : 0,

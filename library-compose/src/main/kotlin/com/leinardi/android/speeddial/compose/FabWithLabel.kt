@@ -17,24 +17,22 @@
 package com.leinardi.android.speeddial.compose
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.Card
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.FloatingActionButtonDefaults
-import androidx.compose.material.FloatingActionButtonElevation
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.contentColorFor
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ChipBorder
+import androidx.compose.material3.ChipColors
+import androidx.compose.material3.ChipElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.FloatingActionButtonElevation
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,20 +40,21 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-@ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @Composable
 fun FabWithLabel(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     labelContent: @Composable (() -> Unit)? = null,
-    labelBackgroundColor: Color = MaterialTheme.colors.surface,
+    labelColors: ChipColors = AssistChipDefaults.elevatedAssistChipColors(),
     labelMaxWidth: Dp = 160.dp,
-    labelContainerElevation: Dp = 2.dp,
-    fabShape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
+    labelElevation: ChipElevation? = AssistChipDefaults.elevatedAssistChipElevation(),
+    labelBorder: ChipBorder = AssistChipDefaults.assistChipBorder(),
+    fabShape: Shape = FloatingActionButtonDefaults.shape,
     fabElevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     fabSize: Dp = SpeedDialMiniFabSize,
-    fabBackgroundColor: Color = MaterialTheme.colors.primary,
-    fabContentColor: Color = contentColorFor(fabBackgroundColor),
+    fabContainerColor: Color = MaterialTheme.colorScheme.surface,
+    fabContentColor: Color = contentColorFor(fabContainerColor),
     fabContent: @Composable () -> Unit,
 ) {
     Row(
@@ -66,35 +65,24 @@ fun FabWithLabel(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (labelContent != null) {
-            Card(
-                modifier = Modifier.widthIn(max = labelMaxWidth),
+            AssistChip(
                 onClick = onClick,
-                backgroundColor = labelBackgroundColor,
-                elevation = labelContainerElevation,
-            ) {
-                Box(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    propagateMinConstraints = true,
-                ) {
-                    ProvideTextStyle(value = MaterialTheme.typography.subtitle2) {
-                        CompositionLocalProvider(
-                            LocalContentAlpha provides ContentAlpha.high,
-                            content = labelContent,
-                        )
-                    }
-                }
-            }
+                label = labelContent,
+                modifier = Modifier.widthIn(max = labelMaxWidth),
+                colors = labelColors,
+                elevation = labelElevation,
+                border = labelBorder,
+            )
         }
 
         FloatingActionButton(
             onClick = onClick,
             modifier = Modifier.size(fabSize),
             shape = fabShape,
-            backgroundColor = fabBackgroundColor,
+            containerColor = fabContainerColor,
             contentColor = fabContentColor,
             elevation = fabElevation,
-        ) {
-            fabContent()
-        }
+            content = fabContent,
+        )
     }
 }

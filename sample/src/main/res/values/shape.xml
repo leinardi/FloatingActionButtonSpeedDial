@@ -34,17 +34,17 @@
     <!--and cornerSizeBottomRight.-->
 
     <!--Shape Appearance for small components like chips, buttons, text fields and FABs-->
-    <style name="ShapeAppearance.MyTheme.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="ShapeAppearance.MyTheme.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <!--Your custom shape here-->
     </style>
 
     <!--Shape Appearance for medium components like cards, alert dialogs-->
-    <style name="ShapeAppearance.MyTheme.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+    <style name="ShapeAppearance.MyTheme.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <!--Your custom shape here-->
     </style>
 
     <!--Shape Appearance for large components like side and bottom navigation drawers-->
-    <style name="ShapeAppearance.MyTheme.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="ShapeAppearance.MyTheme.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
         <!--Your custom shape here-->
     </style>
 

@@ -16,6 +16,6 @@
 
 package com.leinardi.android.speeddial.sample.compose.theme
 
-import androidx.compose.material.Shapes
+import androidx.compose.material3.Shapes
 
 val SampleShapes = Shapes()
