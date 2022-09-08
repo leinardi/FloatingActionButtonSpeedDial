@@ -69,8 +69,8 @@ class ViewActivity : BaseUseCaseActivity() {
                     )
                     .create(),
             )
-            fabWithLabelView?.apply {
-                speedDialActionItem = speedDialActionItemBuilder
+            fabWithLabelView?.let {
+                it.speedDialActionItem = it.speedDialActionItemBuilder
                     .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.material_white_1000, theme))
                     .create()
             }

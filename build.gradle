@@ -51,11 +51,6 @@ doctor {
 }
 
 wrapper {
-    gradleVersion = "7.4.2"
-    distributionType = Wrapper.DistributionType.ALL
-}
-
-wrapper {
-    gradleVersion "7.4.1"
+    gradleVersion = libs.versions.gradle.get()
     distributionType = Wrapper.DistributionType.ALL
 }

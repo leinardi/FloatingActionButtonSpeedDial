@@ -21,9 +21,13 @@
 
     <uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="31" />
+        android:targetSdkVersion="33" />
 
-    <!-- To store the heap dumps and leak analysis results. -->
+    <permission
+        android:name="com.leinardi.android.speeddial.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.leinardi.android.speeddial.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- To store the heap dumps and leak analysis results. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- To allow starting foreground services on Android P+ - https://developer.android.com/preview/behavior-changes#fg-svc -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -67,6 +71,20 @@
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />
 
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.leinardi.android.speeddial.sample.debug.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
         <provider
             android:name="leakcanary.internal.LeakCanaryFileProvider"
             android:authorities="com.squareup.leakcanary.fileprovider.com.leinardi.android.speeddial.sample.debug"
@@ -149,20 +167,6 @@
             android:authorities="com.leinardi.android.speeddial.sample.debug.plumber-installer"
             android:enabled="@bool/leak_canary_plumber_auto_install"
             android:exported="false" />
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.leinardi.android.speeddial.sample.debug.androidx-startup"
-            android:exported="false" >
-            <meta-data
-                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-                android:value="androidx.startup" />
-            <meta-data
-                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-                android:value="androidx.startup" />
-            <meta-data
-                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-                android:value="androidx.startup" />
-        </provider>
 
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"
