@@ -44,7 +44,8 @@
         <activity
             android:name="com.leinardi.android.speeddial.sample.compose.ComposeActivity"
             android:exported="true"
-            android:label="@string/app_name_compose" >
+            android:label="@string/app_name_compose"
+            android:theme="@style/Theme.MyAppCompose" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,13 +61,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.leinardi.android.speeddial.sample.usecases.UseCasesActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.leinardi.android.speeddial.sample.usecases.UseCase1Activity"
-            android:exported="true"
-            android:label="@string/use_case_1" />
         <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />

@@ -26,7 +26,6 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,6 +35,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
@@ -49,42 +49,9 @@ public class UiUtils {
     private UiUtils() {
     }
 
-    public static int getPrimaryColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = android.R.attr.colorPrimary;
-        } else {
-            //Get colorAccent defined for AppCompat
-            colorAttr = context.getResources().getIdentifier("colorPrimary", "attr", context.getPackageName());
-        }
+    public static int getAttributeColor(Context context, @AttrRes int attrRes) {
         TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(colorAttr, outValue, true);
-        return outValue.data;
-    }
-
-    public static int getOnSecondaryColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = R.attr.colorOnSecondary;
-        } else {
-            //Get colorAccent defined for AppCompat
-            colorAttr = context.getResources().getIdentifier("colorOnSecondary", "attr", context.getPackageName());
-        }
-        TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(colorAttr, outValue, true);
-        return outValue.data;
-    }
-
-    public static int getAccentColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = android.R.attr.colorAccent;
-        } else {
-            //Get colorAccent defined for AppCompat
-            colorAttr = context.getResources().getIdentifier("colorAccent", "attr", context.getPackageName());
-        }
-        TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(colorAttr, outValue, true);
+        context.getTheme().resolveAttribute(attrRes, outValue, true);
         return outValue.data;
     }
 
@@ -107,17 +74,17 @@ public class UiUtils {
         view.setAlpha(1F);
         view.setVisibility(VISIBLE);
         ViewCompat.animate(view)
-                .alpha(0F)
-                .withLayer()
-                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.setVisibility(GONE);
-                    }
-                })
-                .start();
+            .alpha(0F)
+            .withLayer()
+            .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
+            .setInterpolator(new FastOutSlowInInterpolator())
+            .withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    view.setVisibility(GONE);
+                }
+            })
+            .start();
     }
 
     /**
@@ -130,11 +97,11 @@ public class UiUtils {
         view.setAlpha(0);
         view.setVisibility(VISIBLE);
         ViewCompat.animate(view)
-                .alpha(1F)
-                .withLayer()
-                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_open_animation_duration))
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .start();
+            .alpha(1F)
+            .withLayer()
+            .setDuration(view.getContext().getResources().getInteger(R.integer.sd_open_animation_duration))
+            .setInterpolator(new FastOutSlowInInterpolator())
+            .start();
     }
 
     /**
@@ -188,24 +155,24 @@ public class UiUtils {
     public static void shrinkAnim(final View view, final boolean removeView) {
         ViewCompat.animate(view).cancel();
         ViewCompat.animate(view)
-                .alpha(0F)
-                .withLayer()
-                .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (removeView) {
-                            ViewGroup parent = (ViewGroup) view.getParent();
-                            if (parent != null) {
-                                parent.removeView(view);
-                            }
-                        } else {
-                            view.setVisibility(GONE);
+            .alpha(0F)
+            .withLayer()
+            .setDuration(view.getContext().getResources().getInteger(R.integer.sd_close_animation_duration))
+            .setInterpolator(new FastOutSlowInInterpolator())
+            .withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    if (removeView) {
+                        ViewGroup parent = (ViewGroup) view.getParent();
+                        if (parent != null) {
+                            parent.removeView(view);
                         }
+                    } else {
+                        view.setVisibility(GONE);
                     }
-                })
-                .start();
+                }
+            })
+            .start();
     }
 
     /**
@@ -217,12 +184,12 @@ public class UiUtils {
      */
     public static void rotateForward(View view, float angle, boolean animate) {
         ViewCompat.animate(view)
-                .rotation(angle)
-                .withLayer()
-                .setDuration(animate ?
-                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .start();
+            .rotation(angle)
+            .withLayer()
+            .setDuration(animate ?
+                view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
+            .setInterpolator(new FastOutSlowInInterpolator())
+            .start();
     }
 
     /**
@@ -234,12 +201,12 @@ public class UiUtils {
      */
     public static void rotateBackward(View view, boolean animate) {
         ViewCompat.animate(view)
-                .rotation(0.0F)
-                .withLayer()
-                .setDuration(animate ?
-                        view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .start();
+            .rotation(0.0F)
+            .withLayer()
+            .setDuration(animate ?
+                view.getContext().getResources().getInteger(R.integer.sd_rotate_animation_duration) : 0)
+            .setInterpolator(new FastOutSlowInInterpolator())
+            .start();
     }
 
     public static Drawable getRotateDrawable(final Drawable drawable, final float angle) {
@@ -279,7 +246,7 @@ public class UiUtils {
                 bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
             } else {
                 bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap
-                        .Config.ARGB_8888);
+                    .Config.ARGB_8888);
             }
 
             Canvas canvas = new Canvas(bitmap);

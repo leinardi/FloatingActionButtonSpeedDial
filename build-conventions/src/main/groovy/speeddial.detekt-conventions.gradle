@@ -27,6 +27,7 @@ detekt {
 
 dependencies {
     detektPlugins libs.detekt
+    detektPlugins libs.detekt.rules.compose
 }
 
 afterEvaluate {

@@ -19,7 +19,7 @@
     <!--Components-->
 
     <!--Bottom Sheets-->
-    <style name="ThemeOverlay.MyTheme.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+    <style name="ThemeOverlay.MyTheme.BottomSheetDialog" parent="ThemeOverlay.Material3.Dialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.MyTheme.BottomSheet.Modal</item>
@@ -31,12 +31,12 @@
         </item>
     </style>
 
-    <style name="Widget.MyTheme.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Widget.MyTheme.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">?attr/shapeAppearanceLargeComponent</item>
     </style>
 
     <!--Navigation Drawer-->
-    <style name="Widget.MyTheme.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+    <style name="Widget.MyTheme.NavigationView" parent="Widget.Material3.NavigationView">
         <item name="itemTextAppearance">?attr/textAppearanceBody2</item>
     </style>
 

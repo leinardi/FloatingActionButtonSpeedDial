@@ -17,6 +17,5 @@
 
 <resources>
     <color name="sd_label_text_color">#bdbdbd</color>
-    <color name="sd_label_background_color">@color/cardview_dark_background</color>
     <color name="sd_overlay_color">#aa000000</color>
 </resources>

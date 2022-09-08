@@ -22,7 +22,6 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -30,14 +29,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.ImageViewCompat;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leinardi.android.speeddial.SpeedDialView.OnActionSelectedListener;
 
@@ -53,9 +51,8 @@ import static com.leinardi.android.speeddial.SpeedDialActionItem.RESOURCE_NOT_SE
 public class FabWithLabelView extends LinearLayout {
     private static final String TAG = FabWithLabelView.class.getSimpleName();
 
-    private TextView mLabelTextView;
+    private Chip mLabelChip;
     private FloatingActionButton mFab;
-    private CardView mLabelCardView;
     private boolean mIsLabelEnabled;
     @Nullable
     private SpeedDialActionItem mSpeedDialActionItem;
@@ -63,9 +60,7 @@ public class FabWithLabelView extends LinearLayout {
     private OnActionSelectedListener mOnActionSelectedListener;
     @FloatingActionButton.Size
     private int mCurrentFabSize;
-    private float mLabelCardViewElevation;
-    @Nullable
-    private Drawable mLabelCardViewBackground;
+    private float mLabelChipElevation;
 
     public FabWithLabelView(Context context) {
         super(context);
@@ -88,7 +83,7 @@ public class FabWithLabelView extends LinearLayout {
         super.setVisibility(visibility);
         getFab().setVisibility(visibility);
         if (isLabelEnabled()) {
-            getLabelBackground().setVisibility(visibility);
+            getLabelChip().setVisibility(visibility);
         }
     }
 
@@ -99,7 +94,7 @@ public class FabWithLabelView extends LinearLayout {
         if (orientation == VERTICAL) {
             setLabelEnabled(false);
         } else {
-            setLabel(mLabelTextView.getText().toString());
+            setLabel(mLabelChip.getText().toString());
         }
     }
 
@@ -115,14 +110,14 @@ public class FabWithLabelView extends LinearLayout {
      */
     private void setLabelEnabled(boolean enabled) {
         mIsLabelEnabled = enabled;
-        mLabelCardView.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        mLabelChip.setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
     /**
      * Returns FAB labels background card.
      */
-    public CardView getLabelBackground() {
-        return mLabelCardView;
+    public Chip getLabelChip() {
+        return mLabelChip;
     }
 
     /**
@@ -152,8 +147,7 @@ public class FabWithLabelView extends LinearLayout {
         if (actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
             this.removeView(mFab);
             View view = inflate(getContext(), R.layout.sd_fill_fab, this);
-            FloatingActionButton newFab = view.findViewById(R.id.sd_fab_fill);
-            mFab = newFab;
+            mFab = view.findViewById(R.id.sd_fab_fill);
         }
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
@@ -163,7 +157,7 @@ public class FabWithLabelView extends LinearLayout {
         setFabIcon(actionItem.getFabImageDrawable(getContext()));
         int imageTintColor = actionItem.getFabImageTintColor();
         if (imageTintColor == RESOURCE_NOT_SET) {
-            imageTintColor = UiUtils.getOnSecondaryColor(getContext());
+            imageTintColor = UiUtils.getAttributeColor(getContext(), R.attr.colorOnSurface);
         }
         boolean imageTint = actionItem.getFabImageTint();
         if (imageTint) {
@@ -171,21 +165,19 @@ public class FabWithLabelView extends LinearLayout {
         }
         int fabBackgroundColor = actionItem.getFabBackgroundColor();
         if (fabBackgroundColor == RESOURCE_NOT_SET) {
-            fabBackgroundColor = UiUtils.getPrimaryColor(getContext());
+            fabBackgroundColor = UiUtils.getAttributeColor(getContext(), R.attr.colorSurface);
         }
         setFabBackgroundColor(fabBackgroundColor);
         int labelColor = actionItem.getLabelColor();
         if (labelColor == RESOURCE_NOT_SET) {
             labelColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_text_color,
-                    getContext().getTheme());
+                getContext().getTheme());
         }
         setLabelColor(labelColor);
         int labelBackgroundColor = actionItem.getLabelBackgroundColor();
-        if (labelBackgroundColor == RESOURCE_NOT_SET) {
-            labelBackgroundColor = ResourcesCompat.getColor(getResources(), R.color.sd_label_background_color,
-                    getContext().getTheme());
+        if (labelBackgroundColor != RESOURCE_NOT_SET) {
+            setLabelBackgroundColor(labelBackgroundColor);
         }
-        setLabelBackgroundColor(labelBackgroundColor);
         if (actionItem.getFabSize() == SIZE_AUTO || actionItem.getFabType().equals(SpeedDialActionItem.TYPE_FILL)) {
             getFab().setSize(SIZE_MINI);
         } else {
@@ -202,45 +194,36 @@ public class FabWithLabelView extends LinearLayout {
     public void setOnActionSelectedListener(@Nullable OnActionSelectedListener listener) {
         mOnActionSelectedListener = listener;
         if (mOnActionSelectedListener != null) {
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
-                    if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null) {
-                        if (speedDialActionItem.isLabelClickable()) {
-                            UiUtils.performTap(getLabelBackground());
-                        } else {
-                            UiUtils.performTap(getFab());
-                        }
+            setOnClickListener(view -> {
+                SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                if (mOnActionSelectedListener != null
+                    && speedDialActionItem != null) {
+                    if (speedDialActionItem.isLabelClickable()) {
+                        UiUtils.performTap(getLabelChip());
+                    } else {
+                        UiUtils.performTap(getFab());
                     }
                 }
             });
-            getFab().setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
-                    if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null) {
-                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
-                    }
+            getFab().setOnClickListener(view -> {
+                SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                if (mOnActionSelectedListener != null
+                    && speedDialActionItem != null) {
+                    mOnActionSelectedListener.onActionSelected(speedDialActionItem);
                 }
             });
 
-            getLabelBackground().setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
-                    if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null
-                            && speedDialActionItem.isLabelClickable()) {
-                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
-                    }
+            getLabelChip().setOnClickListener(view -> {
+                SpeedDialActionItem speedDialActionItem = getSpeedDialActionItem();
+                if (mOnActionSelectedListener != null
+                    && speedDialActionItem != null
+                    && speedDialActionItem.isLabelClickable()) {
+                    mOnActionSelectedListener.onActionSelected(speedDialActionItem);
                 }
             });
         } else {
             getFab().setOnClickListener(null);
-            getLabelBackground().setOnClickListener(null);
+            getLabelChip().setOnClickListener(null);
         }
 
     }
@@ -255,10 +238,9 @@ public class FabWithLabelView extends LinearLayout {
         View rootView = inflate(context, R.layout.sd_fab_with_label_view, this);
         rootView.setFocusable(false);
         rootView.setFocusableInTouchMode(false);
-      
+
         mFab = rootView.findViewById(R.id.sd_fab);
-        mLabelTextView = rootView.findViewById(R.id.sd_label);
-        mLabelCardView = rootView.findViewById(R.id.sd_label_container);
+        mLabelChip = rootView.findViewById(R.id.sd_chip);
 
         setFabSize(SIZE_MINI);
         setOrientation(LinearLayout.HORIZONTAL);
@@ -266,7 +248,7 @@ public class FabWithLabelView extends LinearLayout {
         setClipToPadding(false);
 
         TypedArray attr = context.obtainStyledAttributes(attrs,
-                R.styleable.FabWithLabelView, 0, 0);
+            R.styleable.FabWithLabelView, 0, 0);
 
         try {
             @DrawableRes int src = attr.getResourceId(R.styleable.FabWithLabelView_srcCompat, RESOURCE_NOT_SET);
@@ -276,7 +258,7 @@ public class FabWithLabelView extends LinearLayout {
             SpeedDialActionItem.Builder builder = new SpeedDialActionItem.Builder(getId(), src);
             String labelText = attr.getString(R.styleable.FabWithLabelView_fabLabel);
             builder.setLabel(labelText);
-            @ColorInt int fabBackgroundColor = UiUtils.getPrimaryColor(context);
+            @ColorInt int fabBackgroundColor = UiUtils.getAttributeColor(context, R.attr.colorSurface);
             fabBackgroundColor = attr.getColor(R.styleable.FabWithLabelView_fabBackgroundColor, fabBackgroundColor);
             builder.setFabBackgroundColor(fabBackgroundColor);
             @ColorInt int labelColor = RESOURCE_NOT_SET;
@@ -284,7 +266,7 @@ public class FabWithLabelView extends LinearLayout {
             builder.setLabelColor(labelColor);
             @ColorInt int labelBackgroundColor = RESOURCE_NOT_SET;
             labelBackgroundColor = attr.getColor(R.styleable.FabWithLabelView_fabLabelBackgroundColor,
-                    labelBackgroundColor);
+                labelBackgroundColor);
             builder.setLabelBackgroundColor(labelBackgroundColor);
             boolean labelClickable = attr.getBoolean(R.styleable.FabWithLabelView_fabLabelClickable, true);
             builder.setLabelClickable(labelClickable);
@@ -341,7 +323,7 @@ public class FabWithLabelView extends LinearLayout {
      */
     private void setLabel(@Nullable CharSequence sequence) {
         if (!TextUtils.isEmpty(sequence)) {
-            mLabelTextView.setText(sequence);
+            mLabelChip.setText(sequence);
             setLabelEnabled(getOrientation() == HORIZONTAL);
         } else {
             setLabelEnabled(false);
@@ -349,9 +331,9 @@ public class FabWithLabelView extends LinearLayout {
     }
 
     private void setLabelClickable(boolean clickable) {
-        getLabelBackground().setClickable(clickable);
-        getLabelBackground().setFocusable(clickable);
-        getLabelBackground().setEnabled(clickable);
+        getLabelChip().setClickable(clickable);
+        getLabelChip().setFocusable(clickable);
+        getLabelChip().setEnabled(clickable);
     }
 
     /**
@@ -384,35 +366,20 @@ public class FabWithLabelView extends LinearLayout {
     }
 
     private void setLabelColor(@ColorInt int color) {
-        mLabelTextView.setTextColor(color);
+        mLabelChip.setTextColor(color);
     }
 
     private void setLabelBackgroundColor(@ColorInt int color) {
         if (color == Color.TRANSPARENT) {
-            mLabelCardView.setCardBackgroundColor(Color.TRANSPARENT);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mLabelCardViewElevation = mLabelCardView.getElevation();
-                mLabelCardView.setElevation(0);
-            } else {
-                mLabelCardView.setBackgroundColor(Color.TRANSPARENT);
-                mLabelCardViewBackground = mLabelCardView.getBackground();
-            }
+            mLabelChip.setChipBackgroundColorResource(android.R.color.transparent);
+            mLabelChip.setChipStrokeColorResource(android.R.color.transparent);
+            mLabelChipElevation = mLabelChip.getElevation();
+            mLabelChip.setElevation(0);
         } else {
-            mLabelCardView.setCardBackgroundColor(ColorStateList.valueOf(color));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (mLabelCardViewElevation != 0) {
-                    mLabelCardView.setElevation(mLabelCardViewElevation);
-                    mLabelCardViewElevation = 0;
-                }
-            } else {
-                if (mLabelCardViewBackground != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        mLabelCardView.setBackground(mLabelCardViewBackground);
-                    } else {
-                        mLabelCardView.setBackgroundDrawable(mLabelCardViewBackground);
-                    }
-                    mLabelCardViewBackground = null;
-                }
+            mLabelChip.setChipBackgroundColor(ColorStateList.valueOf(color));
+            if (mLabelChipElevation != 0) {
+                mLabelChip.setElevation(mLabelChipElevation);
+                mLabelChipElevation = 0;
             }
         }
     }

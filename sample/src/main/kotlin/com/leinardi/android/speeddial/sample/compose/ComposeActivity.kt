@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.leinardi.android.speeddial.sample.compose
 
 import android.content.Context
@@ -28,44 +30,47 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.AppBarDefaults
-import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import com.leinardi.android.speeddial.compose.FabWithLabel
 import com.leinardi.android.speeddial.compose.SpeedDial
 import com.leinardi.android.speeddial.compose.SpeedDialOverlay
@@ -86,6 +91,7 @@ import timber.log.Timber
 class ComposeActivity : AppCompatActivity() {  // AppCompatActivity is needed to be able to toggle Day/Night programmatically
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             SampleTheme {
                 MainContent()
@@ -96,16 +102,19 @@ class ComposeActivity : AppCompatActivity() {  // AppCompatActivity is needed to
 
 @Composable
 fun MainContent() {
+    val context = LocalContext.current
     val speedDialState = rememberSaveable { mutableStateOf(SpeedDialState.Collapsed) }
-    val speedDialVisible = rememberSaveable { mutableStateOf(true) }
-    val reverseAnimationOnClose = rememberSaveable { mutableStateOf(false) }
     val overlayVisible = rememberSaveable { mutableStateOf(speedDialState.value.isExpanded()) }
-    val scaffoldState = rememberScaffoldState()
+    val reverseAnimationOnClose = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val speedDialVisible = rememberSaveable { mutableStateOf(true) }
     Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { TopBar(speedDialVisible, scope, scaffoldState, reverseAnimationOnClose) },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = { TopBar(scrollBehavior) },
+        bottomBar = { BottomBar(speedDialVisible, scope, snackbarHostState, context, reverseAnimationOnClose) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 speedDialState,
@@ -113,70 +122,73 @@ fun MainContent() {
                 speedDialVisible,
                 reverseAnimationOnClose,
                 scope,
-                scaffoldState,
+                snackbarHostState,
             )
         },
-    ) { scaffoldPadding -> ScaffoldContent(scaffoldPadding, overlayVisible, speedDialState) }
+    ) { scaffoldPadding ->
+        ScaffoldContent(scaffoldPadding, overlayVisible, speedDialState)
+    }
 }
 
 @Composable
-private fun TopBar(
+private fun TopBar(scrollBehavior: TopAppBarScrollBehavior) {
+    val context = LocalContext.current
+    TopAppBar(
+        title = stringResource(R.string.app_name_compose),
+        subtitle = stringResource(R.string.app_version, GetVersionInteractor()(context.applicationContext)),
+        scrollBehavior = scrollBehavior,
+    )
+}
+
+@Composable
+private fun BottomBar(
     speedDialVisible: MutableState<Boolean>,
     scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
+    snackbarHostState: SnackbarHostState,
+    context: Context,
     reverseAnimationOnClose: MutableState<Boolean>,
 ) {
-    val context = LocalContext.current
-    Column {
-        TopAppBar(
-            title = stringResource(R.string.app_name_compose),
-            subtitle = stringResource(R.string.app_version, GetVersionInteractor()(context.applicationContext)),
-        )
-        BottomAppBar(
-            backgroundColor = MaterialTheme.colors.primary,
-            elevation = AppBarDefaults.TopAppBarElevation,
+    BottomAppBar {
+        IconButton(
+            onClick = { speedDialVisible.value = !speedDialVisible.value },
         ) {
-            IconButton(
-                onClick = { speedDialVisible.value = !speedDialVisible.value },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_show_white_24dp),
-                    contentDescription = stringResource(R.string.action_show_hide_fab),
-                )
-            }
-            IconButton(
-                onClick = { showSnackbar(scope, scaffoldState.snackbarHostState, context.getString(R.string.test_snackbar)) },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_snack_white_24dp),
-                    contentDescription = stringResource(R.string.action_show_snackbar),
-                )
-            }
-            IconButton(
-                onClick = {
-                    ToggleNightModeInteractor()(context)
-                },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_day_night_white_24dp),
-                    contentDescription = stringResource(R.string.action_toggle_day_night),
-                )
-            }
-            IconButton(
-                onClick = {
-                    reverseAnimationOnClose.value = !reverseAnimationOnClose.value
-                },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_animation_white_24dp),
-                    contentDescription = stringResource(R.string.action_toggle_reverse_animation),
-                )
-            }
+            Icon(
+                painter = painterResource(R.drawable.ic_show_white_24dp),
+                contentDescription = stringResource(R.string.action_show_hide_fab),
+            )
+        }
+        IconButton(
+            onClick = { showSnackbar(scope, snackbarHostState, context.getString(R.string.test_snackbar)) },
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_snack_white_24dp),
+                contentDescription = stringResource(R.string.action_show_snackbar),
+            )
+        }
+        IconButton(
+            onClick = {
+                ToggleNightModeInteractor()(context)
+            },
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_day_night_white_24dp),
+                contentDescription = stringResource(R.string.action_toggle_day_night),
+            )
+        }
+        IconButton(
+            onClick = {
+                reverseAnimationOnClose.value = !reverseAnimationOnClose.value
+            },
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_animation_white_24dp),
+                contentDescription = stringResource(R.string.action_toggle_reverse_animation),
+            )
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun FloatingActionButton(
     speedDialState: MutableState<SpeedDialState>,
@@ -184,7 +196,7 @@ private fun FloatingActionButton(
     speedDialVisible: MutableState<Boolean>,
     reverseAnimationOnClose: MutableState<Boolean>,
     scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
+    snackbarHostState: SnackbarHostState,
 ) {
     BackHandler(enabled = speedDialState.value.isExpanded()) {
         closeSpeedDial(overlayVisible, speedDialState)
@@ -236,13 +248,13 @@ private fun FloatingActionButton(
                             color = Color(0XFFFFFFFF),
                         )
                     },
-                    labelBackgroundColor = Color(0XFF4285F4),
-                    fabBackgroundColor = Color(0XFFFFFFFF),
+                    labelColors = AssistChipDefaults.elevatedAssistChipColors(containerColor = Color(0XFF90CAF9)),
+                    fabContainerColor = Color.White,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_custom_color),
                         contentDescription = null,
-                        tint = Color(0XFF4285F4),
+                        tint = Color(0XFF90CAF9),
                     )
                 }
             }
@@ -251,7 +263,7 @@ private fun FloatingActionButton(
                     onClick = {
                         showSnackbar(
                             scope = scope,
-                            snackbarHostState = scaffoldState.snackbarHostState,
+                            snackbarHostState = snackbarHostState,
                             message = context.getString(R.string.lorem_ipsum) + " clicked!",
                         )
                     },
@@ -274,14 +286,15 @@ private fun FloatingActionButton(
                 FabWithLabel(
                     onClick = { replaceActionVisible = true },
                     labelContent = { Text(stringResource(R.string.label_add_action)) },
-                    labelBackgroundColor = Color.Transparent,
-                    labelContainerElevation = 0.dp,
-                    fabBackgroundColor = Color(0XFF4CAF50),
+                    labelColors = AssistChipDefaults.assistChipColors(),
+                    labelElevation = AssistChipDefaults.assistChipElevation(),
+                    labelBorder = AssistChipDefaults.assistChipBorder(Color.Transparent, Color.Transparent, 0.dp),
+                    fabContainerColor = MaterialTheme.colorScheme.secondaryContainer,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_add_white_24dp),
                         contentDescription = null,
-                        tint = MaterialTheme.colors.onPrimary,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     )
                 }
             }
@@ -293,12 +306,16 @@ private fun FloatingActionButton(
                             deleteActionVisibility = true
                         },
                         labelContent = { Text(stringResource(R.string.label_replace_action)) },
-                        fabBackgroundColor = Color(0XFFFF9800),
+                        labelColors = AssistChipDefaults.elevatedAssistChipColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            labelColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                        ),
+                        fabContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_replace_white_24dp),
                             contentDescription = null,
-                            tint = MaterialTheme.colors.onPrimary,
+                            tint = MaterialTheme.colorScheme.onTertiaryContainer,
                         )
                     }
                 }
@@ -308,12 +325,16 @@ private fun FloatingActionButton(
                     FabWithLabel(
                         onClick = { deleteActionVisibility = false },
                         labelContent = { Text(stringResource(R.string.label_remove_action)) },
-                        fabBackgroundColor = MaterialTheme.colors.secondary,
+                        labelColors = AssistChipDefaults.elevatedAssistChipColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            labelColor = MaterialTheme.colorScheme.onErrorContainer,
+                        ),
+                        fabContainerColor = MaterialTheme.colorScheme.errorContainer,
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_delete_white_24dp),
                             contentDescription = null,
-                            tint = MaterialTheme.colors.onPrimary,
+                            tint = MaterialTheme.colorScheme.onErrorContainer,
                         )
                     }
                 }
@@ -327,7 +348,6 @@ private fun FloatingActionButton(
                         Icon(
                             painter = painterResource(R.drawable.ic_theme_white_24dp),
                             contentDescription = null,
-                            tint = MaterialTheme.colors.onSecondary,
                         )
                     }
                 }
@@ -358,7 +378,7 @@ private fun ScaffoldContent(
                     ) {
                         Text(
                             text = "This is element #$index",
-                            style = MaterialTheme.typography.body1,
+                            style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier
                                 .alpha(ContentAlpha.medium)
                                 .fillMaxWidth()
@@ -404,7 +424,7 @@ private fun showSnackbar(
 
 @Preview
 @Composable
-fun PreviewMainContent() {
+private fun PreviewMainContent() {
     SampleTheme {
         MainContent()
     }

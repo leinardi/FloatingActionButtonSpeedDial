@@ -18,16 +18,16 @@ formatting: # KtLint
   android: true # Custom
   autoCorrect: true
   AnnotationOnSeparateLine:
-    active: false
+    active: false # Custom
     autoCorrect: true
   AnnotationSpacing:
     active: true # Custom
     autoCorrect: true
   ArgumentListWrapping:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
-    maxLineLength: 120
+    maxLineLength: 150 # Custom
   BlockCommentInitialStarAlignment:
     active: true # Custom
     autoCorrect: true
@@ -82,9 +82,12 @@ formatting: # KtLint
     active: true
     autoCorrect: true
   MultiLineIfElse:
-    active: false
+    active: true
     autoCorrect: true
   NoBlankLineBeforeRbrace:
+    active: true
+    autoCorrect: true
+  NoBlankLinesInChainedMethodCalls:
     active: true
     autoCorrect: true
   NoConsecutiveBlankLines:
@@ -121,7 +124,7 @@ formatting: # KtLint
     active: false # Custom duplicate of WildcardImport
     packagesToUseImportOnDemandProperty: 'java.util.*,kotlinx.android.synthetic.**'
   PackageName:
-    active: false
+    active: false # Custom
     autoCorrect: true
   ParameterListWrapping:
     active: true
@@ -159,13 +162,13 @@ formatting: # KtLint
     active: true
     autoCorrect: true
   SpacingAroundUnaryOperator:
-    active: false
+    active: true
     autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
-    active: false
+    active: true
     autoCorrect: true
   SpacingBetweenDeclarationsWithComments:
-    active: false
+    active: true
     autoCorrect: true
   StringTemplate:
     active: true
@@ -182,8 +185,9 @@ formatting: # KtLint
     active: true # Custom
     autoCorrect: true
   Wrapping:
-    active: false
+    active: false # Custom
     autoCorrect: true
+    indentSize: 4
 
 processors:
   active: true
@@ -218,6 +222,7 @@ output-reports:
   # - 'TxtOutputReport'
   # - 'XmlOutputReport'
   # - 'HtmlOutputReport'
+  # - 'MdOutputReport'
 
 comments:
   active: true
@@ -234,6 +239,17 @@ comments:
   EndOfSentenceFormat:
     active: false
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  KDocReferencesNonPublicProperty:
+    active: false
+    excludes:
+      [
+        '**/test/**',
+        '**/androidTest/**',
+        '**/commonTest/**',
+        '**/jvmTest/**',
+        '**/jsTest/**',
+        '**/iosTest/**',
+      ]
   OutdatedDocumentation:
     active: true # Custom
     matchTypeParameters: true
@@ -317,9 +333,9 @@ complexity:
       - 'Composable'
   LongParameterList:
     active: true
-    functionThreshold: 8
-    constructorThreshold: 8
-    ignoreDefaultParameters: false
+    functionThreshold: 6
+    constructorThreshold: 7
+    ignoreDefaultParameters: true # Custom
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
     ignoreAnnotated: # Custom
@@ -337,6 +353,17 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 5 # Custom
+    ignoreAnnotated: # Custom
+      - 'Composable'
+  NestedScopeFunctions:
+    active: false
+    threshold: 1
+    functions:
+      - 'kotlin.apply'
+      - 'kotlin.run'
+      - 'kotlin.with'
+      - 'kotlin.let'
+      - 'kotlin.also'
   ReplaceSafeCallChainWithRun:
     active: true # Custom
   StringLiteralDuplication:
@@ -438,7 +465,7 @@ exceptions:
       - 'hashCode'
       - 'toString'
   InstanceOfCheckForException:
-    active: false
+    active: true
     excludes:
       [
         '**/test/**',
@@ -576,7 +603,7 @@ naming:
     excludeClassPattern: '$^'
     ignoreOverridden: true
   InvalidPackageDeclaration:
-    active: false
+    active: true
     rootPackage: ''
     requireRootInDeclaration: false
   LambdaParameterNaming:
@@ -589,7 +616,7 @@ naming:
     active: true
     ignoreOverridden: true
   NoNameShadowing:
-    active: false
+    active: true
   NonBooleanPropertyPrefixedWithIs:
     active: false
   ObjectPropertyNaming:
@@ -625,6 +652,9 @@ performance:
   active: true
   ArrayPrimitive:
     active: true
+  CouldBeSequence:
+    active: true # Custom
+    threshold: 3
   ForEachOnRange:
     active: true
     excludes:
@@ -653,7 +683,7 @@ performance:
 potential-bugs:
   active: true
   AvoidReferentialEquality:
-    active: false
+    active: true
     forbiddenTypePatterns:
       - 'kotlin.String'
   CastToNullableType:
@@ -686,7 +716,7 @@ potential-bugs:
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
-    active: false
+    active: true
   IgnoredReturnValue:
     active: true # Custom
     restrictToAnnotatedMethods: true
@@ -741,7 +771,7 @@ potential-bugs:
   UnnecessarySafeCall:
     active: true
   UnreachableCatchBlock:
-    active: false
+    active: true
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
@@ -750,7 +780,7 @@ potential-bugs:
   UnsafeCast:
     active: true
   UnusedUnaryOperator:
-    active: false
+    active: true
   UselessPostfixExpression:
     active: true # Custom
   WrongEqualsTypeParameter:
@@ -760,24 +790,27 @@ style:
   active: true
   CanBeNonNullable:
     active: false
+  CascadingCallWrapping:
+    active: true # Custom
+    includeElvis: true
   ClassOrdering:
     active: true # Custom
   CollapsibleIfStatements:
     active: true # Custom
   DataClassContainsFunctions:
-    active: true # Custom
+    active: false
     conversionFunctionPrefix: 'to'
   DataClassShouldBeImmutable:
-    active: false
+    active: true # Custom
   DestructuringDeclarationWithTooManyEntries:
     active: false
     maxDestructuringEntries: 3
   EqualsNullCall:
-    active: true
+    active: true # Custom
   EqualsOnSignatureLine:
     active: true # Custom
   ExplicitCollectionElementAccessMethod:
-    active: false
+    active: true # Custom
   ExplicitItLambdaParameter:
     active: true # Custom
   ExpressionBodySyntax:
@@ -807,6 +840,9 @@ style:
     ignorePackages:
       - '*.internal'
       - '*.internal.*'
+  ForbiddenSuppress:
+    active: false
+    rules: []
   ForbiddenVoid:
     active: true # Custom
     ignoreOverridden: false
@@ -859,6 +895,9 @@ style:
     active: true # Custom
   MandatoryBracesLoops:
     active: true # Custom
+  MaxChainedCallsOnSameLine:
+    active: false
+    maxChainedCalls: 5
   MaxLineLength:
     active: true
     maxLineLength: 150 # Custom
@@ -876,6 +915,8 @@ style:
   NewLineAtEndOfFile:
     active: true
   NoTabs:
+    active: true # Custom
+  NullableBooleanCheck:
     active: true # Custom
   ObjectLiteralToLambda:
     active: true # Custom
@@ -926,6 +967,8 @@ style:
     active: true # Custom
   UnnecessaryApply:
     active: true
+  UnnecessaryBackticks:
+    active: true # Custom
   UnnecessaryFilter:
     active: true # Custom
   UnnecessaryInheritance:
@@ -945,6 +988,8 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
+    ignoreAnnotated: # Custom
+      - 'Preview'
   UseAnyOrNoneInsteadOfFind:
     active: true # Custom
   UseArrayLiteralsInAnnotations:
@@ -952,7 +997,7 @@ style:
   UseCheckNotNull:
     active: true # Custom
   UseCheckOrError:
-    active: false
+    active: true # Custom
   UseDataClass:
     active: true # Custom
     allowVars: false
@@ -961,13 +1006,13 @@ style:
   UseIfEmptyOrIfBlank:
     active: true # Custom
   UseIfInsteadOfWhen:
-    active: false
+    active: true # Custom
   UseIsNullOrEmpty:
     active: true # Custom
   UseOrEmpty:
     active: true # Custom
   UseRequire:
-    active: false
+    active: true # Custom
   UseRequireNotNull:
     active: true # Custom
   UselessCallOnNotNull:
@@ -976,7 +1021,28 @@ style:
     active: true
   VarCouldBeVal:
     active: true
+    ignoreLateinitVar: false
   WildcardImport:
     active: true
     excludes: [] # Custom
     excludeImports: [] # Custom
+
+compose:
+  ReusedModifierInstance:
+    active: true
+  UnnecessaryEventHandlerParameter:
+    active: true
+  ComposableEventParameterNaming:
+    active: false
+  ComposableParametersOrdering:
+    active: true
+  ModifierHeightWithText:
+    active: true
+  ModifierParameterPosition:
+    active: true
+  ModifierDefaultValue:
+    active: true
+  MissingModifierDefaultValue:
+    active: true
+  PublicComposablePreview:
+    active: true

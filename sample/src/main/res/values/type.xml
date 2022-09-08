@@ -37,56 +37,64 @@
     <!--letterSpacing, etc. to define a custom appearance for each and see how they are -->
     <!--applied globally across your app.-->
 
-    <style name="TextAppearance.MyTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Button" parent="TextAppearance.MaterialComponents.Button">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <!-- Your custom type style here-->
     </style>
 
-    <style name="TextAppearance.MyTheme.Overline" parent="TextAppearance.MaterialComponents.Overline">
-        <!--Your custom type style here-->
+    <style name="TextAppearance.MyTheme.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <!-- Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.MyTheme.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <!-- Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.MyTheme.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <!-- Your custom type style here-->
     </style>
 
 </resources>

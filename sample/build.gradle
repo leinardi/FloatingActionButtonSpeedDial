@@ -72,7 +72,7 @@ dependencies {
     //    implementation "com.leinardi.android:speed-dial.compose:${config.android.version_name_compose}"
     implementation libs.accompanist.systemuicontroller
     implementation libs.androidx.activity.compose
-    implementation libs.androidx.compose.material
+    //    implementation libs.androidx.compose.material
     implementation libs.androidx.compose.runtime
     implementation libs.androidx.compose.tooling
     implementation libs.androidx.compose.ui

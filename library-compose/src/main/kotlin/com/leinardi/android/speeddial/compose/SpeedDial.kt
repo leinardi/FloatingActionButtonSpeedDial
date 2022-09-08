@@ -33,26 +33,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.Card
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.FloatingActionButtonDefaults
-import androidx.compose.material.FloatingActionButtonElevation
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ChipBorder
+import androidx.compose.material3.ChipColors
+import androidx.compose.material3.ChipElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.FloatingActionButtonElevation
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
@@ -67,27 +66,28 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 
-@ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Composable
 fun SpeedDial(
     state: SpeedDialState,
     onFabClick: (expanded: Boolean) -> Unit,
+    fabClosedContent: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     // expansionMode: ExpansionMode = ExpansionMode.Top,
-    fabShape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
+    fabShape: Shape = FloatingActionButtonDefaults.shape,
     fabElevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     fabAnimationRotateAngle: Float = 45f,
-    fabClosedContent: @Composable () -> Unit = { Icon(Icons.Default.Add, null) },
-    fabClosedBackgroundColor: Color = MaterialTheme.colors.secondary,
-    fabClosedContentColor: Color = contentColorFor(fabClosedBackgroundColor),
-    fabOpenedContent: @Composable () -> Unit = { Icon(Icons.Default.Close, null) },
-    fabOpenedBackgroundColor: Color = MaterialTheme.colors.secondary,
-    fabOpenedContentColor: Color = contentColorFor(fabOpenedBackgroundColor),
+    fabClosedContainerColor: Color = FloatingActionButtonDefaults.containerColor,
+    fabClosedContentColor: Color = contentColorFor(fabClosedContainerColor),
+    fabOpenedContent: @Composable () -> Unit = fabClosedContent,
+    fabOpenedContainerColor: Color = fabClosedContainerColor,
+    fabOpenedContentColor: Color = fabClosedContentColor,
     labelContent: @Composable (() -> Unit)? = null,
-    labelBackgroundColor: Color = MaterialTheme.colors.surface,
+    labelColors: ChipColors = AssistChipDefaults.elevatedAssistChipColors(),
     labelMaxWidth: Dp = 160.dp,
-    labelContainerElevation: Dp = 2.dp,
+    labelElevation: ChipElevation? = AssistChipDefaults.elevatedAssistChipElevation(),
+    labelBorder: ChipBorder = AssistChipDefaults.assistChipBorder(),
     reverseAnimationOnClose: Boolean = false,
     contentAnimationDelayInMillis: Int = 20,
     content: SpeedDialScope.() -> Unit = {},
@@ -135,31 +135,21 @@ fun SpeedDial(
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
-                Card(
-                    modifier = Modifier.widthIn(max = labelMaxWidth),
+                AssistChip(
                     onClick = { onFabClick(state.isExpanded()) },
-                    backgroundColor = labelBackgroundColor,
-                    elevation = labelContainerElevation,
-                ) {
-                    Box(
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                        propagateMinConstraints = true,
-                    ) {
-                        ProvideTextStyle(value = MaterialTheme.typography.subtitle2) {
-                            CompositionLocalProvider(
-                                LocalContentAlpha provides ContentAlpha.high,
-                                content = checkNotNull(labelContent),
-                            )
-                        }
-                    }
-                }
+                    label = checkNotNull(labelContent),
+                    modifier = Modifier.widthIn(max = labelMaxWidth),
+                    colors = labelColors,
+                    elevation = labelElevation,
+                    border = labelBorder,
+                )
             }
 
             when (state) {
                 SpeedDialState.Expanded -> FloatingActionButton(
                     onClick = { onFabClick(true) },
                     shape = fabShape,
-                    backgroundColor = fabOpenedBackgroundColor,
+                    containerColor = fabOpenedContainerColor,
                     contentColor = fabOpenedContentColor,
                     elevation = fabElevation,
                     content = {
@@ -176,7 +166,7 @@ fun SpeedDial(
                 SpeedDialState.Collapsed -> FloatingActionButton(
                     onClick = { onFabClick(false) },
                     shape = fabShape,
-                    backgroundColor = fabClosedBackgroundColor,
+                    containerColor = fabClosedContainerColor,
                     contentColor = fabClosedContentColor,
                     elevation = fabElevation,
                     content = {
@@ -195,41 +185,44 @@ fun SpeedDial(
 
 val LocalSpeedDialTag: ProvidableCompositionLocal<MutableState<Any>> = compositionLocalOf { error("No SpeedDialTag provided") }
 
-@ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialCollapsed() {
+private fun PreviewSpeedDialCollapsed() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Collapsed,
             onFabClick = {},
+            fabClosedContent = { Icon(Icons.Default.Add, null) },
         )
     }
 }
 
-@ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialExpanded() {
+private fun PreviewSpeedDialExpanded() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Expanded,
             onFabClick = {},
+            fabClosedContent = { Icon(Icons.Default.Close, null) },
         )
     }
 }
 
-@ExperimentalMaterialApi
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialExpandedWithActions() {
+private fun PreviewSpeedDialExpandedWithActions() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Expanded,
             onFabClick = {},
+            fabClosedContent = { Icon(Icons.Default.Close, null) },
             labelContent = { Text("Close") },
         ) {
             item {

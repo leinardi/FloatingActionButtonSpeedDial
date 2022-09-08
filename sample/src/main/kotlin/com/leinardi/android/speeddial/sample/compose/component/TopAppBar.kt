@@ -16,120 +16,107 @@
 
 package com.leinardi.android.speeddial.sample.compose.component
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.AppBarDefaults
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.leinardi.android.speeddial.sample.compose.theme.SampleTheme
 
+@ExperimentalMaterial3Api
 @Composable
 fun TopAppBar(
     title: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     onNavigateUp: (() -> Unit)? = null,
-    titleCentered: Boolean = false,
-    elevation: Dp = AppBarDefaults.TopAppBarElevation,
     actions: @Composable RowScope.() -> Unit = {},
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
+    colors: TopAppBarColors = TopAppBarDefaults.smallTopAppBarColors(),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(MaterialTheme.colors.primaryVariant)
-    Box {
-        androidx.compose.material.TopAppBar(
-            title = {
-                if (!titleCentered) {
-                    Column {
-                        Text(text = title)
-                        if (!subtitle.isNullOrEmpty()) {
-                            Text(
-                                text = subtitle,
-                                style = MaterialTheme.typography.subtitle1,
-                                modifier = Modifier.alpha(ContentAlpha.medium),
-                            )
-                        }
-                    }
-                }
-            },
-            modifier = modifier,
-            navigationIcon = onNavigateUp?.let {
-                {
-                    IconButton(
-                        onClick = it,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null,
-                        )
-                    }
-                }
-            },
-            actions = actions,
-            backgroundColor = MaterialTheme.colors.primary,
-            elevation = elevation,
-        )
-        if (titleCentered) {
-            ProvideTextStyle(value = MaterialTheme.typography.h5) {
-                CompositionLocalProvider(
-                    LocalContentAlpha provides ContentAlpha.high,
-                ) {
+    SmallTopAppBar(
+        title = {
+            Column {
+                Text(
+                    text = title,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                )
+                if (!subtitle.isNullOrEmpty()) {
                     Text(
-                        text = title,
-                        color = MaterialTheme.colors.primary,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.Center),
+                        text = subtitle,
+                        modifier = Modifier.alpha(ContentAlpha.medium),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                 }
             }
-        }
-    }
+        },
+        modifier = modifier,
+        navigationIcon = onNavigateUp?.let {
+            {
+                IconButton(
+                    onClick = it,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                    )
+                }
+            }
+        } ?: {},
+        actions = actions,
+        windowInsets = windowInsets,
+        colors = colors,
+        scrollBehavior = scrollBehavior,
+    )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
-fun PreviewTopAppBarWithNavigationIcon() {
+private fun PreviewTopAppBarWithNavigationIcon() {
     SampleTheme {
         TopAppBar(
             title = "Page title",
-        ) { }
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
-fun PreviewTopAppBarWithSubtitle() {
+private fun PreviewTopAppBarWithSubtitle() {
     SampleTheme {
         TopAppBar(
             title = "Page title",
             subtitle = "Page subtitle",
-        ) { }
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
-fun PreviewTopAppBarWithAction() {
+private fun PreviewTopAppBarWithAction() {
     SampleTheme {
         TopAppBar(
             title = "Page title",
@@ -142,9 +129,10 @@ fun PreviewTopAppBarWithAction() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
-@Preview
-fun PreviewTopAppBarWithNavigationIconAndAction() {
+private fun PreviewTopAppBarWithNavigationIconAndAction() {
     SampleTheme {
         TopAppBar(
             title = "Page title",

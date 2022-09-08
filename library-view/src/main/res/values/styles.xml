@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2022 Roberto Leinardi.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,17 +20,11 @@
 
     <style name="SpeedDial.Base" />
 
-    <style name="SpeedDial.Base.FabLabelStyle">
+    <style name="SpeedDial.Base.FabLabelStyle" parent="Widget.Material3.Chip.Assist.Elevated">
+        <item name="chipStrokeColor">?attr/colorOnSurface</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
         <item name="android:maxWidth">@dimen/sd_label_max_width</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
-        <item name="android:textColor">@color/sd_label_text_color</item>
     </style>
 
-    <style name="SpeedDial.FabLabelStyle" parent="SpeedDial.Base.FabLabelStyle">
-        <item name="android:textStyle">bold</item>
-    </style>
 </resources>

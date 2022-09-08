@@ -155,9 +155,9 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 |    +--- androidx.appcompat:appcompat:1.5.1 (*)
 |    +--- androidx.cardview:cardview:1.0.0
 |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.5.0-rc01 (*)
-|    \--- com.google.android.material:material:1.6.1
+|    \--- com.google.android.material:material:1.7.0-rc01
 |         +--- androidx.annotation:annotation:1.2.0 -> 1.5.0-rc01 (*)
-|         +--- androidx.appcompat:appcompat:1.1.0 -> 1.5.1 (*)
+|         +--- androidx.appcompat:appcompat:1.5.0 -> 1.5.1 (*)
 |         +--- androidx.cardview:cardview:1.0.0 (*)
 |         +--- androidx.coordinatorlayout:coordinatorlayout:1.1.0
 |         |    +--- androidx.annotation:annotation:1.1.0 -> 1.5.0-rc01 (*)
@@ -168,7 +168,7 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 |         |    +--- androidx.appcompat:appcompat:1.2.0 -> 1.5.1 (*)
 |         |    +--- androidx.core:core:1.3.2 -> 1.9.0 (*)
 |         |    \--- androidx.constraintlayout:constraintlayout-core:1.0.4
-|         +--- androidx.core:core:1.5.0 -> 1.9.0 (*)
+|         +--- androidx.core:core:1.6.0 -> 1.9.0 (*)
 |         +--- androidx.drawerlayout:drawerlayout:1.1.1 (*)
 |         +--- androidx.dynamicanimation:dynamicanimation:1.0.0
 |         |    +--- androidx.core:core:1.0.0 -> 1.9.0 (*)
@@ -205,8 +205,6 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 +--- androidx.constraintlayout:constraintlayout:2.1.4 (*)
 +--- androidx.recyclerview:recyclerview:1.2.1 (*)
 +--- project :library-compose
-|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10 (*)
-|    +--- androidx.appcompat:appcompat:1.5.1 (*)
 |    +--- androidx.compose.material:material:1.3.0-beta02
 |    |    +--- androidx.compose.animation:animation:1.0.0 -> 1.3.0-beta02
 |    |    |    +--- androidx.annotation:annotation:1.1.0 -> 1.5.0-rc01 (*)
@@ -324,6 +322,23 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 |    |    +--- androidx.lifecycle:lifecycle-viewmodel:2.3.0 -> 2.5.1 (*)
 |    |    +--- androidx.savedstate:savedstate:1.1.0 -> 1.2.0 (*)
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10
+|    +--- androidx.compose.material3:material3:1.0.0-beta01
+|    |    +--- androidx.compose.animation:animation-core:1.1.1 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.foundation:foundation:1.2.0 (*)
+|    |    +--- androidx.compose.foundation:foundation-layout:1.2.0 (*)
+|    |    +--- androidx.compose.material:material-icons-core:1.0.2 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.material:material-ripple:1.0.0 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.runtime:runtime:1.0.1 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.ui:ui:1.1.1 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.ui:ui-graphics:1.0.1 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.ui:ui-text:1.3.0-beta01 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.compose.ui:ui-util:1.0.0 -> 1.3.0-beta02 (*)
+|    |    +--- androidx.lifecycle:lifecycle-runtime:2.3.0 -> 2.5.1 (*)
+|    |    +--- androidx.lifecycle:lifecycle-viewmodel:2.3.0 -> 2.5.1 (*)
+|    |    +--- androidx.savedstate:savedstate-ktx:1.2.0 (*)
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10 (*)
+|    +--- androidx.appcompat:appcompat:1.5.1 (*)
 |    +--- androidx.compose.runtime:runtime:1.3.0-beta02 (*)
 |    +--- androidx.compose.ui:ui-tooling:1.3.0-beta02
 |    |    +--- androidx.activity:activity-compose:1.3.0 -> 1.5.1
@@ -369,7 +384,6 @@ releaseRuntimeClasspath - Runtime classpath of compilation 'release' (target  (a
 |    +--- androidx.compose.ui:ui:1.3.0-beta01 -> 1.3.0-beta02 (*)
 |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 (*)
 +--- androidx.activity:activity-compose:1.5.1 (*)
-+--- androidx.compose.material:material:1.3.0-beta02 (*)
 +--- androidx.compose.runtime:runtime:1.3.0-beta02 (*)
 +--- androidx.compose.ui:ui-tooling:1.3.0-beta02 (*)
 +--- androidx.compose.ui:ui:1.3.0-beta02 (*)
