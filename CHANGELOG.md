@@ -1,10 +1,13 @@
 # Change Log
 
-- Added some ProvidableCompositionLocals and improved Compose sample
+## Compose [2.0.0-alpha01] - 2022-09-13
+
+- Migrated library to Material 3
+
 
 ## Compose [1.0.0-alpha04] - 2022-05-17
 
-- Added optional label to main FAB
+- Added some ProvidableCompositionLocals and improved Compose sample
 
 ## Compose [1.0.0-alpha03] - 2022-05-16
 

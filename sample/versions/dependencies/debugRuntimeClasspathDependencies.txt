@@ -89,6 +89,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20 -> 1.9.0 (*)
 |    |    |    |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.7.3 (*)
 |    |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20 -> 1.9.0 (*)
+|    |    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
@@ -107,6 +108,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    |    \--- com.google.guava:listenablefuture:1.0
 |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-runtime-ktx:2.6.1 (c)
@@ -137,6 +139,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    +--- androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
+|    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    \--- androidx.lifecycle:lifecycle-process:2.6.1 (c)
 |    |    +--- androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1
 |    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.6.0 (*)
@@ -147,6 +150,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (*)
 |    |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-runtime-ktx:2.6.1 (c)
@@ -164,6 +168,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 -> 1.7.3 (*)
 |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
@@ -213,6 +218,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    +--- androidx.startup:startup-runtime:1.1.1 (*)
 |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
@@ -244,6 +250,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (*)
 |    |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |    |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
 |    |    |    |    +--- androidx.lifecycle:lifecycle-runtime-ktx:2.6.1 (c)
@@ -328,10 +335,6 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 +--- androidx.constraintlayout:constraintlayout:2.1.4 (*)
 +--- androidx.recyclerview:recyclerview:1.3.1 (*)
 +--- project :library-compose
-|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0 (*)
-|    +--- androidx.customview:customview:1.2.0-alpha02 (*)
-|    +--- androidx.customview:customview-poolingcontainer:1.0.0 (*)
-|    +--- androidx.appcompat:appcompat:1.6.1 (*)
 |    +--- androidx.compose.material:material:1.6.0-alpha03
 |    |    \--- androidx.compose.material:material-android:1.6.0-alpha03
 |    |         +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
@@ -360,6 +363,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |         |         |         |         |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |         |         |         |         |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 -> 1.7.3 (*)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
@@ -372,6 +376,7 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |         |         |         |         |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |         |         |         |         |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 -> 1.7.3 (*)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-common-java8:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
 |    |         |         |         |         |    |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
@@ -551,10 +556,9 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22 -> 1.9.0
 |    |         +--- androidx.compose.material:material-icons-core:1.6.0-alpha03 (c)
 |    |         \--- androidx.compose.material:material-ripple:1.6.0-alpha03 (c)
-|    +--- androidx.compose.runtime:runtime:1.6.0-alpha03 (*)
-|    +--- androidx.compose.ui:ui-tooling:1.6.0-alpha03
-|    |    \--- androidx.compose.ui:ui-tooling-android:1.6.0-alpha03
-|    |         +--- androidx.activity:activity-compose:1.7.0 -> 1.7.2
+|    +--- androidx.compose.material3:material3:1.2.0-alpha05
+|    |    \--- androidx.compose.material3:material3-android:1.2.0-alpha05
+|    |         +--- androidx.activity:activity-compose:1.5.0 -> 1.7.2
 |    |         |    +--- androidx.activity:activity-ktx:1.7.2 (*)
 |    |         |    +--- androidx.compose.runtime:runtime:1.0.1 -> 1.6.0-alpha03 (*)
 |    |         |    +--- androidx.compose.runtime:runtime-saveable:1.0.1 -> 1.6.0-alpha03 (*)
@@ -563,6 +567,40 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
 |    |         |    +--- androidx.activity:activity:1.7.2 (c)
 |    |         |    \--- androidx.activity:activity-ktx:1.7.2 (c)
+|    |         +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
+|    |         +--- androidx.compose.animation:animation-core:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.foundation:foundation:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.foundation:foundation-layout:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.material:material-icons-core:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.material:material-ripple:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.runtime:runtime:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.ui:ui-graphics:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.ui:ui-text:1.6.0-alpha03 (*)
+|    |         +--- androidx.compose.ui:ui-util:1.6.0-alpha03 (*)
+|    |         +--- androidx.lifecycle:lifecycle-common-java8:2.6.1
+|    |         |    +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
+|    |         |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (*)
+|    |         |    +--- androidx.lifecycle:lifecycle-common:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-livedata:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-livedata-core:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-runtime-ktx:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-viewmodel:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1 (c)
+|    |         |    +--- androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1 (c)
+|    |         |    \--- androidx.lifecycle:lifecycle-process:2.6.1 (c)
+|    |         +--- androidx.lifecycle:lifecycle-runtime:2.6.1 (*)
+|    |         +--- androidx.lifecycle:lifecycle-viewmodel:2.6.1 (*)
+|    |         +--- androidx.savedstate:savedstate-ktx:1.2.1 (*)
+|    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22 -> 1.9.0
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0 (*)
+|    +--- androidx.customview:customview:1.2.0-alpha02 (*)
+|    +--- androidx.customview:customview-poolingcontainer:1.0.0 (*)
+|    +--- androidx.appcompat:appcompat:1.6.1 (*)
+|    +--- androidx.compose.runtime:runtime:1.6.0-alpha03 (*)
+|    +--- androidx.compose.ui:ui-tooling:1.6.0-alpha03
+|    |    \--- androidx.compose.ui:ui-tooling-android:1.6.0-alpha03
+|    |         +--- androidx.activity:activity-compose:1.7.0 -> 1.7.2 (*)
 |    |         +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
 |    |         +--- androidx.compose.animation:animation:1.6.0-alpha03 (*)
 |    |         +--- androidx.compose.material:material:1.0.0 -> 1.6.0-alpha03 (*)
@@ -598,13 +636,13 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    |         +--- androidx.savedstate:savedstate-ktx:1.2.1 (*)
 |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22 -> 1.9.0
 |    |         +--- androidx.compose.ui:ui:1.6.0-alpha03 (c)
-|    |         +--- androidx.compose.ui:ui-text:1.6.0-alpha03 (c)
 |    |         +--- androidx.compose.ui:ui-tooling-data:1.6.0-alpha03 (c)
 |    |         +--- androidx.compose.ui:ui-tooling-preview:1.6.0-alpha03 (c)
-|    |         +--- androidx.compose.ui:ui-util:1.6.0-alpha03 (c)
 |    |         +--- androidx.compose.ui:ui-geometry:1.6.0-alpha03 (c)
 |    |         +--- androidx.compose.ui:ui-graphics:1.6.0-alpha03 (c)
-|    |         \--- androidx.compose.ui:ui-unit:1.6.0-alpha03 (c)
+|    |         +--- androidx.compose.ui:ui-text:1.6.0-alpha03 (c)
+|    |         +--- androidx.compose.ui:ui-unit:1.6.0-alpha03 (c)
+|    |         \--- androidx.compose.ui:ui-util:1.6.0-alpha03 (c)
 |    +--- androidx.compose.ui:ui:1.6.0-alpha03 (*)
 |    \--- androidx.core:core-ktx:1.12.0-rc01 (*)
 +--- com.google.accompanist:accompanist-systemuicontroller:0.33.0-alpha
@@ -613,7 +651,6 @@ debugRuntimeClasspath - Runtime classpath of /debug.
 |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 -> 1.7.3 (*)
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0 (*)
 +--- androidx.activity:activity-compose:1.7.2 (*)
-+--- androidx.compose.material:material:1.6.0-alpha03 (*)
 +--- androidx.compose.runtime:runtime:1.6.0-alpha03 (*)
 +--- androidx.compose.ui:ui-tooling:1.6.0-alpha03 (*)
 +--- androidx.compose.ui:ui:1.6.0-alpha03 (*)
