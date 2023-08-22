@@ -3,47 +3,89 @@
 Project ':sample'
 ------------------------------------------------------------
 
-debugAndroidTestRuntimeClasspath - Runtime classpath of compilation 'debugAndroidTest' (target  (androidJvm)).
-+--- androidx.test.espresso:espresso-core:3.3.0
-|    +--- androidx.test:runner:1.3.0 -> 1.4.0
-|    |    +--- androidx.annotation:annotation:1.0.0 -> 1.5.0-rc01
-|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.7.10
-|    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10
-|    |    |         \--- org.jetbrains:annotations:13.0 -> 20.1.0
-|    |    +--- androidx.test:monitor:1.4.0
-|    |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.5.0-rc01 (*)
-|    |    +--- androidx.test.services:storage:1.4.0
-|    |    |    +--- androidx.test:monitor:1.4.0 (*)
-|    |    |    \--- com.google.code.findbugs:jsr305:2.0.1
-|    |    \--- junit:junit:4.12
+debugAndroidTestRuntimeClasspath - Runtime classpath of /debugAndroidTest.
++--- androidx.test.espresso:espresso-core:3.5.1
+|    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0
+|    |    \--- androidx.annotation:annotation-jvm:1.6.0
+|    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.0 -> 1.9.0
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.0
+|    |              \--- org.jetbrains:annotations:13.0 -> 23.0.0
+|    +--- androidx.test:core:1.5.0
+|    |    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    |    +--- androidx.test:monitor:1.6.0 -> 1.6.1
+|    |    |    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    |    |    +--- androidx.test:annotation:1.0.1
+|    |    |    |    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    |    |    |    \--- androidx.annotation:annotation-experimental:1.1.0 -> 1.3.0
+|    |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.7.10 -> 1.9.0 (*)
+|    |    |    \--- androidx.tracing:tracing:1.0.0
+|    |    |         \--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
+|    |    +--- androidx.test.services:storage:1.4.2
+|    |    |    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    |    |    +--- androidx.test:monitor:1.6.0 -> 1.6.1 (*)
+|    |    |    +--- com.google.code.findbugs:jsr305:2.0.2
+|    |    |    \--- androidx.test:annotation:1.0.1 (*)
+|    |    +--- androidx.lifecycle:lifecycle-common:2.3.1 -> 2.6.1
+|    |    |    +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 1.9.0 (*)
+|    |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4 -> 1.7.3
+|    |    |         +--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3
+|    |    |         |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3
+|    |    |         |         +--- org.jetbrains:annotations:23.0.0
+|    |    |         |         +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.7.3
+|    |    |         |         |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3 (c)
+|    |    |         |         |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3 (c)
+|    |    |         |         |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3 (c)
+|    |    |         |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.20 -> 1.9.0
+|    |    |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.7.3 (*)
+|    |    +--- androidx.tracing:tracing:1.0.0 (*)
+|    |    +--- com.google.guava:listenablefuture:1.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.10 -> 1.9.0 (*)
+|    |    \--- androidx.concurrent:concurrent-futures:1.1.0
+|    |         +--- androidx.annotation:annotation:1.1.0 -> 1.6.0 (*)
+|    |         \--- com.google.guava:listenablefuture:1.0
+|    +--- androidx.test:runner:1.5.2
+|    |    +--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    |    +--- androidx.test:annotation:1.0.1 (*)
+|    |    +--- androidx.test:monitor:1.6.1 (*)
+|    |    +--- androidx.test.services:storage:1.4.2 (*)
+|    |    +--- androidx.tracing:tracing:1.0.0 (*)
+|    |    \--- junit:junit:4.13.2
 |    |         \--- org.hamcrest:hamcrest-core:1.3
-|    +--- androidx.test.espresso:espresso-idling-resource:3.3.0
+|    +--- androidx.test.espresso:espresso-idling-resource:3.5.1
 |    +--- com.squareup:javawriter:2.1.1
 |    +--- javax.inject:javax.inject:1
 |    +--- org.hamcrest:hamcrest-library:1.3
 |    |    \--- org.hamcrest:hamcrest-core:1.3
 |    +--- org.hamcrest:hamcrest-integration:1.3
 |    |    \--- org.hamcrest:hamcrest-library:1.3 (*)
-|    \--- com.google.code.findbugs:jsr305:2.0.1
-+--- androidx.test.ext:junit-ktx:1.1.3
-|    +--- androidx.test.ext:junit:1.1.3
-|    |    +--- junit:junit:4.12 (*)
-|    |    +--- androidx.test:core:1.4.0
-|    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.5.0-rc01 (*)
-|    |    |    +--- androidx.test:monitor:1.4.0 (*)
-|    |    |    \--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.5.1
-|    |    |         \--- androidx.annotation:annotation:1.1.0 -> 1.5.0-rc01 (*)
-|    |    +--- androidx.test:monitor:1.4.0 (*)
-|    |    \--- androidx.annotation:annotation:1.0.0 -> 1.5.0-rc01 (*)
-|    \--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.5.1 (*)
-+--- androidx.test:runner:1.4.0 (*)
-+--- androidx.lifecycle:lifecycle-common:{strictly 2.5.1} -> 2.5.1 (c)
-+--- androidx.annotation:annotation:{strictly 1.5.0-rc01} -> 1.5.0-rc01 (c)
-+--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.7.10} -> 1.7.10 (c)
-+--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.7.10} -> 1.7.10 (c)
-\--- org.jetbrains:annotations:{strictly 20.1.0} -> 20.1.0 (c)
+|    +--- com.google.code.findbugs:jsr305:2.0.2
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.10 -> 1.9.0 (*)
+|    \--- androidx.test:annotation:1.0.1 (*)
++--- androidx.test.ext:junit-ktx:1.1.5
+|    +--- androidx.test.ext:junit:1.1.5
+|    |    +--- junit:junit:4.13.2 (*)
+|    |    +--- androidx.test:core:1.5.0 (*)
+|    |    +--- androidx.test:monitor:1.6.1 (*)
+|    |    \--- androidx.annotation:annotation:1.2.0 -> 1.6.0 (*)
+|    +--- androidx.lifecycle:lifecycle-common:2.3.1 -> 2.6.1 (*)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.7.10 -> 1.9.0 (*)
++--- androidx.test:runner:1.5.2 (*)
++--- androidx.annotation:annotation:{strictly 1.6.0} -> 1.6.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.0} -> 1.9.0 (c)
++--- androidx.lifecycle:lifecycle-common:{strictly 2.6.1} -> 2.6.1 (c)
++--- androidx.tracing:tracing:{strictly 1.0.0} -> 1.0.0 (c)
++--- androidx.concurrent:concurrent-futures:{strictly 1.1.0} -> 1.1.0 (c)
++--- androidx.annotation:annotation-experimental:{strictly 1.3.0} -> 1.3.0 (c)
++--- androidx.annotation:annotation-jvm:{strictly 1.6.0} -> 1.6.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.0} -> 1.9.0 (c)
++--- org.jetbrains:annotations:{strictly 23.0.0} -> 23.0.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-android:{strictly 1.7.3} -> 1.7.3 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.7.3} -> 1.7.3 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:{strictly 1.7.3} -> 1.7.3 (c)
+\--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:{strictly 1.7.3} -> 1.7.3 (c)
 
-(c) - dependency constraint
-(*) - dependencies omitted (listed previously)
+(c) - A dependency constraint, not a dependency. The dependency affected by the constraint occurs elsewhere in the tree.
+(*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
 
 A web-based, searchable dependency report is available by adding the --scan option.

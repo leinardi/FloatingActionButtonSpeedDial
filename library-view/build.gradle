@@ -16,7 +16,7 @@
 
 plugins {
     id 'speeddial.android-library-conventions'
-    id 'speeddial.artifact-publish-library-conventions'
+    //    id 'speeddial.artifact-publish-library-conventions' // TODO
     alias(libs.plugins.errorprone)
     //    alias(libs.plugins.checkstyle) // TODO
 }
@@ -28,6 +28,7 @@ ext {
 }
 
 android {
+    namespace = "com.leinardi.android.speeddial"
     defaultConfig {
         versionName config.android.version_name_view
         consumerProguardFiles 'consumer-proguard-rules.pro'

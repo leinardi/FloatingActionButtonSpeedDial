@@ -199,7 +199,7 @@ val LocalSpeedDialTag: ProvidableCompositionLocal<MutableState<Any>> = compositi
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialCollapsed() {
+private fun PreviewSpeedDialCollapsed() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Collapsed,
@@ -212,7 +212,7 @@ fun PreviewSpeedDialCollapsed() {
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialExpanded() {
+private fun PreviewSpeedDialExpanded() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Expanded,
@@ -225,7 +225,7 @@ fun PreviewSpeedDialExpanded() {
 @ExperimentalAnimationApi
 @Preview
 @Composable
-fun PreviewSpeedDialExpandedWithActions() {
+private fun PreviewSpeedDialExpandedWithActions() {
     MaterialTheme {
         SpeedDial(
             state = SpeedDialState.Expanded,

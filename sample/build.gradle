@@ -19,6 +19,7 @@ plugins {
 }
 
 android {
+    namespace = "com.leinardi.android.speeddial.sample"
     defaultConfig {
         applicationId config.android.applicationId
         archivesBaseName = "floating_action_button_speed_dial"

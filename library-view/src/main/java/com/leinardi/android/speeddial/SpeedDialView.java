@@ -1125,9 +1125,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         public SnackbarBehavior(Context context, AttributeSet attrs) {
             super(context, attrs);
             TypedArray a = context.obtainStyledAttributes(attrs,
-                    R.styleable.FloatingActionButton_Behavior_Layout);
+                    com.google.android.material.R.styleable.FloatingActionButton_Behavior_Layout);
             mAutoHideEnabled = a.getBoolean(
-                    R.styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide,
+                    com.google.android.material.R.styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide,
                     AUTO_HIDE_DEFAULT);
             a.recycle();
         }

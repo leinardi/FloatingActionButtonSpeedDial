@@ -19,7 +19,7 @@ plugins {
     id 'kotlin-kapt'
     id 'speeddial.android-library-conventions'
     id 'speeddial.detekt-conventions'
-    id 'speeddial.artifact-publish-library-conventions'
+    //    id 'speeddial.artifact-publish-library-conventions' // TODO
 }
 
 ext {
@@ -29,6 +29,7 @@ ext {
 }
 
 android {
+    namespace = "com.leinardi.android.speeddial.compose"
     defaultConfig {
         versionName config.android.version_name_compose
         minSdk config.android.minSdkCompose

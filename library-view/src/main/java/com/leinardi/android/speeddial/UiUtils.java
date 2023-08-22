@@ -65,7 +65,7 @@ public class UiUtils {
     public static int getOnSecondaryColor(Context context) {
         int colorAttr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = R.attr.colorOnSecondary;
+            colorAttr = com.google.android.material.R.attr.colorOnSecondary;
         } else {
             //Get colorAccent defined for AppCompat
             colorAttr = context.getResources().getIdentifier("colorOnSecondary", "attr", context.getPackageName());

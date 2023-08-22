@@ -21,7 +21,7 @@
 
     <uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="33" />
+        android:targetSdkVersion="34" />
 
     <permission
         android:name="com.leinardi.android.speeddial.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -29,14 +29,15 @@
 
     <uses-permission android:name="com.leinardi.android.speeddial.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- To store the heap dumps and leak analysis results. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- To allow starting foreground services on Android P+ - https://developer.android.com/preview/behavior-changes#fg-svc -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- To allow posting notifications on Android 13 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name="com.leinardi.android.speeddial.sample.SampleApp"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
+        android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -148,7 +149,7 @@
         </activity-alias>
 
         <activity
-            android:name="leakcanary.internal.RequestStoragePermissionActivity"
+            android:name="leakcanary.internal.RequestPermissionActivity"
             android:excludeFromRecents="true"
             android:icon="@mipmap/leak_canary_icon"
             android:label="@string/leak_canary_storage_permission_activity_label"
@@ -179,6 +180,12 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
             </intent-filter>
         </receiver>
     </application>

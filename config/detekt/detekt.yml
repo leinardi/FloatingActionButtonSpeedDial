@@ -10,6 +10,7 @@ build:
 config:
   validation: true
   warningsAsErrors: true # Custom
+  checkExhaustiveness: true # Custom
   # when writing own rules with new properties, exclude the property path e.g.: 'my_rule_set,.*>.*>[my_property]'
   excludes: ''
 
@@ -18,35 +19,48 @@ formatting: # KtLint
   android: true # Custom
   autoCorrect: true
   AnnotationOnSeparateLine:
-    active: false
+    active: false # Custom
     autoCorrect: true
+    indentSize: 4
   AnnotationSpacing:
     active: true # Custom
     autoCorrect: true
   ArgumentListWrapping:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
-    maxLineLength: 120
+    maxLineLength: 150 # Custom
   BlockCommentInitialStarAlignment:
-    active: true # Custom
+    active: true
     autoCorrect: true
   ChainWrapping:
     active: true
     autoCorrect: true
+    indentSize: 4
+  ClassName:
+    active: false
   CommentSpacing:
     active: true
     autoCorrect: true
   CommentWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  ContextReceiverMapping:
     active: true # Custom
     autoCorrect: true
+    maxLineLength: 150 # Custom
     indentSize: 4
   DiscouragedCommentLocation:
     active: true # Custom
     autoCorrect: true
   EnumEntryNameCase:
-    active: true # Custom
+    active: true
     autoCorrect: true
+  EnumWrapping:
+    active: false
+    autoCorrect: true
+    indentSize: 4
   Filename:
     active: true
   FinalNewline:
@@ -54,11 +68,35 @@ formatting: # KtLint
     autoCorrect: true
     insertFinalNewLine: true
   FunKeywordSpacing:
-    active: true # Custom
+    active: true
+    autoCorrect: true
+  FunctionName:
+    active: false
+  FunctionReturnTypeSpacing:
+    active: true
+    autoCorrect: true
+    maxLineLength: 150 # Custom
+  FunctionSignature:
+    active: false
+    autoCorrect: true
+    forceMultilineWhenParameterCountGreaterOrEqualThan: 2147483647
+    functionBodyExpressionWrapping: 'default'
+    maxLineLength: 150 # Custom
+    indentSize: 4
+  FunctionStartOfBodySpacing:
+    active: true
     autoCorrect: true
   FunctionTypeReferenceSpacing:
-    active: true # Custom
+    active: true
     autoCorrect: true
+  IfElseBracing:
+    active: false
+    autoCorrect: true
+    indentSize: 4
+  IfElseWrapping:
+    active: false
+    autoCorrect: true
+    indentSize: 4
   ImportOrdering:
     active: true
     autoCorrect: true
@@ -68,7 +106,7 @@ formatting: # KtLint
     autoCorrect: true
     indentSize: 4
   KdocWrapping:
-    active: true # Custom
+    active: true
     autoCorrect: true
     indentSize: 4
   MaximumLineLength:
@@ -76,25 +114,42 @@ formatting: # KtLint
     maxLineLength: 120
     ignoreBackTickedIdentifier: false
   ModifierListSpacing:
-    active: true # Custom
+    active: true
     autoCorrect: true
   ModifierOrdering:
     active: true
     autoCorrect: true
   MultiLineIfElse:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  MultilineExpressionWrapping:
     active: false
     autoCorrect: true
+    indentSize: 4
   NoBlankLineBeforeRbrace:
+    active: true
+    autoCorrect: true
+  NoBlankLineInList:
+    active: true # Custom
+    autoCorrect: true
+  NoBlankLinesInChainedMethodCalls:
     active: true
     autoCorrect: true
   NoConsecutiveBlankLines:
     active: true
     autoCorrect: true
+  NoConsecutiveComments:
+    active: false
   NoEmptyClassBody:
     active: true
     autoCorrect: true
-  NoEmptyFirstLineInMethodBlock:
+  NoEmptyFirstLineInClassBody:
     active: true # Custom
+    autoCorrect: true
+    indentSize: 4
+  NoEmptyFirstLineInMethodBlock:
+    active: true
     autoCorrect: true
   NoLineBreakAfterElse:
     active: true
@@ -108,6 +163,10 @@ formatting: # KtLint
   NoSemicolons:
     active: true
     autoCorrect: true
+  NoSingleLineBlockComment:
+    active: false
+    autoCorrect: true
+    indentSize: 4
   NoTrailingSpaces:
     active: true
     autoCorrect: true
@@ -120,16 +179,34 @@ formatting: # KtLint
   NoWildcardImports:
     active: false # Custom duplicate of WildcardImport
     packagesToUseImportOnDemandProperty: 'java.util.*,kotlinx.android.synthetic.**'
+  NullableTypeSpacing:
+    active: false
+    autoCorrect: true
   PackageName:
+    active: false # Custom
+    autoCorrect: true
+  ParameterListSpacing:
     active: false
     autoCorrect: true
   ParameterListWrapping:
     active: true
     autoCorrect: true
+    maxLineLength: 150 # Custom
+    indentSize: 4
+  ParameterWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  PropertyName:
+    active: false
+  PropertyWrapping:
+    active: true
+    autoCorrect: true
     indentSize: 4
     maxLineLength: 150 # Custom
   SpacingAroundAngleBrackets:
-    active: true # Custom
+    active: true
     autoCorrect: true
   SpacingAroundColon:
     active: true
@@ -144,7 +221,7 @@ formatting: # KtLint
     active: true
     autoCorrect: true
   SpacingAroundDoubleColon:
-    active: true # Custom
+    active: true
     autoCorrect: true
   SpacingAroundKeyword:
     active: true
@@ -159,31 +236,52 @@ formatting: # KtLint
     active: true
     autoCorrect: true
   SpacingAroundUnaryOperator:
-    active: false
+    active: true
     autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
-    active: false
+    active: true
     autoCorrect: true
   SpacingBetweenDeclarationsWithComments:
-    active: false
+    active: true
+    autoCorrect: true
+  SpacingBetweenFunctionNameAndOpeningParenthesis:
+    active: true
     autoCorrect: true
   StringTemplate:
     active: true
     autoCorrect: true
-  TrailingComma:
+  StringTemplateIndent:
     active: false
     autoCorrect: true
-    allowTrailingComma: false
-    allowTrailingCommaOnCallSite: false
+    indentSize: 4
+  TrailingCommaOnCallSite:
+    active: false
+    autoCorrect: true
+    useTrailingCommaOnCallSite: true
+  TrailingCommaOnDeclarationSite:
+    active: false
+    autoCorrect: true
+    useTrailingCommaOnDeclarationSite: true
+  TryCatchFinallySpacing:
+    active: false
+    autoCorrect: true
+    indentSize: 4
   TypeArgumentListSpacing:
     active: true # Custom
     autoCorrect: true
-  UnnecessaryParenthesesBeforeTrailingLambda:
-    active: true # Custom
-    autoCorrect: true
-  Wrapping:
+    indentSize: 4
+  TypeParameterListSpacing:
     active: false
     autoCorrect: true
+    indentSize: 4
+  UnnecessaryParenthesesBeforeTrailingLambda:
+    active: true
+    autoCorrect: true
+  Wrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 150 # Custom
 
 processors:
   active: true
@@ -208,9 +306,9 @@ console-reports:
     - 'ProjectStatisticsReport'
     - 'ComplexityReport'
     - 'NotificationReport'
-    #  - 'FindingsReport'
+    - 'FindingsReport'
     - 'FileBasedFindingsReport'
-    - 'LiteFindingsReport'
+    # - 'LiteFindingsReport'
 
 output-reports:
   active: true
@@ -218,6 +316,8 @@ output-reports:
   # - 'TxtOutputReport'
   # - 'XmlOutputReport'
   # - 'HtmlOutputReport'
+  # - 'MdOutputReport'
+  # - 'SarifOutputReport'
 
 comments:
   active: true
@@ -234,6 +334,20 @@ comments:
   EndOfSentenceFormat:
     active: false
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  KDocReferencesNonPublicProperty:
+    active: false
+    excludes:
+      [
+        '**/test/**',
+        '**/androidTest/**',
+        '**/commonTest/**',
+        '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
+        '**/jsTest/**',
+        '**/nativeTest/**',
+        '**/iosTest/**',
+      ]
   OutdatedDocumentation:
     active: true # Custom
     matchTypeParameters: true
@@ -247,13 +361,17 @@ comments:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     searchInNestedClass: true
     searchInInnerClass: true
     searchInInnerObject: true
     searchInInnerInterface: true
+    searchInProtectedClass: false
   UndocumentedPublicFunction:
     active: false
     excludes:
@@ -262,9 +380,13 @@ comments:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
+    searchProtectedFunction: false
   UndocumentedPublicProperty:
     active: false
     excludes:
@@ -273,12 +395,19 @@ comments:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
+    searchProtectedProperty: false
 
 complexity:
   active: true
+  CognitiveComplexMethod:
+    active: false
+    threshold: 15
   ComplexCondition:
     active: true
     threshold: 6 # Custom
@@ -287,7 +416,8 @@ complexity:
     threshold: 10
     includeStaticDeclarations: false
     includePrivateDeclarations: false
-  ComplexMethod:
+    ignoreOverloaded: false
+  CyclomaticComplexMethod:
     active: true
     threshold: 20 # Custom
     ignoreSingleWhenExpression: true # Custom
@@ -303,12 +433,14 @@ complexity:
       - 'run'
       - 'use'
       - 'with'
+    ignoreAnnotated: # Custom
+      - 'Composable'
   LabeledExpression:
     active: false
     ignoredLabels: []
   LargeClass:
     active: true
-    threshold: 600
+    threshold: 800 # Custom
   LongMethod:
     active: true
     threshold: 60
@@ -317,9 +449,9 @@ complexity:
       - 'Composable'
   LongParameterList:
     active: true
-    functionThreshold: 8
-    constructorThreshold: 8
-    ignoreDefaultParameters: false
+    functionThreshold: 6
+    constructorThreshold: 7
+    ignoreDefaultParameters: true # Custom
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
     ignoreAnnotated: # Custom
@@ -337,6 +469,17 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 5 # Custom
+    ignoreAnnotated: # Custom
+      - 'Composable'
+  NestedScopeFunctions:
+    active: false
+    threshold: 1
+    functions:
+      - 'kotlin.apply'
+      - 'kotlin.run'
+      - 'kotlin.with'
+      - 'kotlin.let'
+      - 'kotlin.also'
   ReplaceSafeCallChainWithRun:
     active: true # Custom
   StringLiteralDuplication:
@@ -347,7 +490,10 @@ complexity:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     threshold: 3
@@ -362,7 +508,10 @@ complexity:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     thresholdInFiles: 11
@@ -379,19 +528,21 @@ coroutines:
   GlobalCoroutineUsage:
     active: true # Custom
   InjectDispatcher:
-    active: true # Custom
+    active: true
     dispatcherNames:
       - 'IO'
       - 'Default'
       - 'Unconfined'
   RedundantSuspendModifier:
-    active: true # Custom
+    active: true
   SleepInsteadOfDelay:
+    active: true
+  SuspendFunSwallowedCancellation:
     active: true # Custom
   SuspendFunWithCoroutineScopeReceiver:
     active: true # Custom
   SuspendFunWithFlowReturnType:
-    active: true # Custom
+    active: true
 
 empty-blocks:
   active: true
@@ -438,14 +589,17 @@ exceptions:
       - 'hashCode'
       - 'toString'
   InstanceOfCheckForException:
-    active: false
+    active: true
     excludes:
       [
         '**/test/**',
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
   NotImplementedDeclaration:
@@ -479,7 +633,10 @@ exceptions:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     exceptions:
@@ -502,7 +659,10 @@ exceptions:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     exceptionNames:
@@ -528,7 +688,6 @@ naming:
   BooleanPropertyNaming:
     active: false
     allowedPattern: '^(is|has|are)'
-    ignoreOverridden: true
   ClassNaming:
     active: true
     classPattern: '[A-Z][a-zA-Z0-9]*'
@@ -538,7 +697,6 @@ naming:
     parameterPattern: '([a-ln-z]|m[a-z])[A-Za-z0-9]*' # Custom
     privateParameterPattern: '([a-ln-z]|m[a-z])[A-Za-z0-9]*' # Custom
     excludeClassPattern: '$^'
-    ignoreOverridden: true
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][_A-Z0-9]*' # Custom
@@ -562,21 +720,22 @@ naming:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
     ignoreAnnotated: # Custom
       - 'Composable'
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
   InvalidPackageDeclaration:
-    active: false
+    active: true
     rootPackage: ''
     requireRootInDeclaration: false
   LambdaParameterNaming:
@@ -589,7 +748,7 @@ naming:
     active: true
     ignoreOverridden: true
   NoNameShadowing:
-    active: false
+    active: true
   NonBooleanPropertyPrefixedWithIs:
     active: false
   ObjectPropertyNaming:
@@ -619,12 +778,14 @@ naming:
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
 
 performance:
   active: true
   ArrayPrimitive:
     active: true
+  CouldBeSequence:
+    active: true # Custom
+    threshold: 3
   ForEachOnRange:
     active: true
     excludes:
@@ -633,7 +794,10 @@ performance:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
   SpreadOperator:
@@ -644,26 +808,33 @@ performance:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
+  UnnecessaryPartOfBinaryExpression:
+    active: true # Custom
   UnnecessaryTemporaryInstantiation:
     active: true
 
 potential-bugs:
   active: true
   AvoidReferentialEquality:
-    active: false
+    active: true
     forbiddenTypePatterns:
       - 'kotlin.String'
-  CastToNullableType:
+  CastNullableToNonNullableType:
     active: false
+  CastToNullableType:
+    active: true # Custom
   Deprecation:
     active: false
   DontDowncastCollectionTypes:
-    active: false
-  DoubleMutabilityForCollection:
     active: true # Custom
+  DoubleMutabilityForCollection:
+    active: true
     mutableTypes:
       - 'kotlin.collections.MutableList'
       - 'kotlin.collections.MutableMap'
@@ -673,10 +844,9 @@ potential-bugs:
       - 'java.util.HashSet'
       - 'java.util.LinkedHashMap'
       - 'java.util.HashMap'
-  DuplicateCaseInWhenExpression:
-    active: true
   ElseCaseInsteadOfExhaustiveWhen:
     active: false
+    ignoredSubjectTypes: []
   EqualsAlwaysReturnsTrueOrFalse:
     active: true
   EqualsWithHashCodeExist:
@@ -686,15 +856,22 @@ potential-bugs:
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
-    active: false
+    active: true
   IgnoredReturnValue:
-    active: true # Custom
-    restrictToAnnotatedMethods: true
+    active: true
+    restrictToConfig: true
     returnValueAnnotations:
+      - 'CheckResult'
       - '*.CheckResult'
+      - 'CheckReturnValue'
       - '*.CheckReturnValue'
     ignoreReturnValueAnnotations:
+      - 'CanIgnoreReturnValue'
       - '*.CanIgnoreReturnValue'
+    returnValueTypes:
+      - 'kotlin.sequences.Sequence'
+      - 'kotlinx.coroutines.flow.*Flow'
+      - 'java.util.stream.*Stream'
     ignoreFunctionCall: []
   ImplicitDefaultLocale:
     active: true
@@ -715,33 +892,35 @@ potential-bugs:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
       ]
     ignoreAnnotated: ['Inject'] # Custom
     ignoreOnClassesPattern: '(.*Activity|.*Fragment|.*ViewModel)' # Custom
   MapGetWithNotNullAssertionOperator:
-    active: true # Custom
+    active: true
   MissingPackageDeclaration:
     active: false
     excludes: ['**/*.kts']
-  MissingWhenCase:
-    active: true
-    allowElseExpression: true
   NullCheckOnMutableProperty:
     active: true # Custom
   NullableToStringCall:
     active: true # Custom
-  RedundantElseInWhen:
-    active: true
+  PropertyUsedBeforeDeclaration:
+    active: true # Custom
   UnconditionalJumpStatementInLoop:
     active: false
+  UnnecessaryNotNullCheck:
+    active: true # Custom
   UnnecessaryNotNullOperator:
     active: true
   UnnecessarySafeCall:
     active: true
   UnreachableCatchBlock:
-    active: false
+    active: true
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
@@ -750,47 +929,91 @@ potential-bugs:
   UnsafeCast:
     active: true
   UnusedUnaryOperator:
-    active: false
+    active: true
   UselessPostfixExpression:
-    active: true # Custom
+    active: true
   WrongEqualsTypeParameter:
     active: true
 
 style:
   active: true
+  AlsoCouldBeApply:
+    active: true # Custom
+  BracesOnIfStatements:
+    active: true # Custom
+    singleLine: 'never'
+    multiLine: 'always'
+  BracesOnWhenStatements:
+    active: false
+    singleLine: 'necessary'
+    multiLine: 'consistent'
   CanBeNonNullable:
     active: false
+  CascadingCallWrapping:
+    active: true # Custom
+    includeElvis: true
   ClassOrdering:
     active: true # Custom
   CollapsibleIfStatements:
     active: true # Custom
   DataClassContainsFunctions:
-    active: true # Custom
-    conversionFunctionPrefix: 'to'
+    active: false
+    conversionFunctionPrefix:
+      - 'to'
+    allowOperators: false
   DataClassShouldBeImmutable:
-    active: false
+    active: true # Custom
   DestructuringDeclarationWithTooManyEntries:
-    active: false
+    active: false # Custom
     maxDestructuringEntries: 3
+  DoubleNegativeLambda:
+    active: true # Custom
+    negativeFunctions:
+      - reason: 'Use `takeIf` instead.'
+        value: 'takeUnless'
+      - reason: 'Use `all` instead.'
+        value: 'none'
+    negativeFunctionNameParts:
+      - 'not'
+      - 'non'
   EqualsNullCall:
     active: true
   EqualsOnSignatureLine:
     active: true # Custom
   ExplicitCollectionElementAccessMethod:
-    active: false
-  ExplicitItLambdaParameter:
     active: true # Custom
+  ExplicitItLambdaParameter:
+    active: true
   ExpressionBodySyntax:
     active: true # Custom
     includeLineWrapping: true # Custom
+  ForbiddenAnnotation:
+    active: true # Custom
+    annotations:
+      - reason: 'it is a java annotation. Use `Suppress` instead.'
+        value: 'java.lang.SuppressWarnings'
+      - reason: 'it is a java annotation. Use `kotlin.Deprecated` instead.'
+        value: 'java.lang.Deprecated'
+      - reason: 'it is a java annotation. Use `kotlin.annotation.MustBeDocumented` instead.'
+        value: 'java.lang.annotation.Documented'
+      - reason: 'it is a java annotation. Use `kotlin.annotation.Target` instead.'
+        value: 'java.lang.annotation.Target'
+      - reason: 'it is a java annotation. Use `kotlin.annotation.Retention` instead.'
+        value: 'java.lang.annotation.Retention'
+      - reason: 'it is a java annotation. Use `kotlin.annotation.Repeatable` instead.'
+        value: 'java.lang.annotation.Repeatable'
+      - reason: 'Kotlin does not support @Inherited annotation, see https://youtrack.jetbrains.com/issue/KT-22265'
+        value: 'java.lang.annotation.Inherited'
   ForbiddenComment:
     active: true
-    values:
-      - 'FIXME'
-      - 'STOPSHIP'
-      - 'TODO'
+    comments:
+      - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+        value: 'FIXME'
+      - reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
+        value: 'STOPSHIP'
+      - reason: 'Forbidden TODO todo marker in comment, please do the changes.'
+        value: 'TODO'
     allowedPatterns: ''
-    customMessage: ''
   ForbiddenImport:
     active: false
     imports: []
@@ -798,32 +1021,24 @@ style:
   ForbiddenMethodCall:
     active: true # Custom
     methods:
-      - 'kotlin.io.print'
-      - 'kotlin.io.println'
-      - 'kotlin.TODO' # Custom
-  ForbiddenPublicDataClass:
-    active: true
-    excludes: ['**']
-    ignorePackages:
-      - '*.internal'
-      - '*.internal.*'
+      - reason: 'print does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.print'
+      - reason: 'println does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.println'
+  ForbiddenSuppress:
+    active: false
+    rules: []
   ForbiddenVoid:
-    active: true # Custom
+    active: true
     ignoreOverridden: false
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
-    excludedFunctions: ''
+    excludedFunctions: []
     ignoreAnnotated: # Custom
       - 'Provides'
-  LibraryCodeMustSpecifyReturnType:
-    active: true
-    excludes: ['**']
-  LibraryEntitiesShouldNotBePublic:
-    active: true
-    excludes: ['**']
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
@@ -835,8 +1050,12 @@ style:
         '**/androidTest/**',
         '**/commonTest/**',
         '**/jvmTest/**',
+        '**/androidUnitTest/**',
+        '**/androidInstrumentedTest/**',
         '**/jsTest/**',
+        '**/nativeTest/**',
         '**/iosTest/**',
+        '**/*.kts',
       ]
     ignoreNumbers:
       - '-1'
@@ -855,35 +1074,43 @@ style:
     ignoreEnums: true # Custom
     ignoreRanges: false
     ignoreExtensionFunctions: true
-  MandatoryBracesIfStatements:
-    active: true # Custom
   MandatoryBracesLoops:
     active: true # Custom
+  MaxChainedCallsOnSameLine:
+    active: false
+    maxChainedCalls: 5
   MaxLineLength:
     active: true
     maxLineLength: 150 # Custom
     excludePackageStatements: true
     excludeImportStatements: true
     excludeCommentStatements: false
+    excludeRawStrings: true
   MayBeConst:
     active: true
   ModifierOrder:
     active: true
   MultilineLambdaItParameter:
     active: true # Custom
+  MultilineRawStringIndentation:
+    active: true # Custom
+    indentSize: 4
+    trimmingMethods:
+      - 'trimIndent'
+      - 'trimMargin'
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
     active: true
   NoTabs:
     active: true # Custom
-  ObjectLiteralToLambda:
+  NullableBooleanCheck:
     active: true # Custom
+  ObjectLiteralToLambda:
+    active: true
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
-    active: false
-  OptionalWhenBraces:
     active: false
   PreferToOverPairSyntax:
     active: false
@@ -892,13 +1119,14 @@ style:
   RedundantExplicitType:
     active: true # Custom
   RedundantHigherOrderMapUsage:
-    active: true # Custom
+    active: true
   RedundantVisibilityModifierRule:
     active: false
   ReturnCount:
     active: true
     max: 8 # Custom
-    excludedFunctions: 'equals'
+    excludedFunctions:
+      - 'equals'
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false
@@ -908,12 +1136,21 @@ style:
     active: true
   SpacingBetweenPackageAndImports:
     active: true # Custom
+  StringShouldBeRawString:
+    active: false
+    maxEscapedCharacterCount: 2
+    ignoredCharacters: []
   ThrowsCount:
     active: false # Custom
     max: 2
     excludeGuardClauses: false
   TrailingWhitespace:
+    active: true # Custom
+  TrimMultilineRawString:
     active: false
+    trimmingMethods:
+      - 'trimIndent'
+      - 'trimMargin'
   UnderscoresInNumericLiterals:
     active: false
     acceptableLength: 4
@@ -926,8 +1163,12 @@ style:
     active: true # Custom
   UnnecessaryApply:
     active: true
-  UnnecessaryFilter:
+  UnnecessaryBackticks:
     active: true # Custom
+  UnnecessaryBracesAroundTrailingLambda:
+    active: true # Custom
+  UnnecessaryFilter:
+    active: true
   UnnecessaryInheritance:
     active: true
   UnnecessaryInnerClass:
@@ -936,23 +1177,34 @@ style:
     active: true # Custom
   UnnecessaryParentheses:
     active: true # Custom
+    allowForUnclearPrecedence: false
   UntilInsteadOfRangeTo:
     active: false
   UnusedImports:
     active: false
+  UnusedParameter:
+    active: true
+    allowedNames: 'ignored|expected'
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
+    ignoreAnnotated: # Custom
+      - 'DevicePreviews'
+      - 'Preview'
+      - 'ThemePreviews'
+  UnusedPrivateProperty:
+    active: true
+    allowedNames: '_|ignored|expected|serialVersionUID'
   UseAnyOrNoneInsteadOfFind:
-    active: true # Custom
+    active: true
   UseArrayLiteralsInAnnotations:
-    active: true # Custom
+    active: true
   UseCheckNotNull:
-    active: true # Custom
+    active: true
   UseCheckOrError:
-    active: false
+    active: true
   UseDataClass:
     active: true # Custom
     allowVars: false
@@ -961,14 +1213,19 @@ style:
   UseIfEmptyOrIfBlank:
     active: true # Custom
   UseIfInsteadOfWhen:
-    active: false
+    active: true # Custom
+    ignoreWhenContainingVariableDeclaration: false
   UseIsNullOrEmpty:
-    active: true # Custom
-  UseOrEmpty:
-    active: true # Custom
-  UseRequire:
+    active: true
+  UseLet:
     active: false
+  UseOrEmpty:
+    active: true
+  UseRequire:
+    active: true
   UseRequireNotNull:
+    active: true
+  UseSumOfInsteadOfFlatMapSize:
     active: true # Custom
   UselessCallOnNotNull:
     active: true
@@ -976,7 +1233,78 @@ style:
     active: true
   VarCouldBeVal:
     active: true
+    ignoreLateinitVar: false
   WildcardImport:
     active: true
     excludes: [] # Custom
     excludeImports: [] # Custom
+
+compose:
+  ReusedModifierInstance:
+    active: true
+  UnnecessaryEventHandlerParameter:
+    active: true
+  ComposableEventParameterNaming:
+    active: false # Custom
+  ComposableParametersOrdering:
+    active: true
+  ModifierHeightWithText:
+    active: true
+  ModifierParameterPosition:
+    active: true
+  ModifierDefaultValue:
+    active: true
+  MissingModifierDefaultValue:
+    active: true
+  PublicComposablePreview:
+    active: true
+  TopLevelComposableFunctions:
+    active: true
+  ComposeFunctionName:
+    active: true
+
+TwitterCompose:
+  CompositionLocalAllowlist:
+    active: false # Custom
+    # You can optionally define a list of CompositionLocals that are allowed here
+    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
+  CompositionLocalNaming:
+    active: true
+  ContentEmitterReturningValues:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: true
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  MutableParams:
+    active: false # Custom
+  ComposableNaming:
+    active: true
+    # You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
+    # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
+  ComposableParamOrder:
+    active: true
+  PreviewNaming:
+    active: true
+  PreviewPublic:
+    active: true
+    # You can optionally disable that only previews with @PreviewParameter are flagged
+    # previewPublicOnlyIfParams: false
+  RememberMissing:
+    active: true
+  UnstableCollections:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true

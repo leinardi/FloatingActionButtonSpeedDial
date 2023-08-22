@@ -17,11 +17,11 @@ def commitCount = 'git rev-list --count HEAD'.execute().text.trim()
 ext.config = [
     android: [
         'applicationId': 'com.leinardi.android.speeddial.sample',
-        'compileSdk'   : 33,
-        'javaVersion'  : JavaVersion.VERSION_11,
+        'compileSdk'   : 34,
+        'javaVersion'  : JavaVersion.VERSION_17,
         'minSdk'       : 14,
         'minSdkCompose': 21,
-        'targetSdk'    : 33,
+        'targetSdk'    : 34,
         'version_code' : commitCount.isNumber() ? commitCount as int : 0,
         'version_name_view' : '3.3.0',
         'version_name_compose' : '1.0.0-alpha04',

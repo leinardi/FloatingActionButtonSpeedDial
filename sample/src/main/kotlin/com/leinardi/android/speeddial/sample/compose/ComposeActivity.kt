@@ -95,7 +95,9 @@ class ComposeActivity : AppCompatActivity() {  // AppCompatActivity is needed to
 }
 
 @Composable
-fun MainContent() {
+fun MainContent(
+    modifier: Modifier = Modifier,
+) {
     val speedDialState = rememberSaveable { mutableStateOf(SpeedDialState.Collapsed) }
     val speedDialVisible = rememberSaveable { mutableStateOf(true) }
     val reverseAnimationOnClose = rememberSaveable { mutableStateOf(false) }
@@ -104,6 +106,7 @@ fun MainContent() {
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = modifier,
         scaffoldState = scaffoldState,
         topBar = { TopBar(speedDialVisible, scope, scaffoldState, reverseAnimationOnClose) },
         floatingActionButton = {
@@ -404,7 +407,7 @@ private fun showSnackbar(
 
 @Preview
 @Composable
-fun PreviewMainContent() {
+private fun PreviewMainContent() {
     SampleTheme {
         MainContent()
     }

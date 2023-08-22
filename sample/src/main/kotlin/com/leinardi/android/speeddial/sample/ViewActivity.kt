@@ -46,7 +46,8 @@ class ViewActivity : BaseUseCaseActivity() {
         if (addActionItems) {
             speedDialView.addActionItem(
                 SpeedDialActionItem.Builder(
-                    R.id.fab_no_label, R.drawable
+                    R.id.fab_no_label,
+                    R.drawable
                         .ic_link_white_24dp,
                 )
                     .create(),
@@ -56,14 +57,16 @@ class ViewActivity : BaseUseCaseActivity() {
             val fabWithLabelView = speedDialView.addActionItem(
                 SpeedDialActionItem.Builder(
                     R.id
-                        .fab_custom_color, drawable,
+                        .fab_custom_color,
+                    drawable,
                 )
                     .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.inbox_primary, theme))
                     .setLabel(R.string.label_custom_color)
                     .setLabelColor(Color.WHITE)
                     .setLabelBackgroundColor(
                         ResourcesCompat.getColor(
-                            resources, R.color.inbox_primary,
+                            resources,
+                            R.color.inbox_primary,
                             theme,
                         ),
                     )
@@ -77,7 +80,8 @@ class ViewActivity : BaseUseCaseActivity() {
 
             speedDialView.addActionItem(
                 SpeedDialActionItem.Builder(
-                    R.id.fab_long_label, R.drawable
+                    R.id.fab_long_label,
+                    R.drawable
                         .ic_lorem_ipsum,
                 )
                     .setFabSize(FloatingActionButton.SIZE_NORMAL)
@@ -96,7 +100,8 @@ class ViewActivity : BaseUseCaseActivity() {
 
             speedDialView.addActionItem(
                 SpeedDialActionItem.Builder(
-                    R.id.fab_custom_theme, R.drawable
+                    R.id.fab_custom_theme,
+                    R.drawable
                         .ic_theme_white_24dp,
                 )
                     .setLabel(getString(R.string.label_custom_theme))
@@ -118,54 +123,64 @@ class ViewActivity : BaseUseCaseActivity() {
         })
 
         // Set option fabs clicklisteners.
-        speedDialView.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
-            when (actionItem.id) {
-                R.id.fab_no_label -> {
-                    showToast(getString(R.string.no_action_clicked))
-                    speedDialView.close()  // To close the Speed Dial with animation
-                    return@OnActionSelectedListener true  // false will close it without animation
-                }
-                R.id.fab_long_label -> showSnackbar(actionItem.getLabel(this@ViewActivity) + " clicked!")
-                R.id.fab_custom_color -> {
-                    showToast(actionItem.getLabel(this@ViewActivity) + " clicked!\nClosing without animation.")
-                    // closes without animation (same as speedDialView.close(false); return false;)
-                    return@OnActionSelectedListener false
-                }
-                R.id.fab_custom_theme -> showToast(actionItem.getLabel(this@ViewActivity) + " clicked!")
-                R.id.fab_add_action -> speedDialView.addActionItem(
-                    SpeedDialActionItem.Builder(
-                        R.id.fab_replace_action,
-                        R.drawable.ic_replace_white_24dp,
-                    )
-                        .setFabBackgroundColor(
-                            ResourcesCompat.getColor(
-                                resources, R.color
-                                    .material_orange_500,
-                                theme,
-                            ),
+        speedDialView.setOnActionSelectedListener(
+            SpeedDialView.OnActionSelectedListener { actionItem ->
+                when (actionItem.id) {
+                    R.id.fab_no_label -> {
+                        showToast(getString(R.string.no_action_clicked))
+                        speedDialView.close()  // To close the Speed Dial with animation
+                        return@OnActionSelectedListener true  // false will close it without animation
+                    }
+
+                    R.id.fab_long_label -> showSnackbar(actionItem.getLabel(this@ViewActivity) + " clicked!")
+                    R.id.fab_custom_color -> {
+                        showToast(actionItem.getLabel(this@ViewActivity) + " clicked!\nClosing without animation.")
+                        // closes without animation (same as speedDialView.close(false); return false;)
+                        return@OnActionSelectedListener false
+                    }
+
+                    R.id.fab_custom_theme -> showToast(actionItem.getLabel(this@ViewActivity) + " clicked!")
+                    R.id.fab_add_action -> speedDialView.addActionItem(
+                        SpeedDialActionItem.Builder(
+                            R.id.fab_replace_action,
+                            R.drawable.ic_replace_white_24dp,
                         )
-                        .setLabel(getString(R.string.label_replace_action))
-                        .create(), ADD_ACTION_POSITION,
-                )
-                R.id.fab_replace_action -> speedDialView.replaceActionItem(
-                    SpeedDialActionItem.Builder(
-                        R.id
-                            .fab_remove_action,
-                        R.drawable.ic_delete_white_24dp,
+                            .setFabBackgroundColor(
+                                ResourcesCompat.getColor(
+                                    resources,
+                                    R.color
+                                        .material_orange_500,
+                                    theme,
+                                ),
+                            )
+                            .setLabel(getString(R.string.label_replace_action))
+                            .create(),
+                        ADD_ACTION_POSITION,
                     )
-                        .setLabel(getString(R.string.label_remove_action))
-                        .setFabBackgroundColor(
-                            ResourcesCompat.getColor(
-                                resources, R.color.inbox_accent,
-                                theme,
-                            ),
+
+                    R.id.fab_replace_action -> speedDialView.replaceActionItem(
+                        SpeedDialActionItem.Builder(
+                            R.id
+                                .fab_remove_action,
+                            R.drawable.ic_delete_white_24dp,
                         )
-                        .create(), ADD_ACTION_POSITION,
-                )
-                R.id.fab_remove_action -> speedDialView.removeActionItemById(R.id.fab_remove_action)
-            }
-            true  // To keep the Speed Dial open
-        })
+                            .setLabel(getString(R.string.label_remove_action))
+                            .setFabBackgroundColor(
+                                ResourcesCompat.getColor(
+                                    resources,
+                                    R.color.inbox_accent,
+                                    theme,
+                                ),
+                            )
+                            .create(),
+                        ADD_ACTION_POSITION,
+                    )
+
+                    R.id.fab_remove_action -> speedDialView.removeActionItemById(R.id.fab_remove_action)
+                }
+                true  // To keep the Speed Dial open
+            },
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

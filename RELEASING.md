@@ -5,7 +5,7 @@
 3. Update the `README.md` with the new version.
 4. `git commit -am "Prepare for release View|Compose X.Y.Z"` (where X.Y.Z is the version you set in step 1)
 5. `./gradlew spotlessApply check`
-6. `./gradlew clean assembleRelease`
+6. `./gradlew clean assembleRelease bundleRelease`
 7. `git push`
 8. `./gradlew :library-view:publishReleasePublicationToSonatypeRepository`
 9. `./gradlew :library-compose:publishReleasePublicationToSonatypeRepository`

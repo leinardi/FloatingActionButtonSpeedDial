@@ -43,10 +43,10 @@ fun SpeedDialOverlay(
             enter = fadeIn(),
             exit = fadeOut(),
         ) {
-            OverlayBox(color, onClick, modifier)
+            OverlayBox(color, onClick)
         }
     } else if (visible) {
-        OverlayBox(color, onClick, modifier)
+        OverlayBox(color, onClick)
     }
 }
 
@@ -57,10 +57,9 @@ private fun OverlayBox(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color)
-            .clickable(onClick = onClick)
-            .then(modifier),
+            .clickable(onClick = onClick),
     )
 }
